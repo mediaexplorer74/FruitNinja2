@@ -16,7 +16,7 @@
 As is. No support. DIY. Learn purposes only.
 
 ## Reference(s)
-- https://superpokeunicorn.itch.io/minewell Original project
+- https://yandex.com/games/app/278766 
 
 
 ## ..
