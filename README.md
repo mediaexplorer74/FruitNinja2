@@ -3,6 +3,28 @@
 
 Planned "UWP-remake" of FruitNinja (1+2) game project. 
 
+## Intro 
+Today I asked a question, was the Fruit Ninja game released for Windows Phone? It turned out that there is only some strange 3D version of the game for Android with very bad reviews. There is a theme in Russian https://4pda.to/forum/index.php?showtopic=963723 at the 4PDA Technoforum. 
+Here are a couple of posts from there:
+
+" Mes_360: Just damn all the worst that could have been done:
+
+1) There are coins and crystals;
+
+2) Social activities - there are;
+
+3) Levelling - there is;
+
+4) And there is a design that matches all similar games.;
+Surely a permanent Internet connection is also necessary
+
+raincandy_U: Mes_360, it says Online, so you need a permanent connection. The game has completely collapsed. "
+
+I looked at this mess and decided to step in. 
+
+Anyway, I'm starting to make a kind of fusion of Fruit Ninja 1 and 2. I'm not much of a graphic designer, but I'll come up with something =) 
+There are plans to keep 2D and a lightweight interface.
+
 
 ## Status
 - UWP app - only template (draft / early bird -- not for game run!)
@@ -23,4 +45,5 @@ As is. No support. DIY. Learn purposes only.
 
 ## ..
 [m][e] 2025
+
 ![Logo](Images/footer.png)
