@@ -1,10 +1,10 @@
 # FruitNinja2 1.0-alpha - uwp branch 
 ![Logo](Images/logo.png)
 
-Planned "UWP-remake" of FruitNinja (1+2) game project. 
+Planned "UWP-remake" of Fruit Ninja (1+2) game project. 
 
 ## Intro 
-Today I asked a question, was the Fruit Ninja game released for Windows Phone? It turned out that there is only some strange 3D version of the game for Android with very bad reviews. There is a theme in Russian https://4pda.to/forum/index.php?showtopic=963723 at the 4PDA Technoforum. 
+Today I asked a question, was the Fruit Ninja 2 game released for Windows Phone? It turned out that there is only some strange 3D version of the game for Android with very bad reviews. There is a theme https://4pda.to/forum/index.php?showtopic=963723 (in Russian) at the 4PDA Technoforum. 
 Here are a couple of posts from there:
 
 " Mes_360: Just damn all the worst that could have been done:
@@ -40,7 +40,7 @@ There are plans to keep 2D and a lightweight interface.
 As is. No support. DIY. Learn purposes only.
 
 ## Reference(s)
-- - https://yandex.com/games/app/278766 
+- https://yandex.com/games/app/278766 
 
 
 ## ..
