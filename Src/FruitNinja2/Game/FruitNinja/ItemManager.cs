@@ -248,12 +248,7 @@ namespace GameManager
       catch (Exception ex)
       {
           Debug.WriteLine("[ex] ItemManager - SaveItemInfo ex.: " + ex.Message);
-      }
-      //finally
-      //{
-      // storageFileStream?.Flush();
-       // storageFileStream?.Dispose();
-      //}
+      }    
     }
 
     public bool IsEquipped(ItemInfo item)

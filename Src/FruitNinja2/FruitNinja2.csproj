@@ -390,7 +390,7 @@
       <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="MonoGame.Framework.WindowsUniversal">
-      <Version>3.7.1.189</Version>
+      <Version>3.8.0.1641</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
@@ -1075,7 +1075,7 @@
     <Content Include="Content\localisedwp7\en\haikus.tga.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\localisedwp7\en\hb_logo.tga.xnb">
+    <Content Include="Content\localisedwp7\en\HB_logo.tga.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\localisedwp7\en\leaderboard.tga.xnb">

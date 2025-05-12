@@ -92,7 +92,7 @@ namespace Mortar
     private GamePadState state_prev;
     private GamePadState state_curr;
     private int skip;
-    public static bool switchLanguage = false;
+        public static bool switchLanguage = true;//false;
     public static StringTableUtils.Language switchToLanguage;
     public static float loadinScreen = 0.0f;
     private static Texture2D m_fruitTex;
@@ -463,35 +463,36 @@ namespace Mortar
 
     protected override void LoadContent()
     {
+      Content.RootDirectory = "Content";
+
       try
       {
             /*Game.SetTrialModeState();
             switch (Game.game_work.language)
             {
                 case StringTableUtils.Language.LANGUAGE_ENGLISH_UK:
-                this.bob = Texture.Load("localisedwp7/en/HB_logo.tex");
+                this.bob = Texture.Load("localisedwp7/en/hb_logo.tex");
                 break;
                 case StringTableUtils.Language.LANGUAGE_FRENCH:
-                this.bob = Texture.Load("localisedwp7/fr/HB_logo.tex");
+                this.bob = Texture.Load("localisedwp7/fr/hb_logo.tex");
                 break;
                 case StringTableUtils.Language.LANGUAGE_SPANISH:
-                this.bob = Texture.Load("localisedwp7/es/HB_logo.tex");
+                this.bob = Texture.Load("localisedwp7/es/hb_logo.tex");
                 break;
                 case StringTableUtils.Language.LANGUAGE_GERMAN:
-                this.bob = Texture.Load("localisedwp7/de/HB_logo.tex");
+                this.bob = Texture.Load("localisedwp7/de/hb_logo.tex");
                 break;
                 case StringTableUtils.Language.LANGUAGE_ITALIAN:
-                this.bob = Texture.Load("localisedwp7/it/HB_logo.tex");
+                this.bob = Texture.Load("localisedwp7/it/hb_logo.tex");
                 break;
                 default:
-                this.bob = Texture.Load("localisedwp7/en/HB_logo.tex");
+                this.bob = Texture.Load("localisedwp7/en/hb_logo.tex");
                 break;
             }*/
 
-        //Temp
+        // TODO: fix load texture error
         this.bob = Texture.Load("localisedwp7/en/HB_logo.tex");
         
-
         this.bobsCousinIt = this.Content.Load<Texture2D>("extra/MGS_WP7_Horiz_Still");
         Game1.bobsCousinHairyMaclary = this.Content.Load<Texture2D>("extra/black");
         this.upsell = TextureManager.GetInstance().Load("trial_upsell.tex", true);
@@ -827,14 +828,14 @@ namespace Mortar
                 }
                 catch //(GameUpdateRequiredException ex)
                 {
-                  this.gameUpdateRequired = true;
+                  //this.gameUpdateRequired = true;
                 }
               }
             }
-            catch (Microsoft.Xna.Framework.GameUpdateRequiredException ex)
-            {
-              this.gameUpdateRequired = true;
-            }
+            //catch (Microsoft.Xna.Framework.GameUpdateRequiredException ex)
+            //{
+            //  this.gameUpdateRequired = true;
+            //}
             catch (Exception ex)
             {
               this.GameException();
@@ -932,31 +933,36 @@ namespace Mortar
         {
           if (Game1.switchLanguage)
           {
-            DisplayManager.GetInstance().currentTexture = (Texture) null;
+            DisplayManager.GetInstance().currentTexture = null;
             Game1.switchLanguage = false;
-            //Game.game_work.language = TheGame.switchToLanguage;
-            switch (Game1.switchToLanguage)
-            {
-              case StringTableUtils.Language.LANGUAGE_ENGLISH:
-                StringManager.GetInstance().SetDefaultLanguage("english_us");
-                break;
-              case StringTableUtils.Language.LANGUAGE_FRENCH:
-                StringManager.GetInstance().SetDefaultLanguage("french");
-                break;
-              case StringTableUtils.Language.LANGUAGE_SPANISH:
-                StringManager.GetInstance().SetDefaultLanguage("spanish");
-                break;
-              case StringTableUtils.Language.LANGUAGE_GERMAN:
-                StringManager.GetInstance().SetDefaultLanguage("german");
-                break;
-              case StringTableUtils.Language.LANGUAGE_ITALIAN:
-                StringManager.GetInstance().SetDefaultLanguage("italian");
-                break;
-            }
+                        //Game.game_work.language = TheGame.switchToLanguage;
+                        /*switch (Game1.switchToLanguage)
+                        {
+                          case StringTableUtils.Language.LANGUAGE_ENGLISH:
+                            StringManager.GetInstance().SetDefaultLanguage("english_us");
+                            break;
+                          case StringTableUtils.Language.LANGUAGE_FRENCH:
+                            StringManager.GetInstance().SetDefaultLanguage("french");
+                            break;
+                          case StringTableUtils.Language.LANGUAGE_SPANISH:
+                            StringManager.GetInstance().SetDefaultLanguage("spanish");
+                            break;
+                          case StringTableUtils.Language.LANGUAGE_GERMAN:
+                            StringManager.GetInstance().SetDefaultLanguage("german");
+                            break;
+                          case StringTableUtils.Language.LANGUAGE_ITALIAN:
+                            StringManager.GetInstance().SetDefaultLanguage("italian");
+                            break;
+                        }*/
+
+            //TEMP
+            StringManager.GetInstance().SetDefaultLanguage("english_us");
+
             Game1.instance.stringTable.UpdateDefaultLanguage();
             Game1.SaveConfig();
             //TextureManager.GetInstance().ReloadLocalisedTextures((int) Game.game_work.language);
           }
+
           if (this.showUpsell && this.upsell != null)
           {
             this.spriteBatch.Begin((SpriteSortMode) 1, BlendState.NonPremultiplied);
@@ -977,7 +983,7 @@ namespace Mortar
             this.spriteBatch.Begin();
 
             // RnD / TEMP: this.bob != null
-            if ((double) this.timeout < 0.25 && this.bob != null)
+            if ((double) this.timeout < 0.25)
               this.spriteBatch.Draw(this.bob.intex, new Vector2(0.0f, 0.0f), new Rectangle?(), 
                   Color.White, MathHelper.ToRadians(0.0f), new Vector2(0.0f, 0.0f), new Vector2(1.66666663f, 1.5f), (SpriteEffects) 0, 0.0f);
             else

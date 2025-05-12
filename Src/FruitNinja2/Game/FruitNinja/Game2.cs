@@ -81,7 +81,9 @@ namespace GameManager
 
     public static Color TintWhite(float[] tints)
     {
-      return new Color((int) (byte) Mortar.Math.CLAMP((float) byte.MaxValue * tints[0], 0.0f, (float) byte.MaxValue), (int) (byte) Mortar.Math.CLAMP((float) byte.MaxValue * tints[1], 0.0f, (float) byte.MaxValue), (int) (byte) Mortar.Math.CLAMP((float) byte.MaxValue * tints[2], 0.0f, (float) byte.MaxValue), (int) byte.MaxValue);
+      return new Color((int) (byte) Mortar.Math.CLAMP((float) byte.MaxValue * tints[0], 0.0f, (float) byte.MaxValue), 
+          (int) (byte) Mortar.Math.CLAMP((float) byte.MaxValue * tints[1], 0.0f, (float) byte.MaxValue), 
+          (int) (byte) Mortar.Math.CLAMP((float) byte.MaxValue * tints[2], 0.0f, (float) byte.MaxValue), (int) byte.MaxValue);
     }
 
     public static void SetTrialModeState()
@@ -332,7 +334,10 @@ namespace GameManager
 
     public static int GetCurrentModeHighscore()
     {
-      return Game2.game_work.gameMode >= Game2.GAME_MODE.GM_CLASSIC && Game2.game_work.gameMode < Game2.GAME_MODE.GM_MAX && Game2.game_work.saveData != null ? Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode] : 0;
+      return Game2.game_work.gameMode >= Game2.GAME_MODE.GM_CLASSIC 
+                && Game2.game_work.gameMode < Game2.GAME_MODE.GM_MAX && Game2.game_work.saveData != null 
+                ? Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode]
+                : 0;
     }
 
     public static int GetCurrentModeHighscore(int mode)
@@ -342,8 +347,11 @@ namespace GameManager
 
     public static bool SetCurrentModeHighscore(int score)
     {
-      if (Game2.game_work.gameMode < Game2.GAME_MODE.GM_CLASSIC || Game2.game_work.gameMode >= Game2.GAME_MODE.GM_MAX || Game2.game_work.saveData == null || score <= Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode])
+      if (Game2.game_work.gameMode < Game2.GAME_MODE.GM_CLASSIC || Game2.game_work.gameMode >= Game2.GAME_MODE.GM_MAX 
+                || Game2.game_work.saveData == null || score <= Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode])
         return false;
+
+
       Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode] = score;
       int mode = -1;
       switch (Game2.game_work.gameMode)
@@ -417,7 +425,8 @@ namespace GameManager
         return;
       Game2.game_work.gameOver = true;
       WaveManager.GetInstance().ClearUnspawned();
-      Game2.game_work.gameOverScreen = new GameOverScreen((string) null, state, time, Game2.game_work.saveData.go_head, Game2.game_work.saveData.go_body, Game2.game_work.saveData.go_fruit, Game2.game_work.saveData.go_fact);
+      Game2.game_work.gameOverScreen = new GameOverScreen((string) null, state, time, 
+          Game2.game_work.saveData.go_head, Game2.game_work.saveData.go_body, Game2.game_work.saveData.go_fruit, Game2.game_work.saveData.go_fact);
       Game2.game_work.saveData.go_head = Game2.game_work.saveData.go_body = Game2.game_work.saveData.go_fruit = Game2.game_work.saveData.go_fact = -1;
       Game2.game_work.gameOverScreen.Init();
       Game2.game_work.hud.AddControl((HUDControl) Game2.game_work.gameOverScreen);
@@ -434,7 +443,9 @@ namespace GameManager
     public static void ClearMenuItems()
     {
       LinkedListNode<Entity> iterator = (LinkedListNode<Entity>) null;
-      for (Entity entity = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BEGIN, ref iterator); entity != null; entity = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BEGIN, ref iterator))
+      for (Entity entity = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BEGIN, ref iterator); 
+                entity != null; 
+                entity = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BEGIN, ref iterator))
       {
         if ((entity.partOfPopup || !PopOverControl.IsInPopup) && !((Fruit) entity).m_isSliced)
         {
@@ -444,7 +455,9 @@ namespace GameManager
           ((Fruit) entity).m_vel2 = entity.m_vel;
         }
       }
-      for (Entity entity = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BOMB, ref iterator); entity != null; entity = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BOMB, ref iterator))
+      for (Entity entity = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BOMB, ref iterator); 
+                entity != null; 
+                entity = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BOMB, ref iterator))
       {
         if (entity.partOfPopup || !PopOverControl.IsInPopup)
         {
@@ -532,11 +545,19 @@ namespace GameManager
 
     public static int TouchInRegion(float xMin, float xMax, float yMin, float yMax, int touch)
     {
-      if (touch >= 0 && touch < GameTask.MAX_SLASHES && (double) Game2.game_work.touchPositions[touch].Z > 0.0 && (double) Game2.game_work.touchPositions[touch].X >= (double) xMin && (double) Game2.game_work.touchPositions[touch].X <= (double) xMax && (double) Game2.game_work.touchPositions[touch].Y >= (double) yMin && (double) Game2.game_work.touchPositions[touch].Y <= (double) yMax)
+      if (touch >= 0 && touch < GameTask.MAX_SLASHES && (double) Game2.game_work.touchPositions[touch].Z > 0.0 
+                && (double) Game2.game_work.touchPositions[touch].X >= (double) xMin 
+                && (double) Game2.game_work.touchPositions[touch].X <= (double) xMax 
+                && (double) Game2.game_work.touchPositions[touch].Y >= (double) yMin 
+                && (double) Game2.game_work.touchPositions[touch].Y <= (double) yMax)
         return touch;
+
       for (int index = 0; index < GameTask.MAX_SLASHES; ++index)
       {
-        if ((double) Game2.game_work.touchPositions[index].Z > 0.0 && (double) Game2.game_work.touchPositions[index].X >= (double) xMin && (double) Game2.game_work.touchPositions[index].X <= (double) xMax && (double) Game2.game_work.touchPositions[index].Y >= (double) yMin && (double) Game2.game_work.touchPositions[index].Y <= (double) yMax)
+        if ((double) Game2.game_work.touchPositions[index].Z > 0.0 && (double) Game2.game_work.touchPositions[index].X >= (double) xMin 
+                    && (double) Game2.game_work.touchPositions[index].X <= (double) xMax
+                    && (double) Game2.game_work.touchPositions[index].Y >= (double) yMin 
+                    && (double) Game2.game_work.touchPositions[index].Y <= (double) yMax)
           return index;
       }
       return -1;
@@ -623,10 +644,16 @@ namespace GameManager
       Game2.game_work.inRetrySequence = false;
       Game2.game_work.gameOverScreen = (GameOverScreen) null;
       Game2.game_work.soundEnabled = Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("soundOff")) == 0;
+
       SoundManager.GetInstance().SetSFXVolume(Game2.game_work.soundEnabled ? SoundDef.DEFAULT_SFX_VOL : 0.0f);
+
       Game2.game_work.musicEnabled = Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("musicOff")) == 0;
-      Game2.game_work.saveData.AddToTotal("soundOff", StringFunctions.StringHash("soundOff"), -Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("soundOff")), false, true);
-      Game2.game_work.saveData.AddToTotal("musicOff", StringFunctions.StringHash("musicOff"), -Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("musicOff")), false, true);
+
+      Game2.game_work.saveData.AddToTotal("soundOff", StringFunctions.StringHash("soundOff"), 
+          -Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("soundOff")), false, true);
+
+      Game2.game_work.saveData.AddToTotal("musicOff", StringFunctions.StringHash("musicOff"), 
+          -Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("musicOff")), false, true);
       SlashEntity.InitModColors();
       AchievementManager.GetInstance().LoadAchievementInfo();
       Game2.game_work.coins = 0;
@@ -648,7 +675,9 @@ namespace GameManager
       TextureManager.GetInstance().Initialise(51200);
       MeshManager.GetInstance().Initialise(158720);
       AnimationManager.GetInstance().Initialise(512000);
+
       InputManager.GetInstance().Init();
+      
       PSPParticleManager.GetInstance().LoadFile("particles", "particles/particles_fast.xml");
       PowerUpManager.GetInstance().Load();
       Game2.InitialiseData();

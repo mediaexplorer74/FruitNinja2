@@ -8,8 +8,18 @@ using System.Threading.Tasks;
 
 namespace GameManager
 {
-    static class InputManager
+    public class InputManager
     {
+        private static InputManager instance;
+      
+
+        public static InputManager GetInstance()
+        {
+            if (InputManager.instance == null)
+                InputManager.instance = new InputManager();
+            return InputManager.instance;
+        }
+
         public static void SetInput(string input, Keys key)
         {
             if(!inputs.ContainsKey(input))
@@ -126,20 +136,12 @@ namespace GameManager
             return retVal;
         }
 
-        public static InputObject GetInstance()
-        {
-            return default;
-        }
-    }
-
-    public class InputObject
-    {
-        internal void ClearActions(uint v)
+        public void ClearActions(uint v)
         {
             //
         }
 
-        internal void Init()
+        internal void Update(float dt)
         {
             //
         }
@@ -154,9 +156,10 @@ namespace GameManager
             //
         }
 
-        internal void Update(float dt)
+        internal void Init()
         {
-            //
+            if (InputManager.instance == null)
+                InputManager.instance = new InputManager();
         }
     }
 }

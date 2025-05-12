@@ -25,6 +25,9 @@ I looked at this mess and decided to step in.
 Anyway, I'm starting to make a kind of fusion of Fruit Ninja 1 and 2. I'm not much of a graphic designer, but I'll come up with something =) 
 There are plans to keep 2D and a lightweight interface.
 
+## Screenshots
+![](Images/sshot01.png)
+![](Images/sshot02.png)
 
 ## Status
 - UWP app - only template (draft / early bird -- not for game run!)
