@@ -50,22 +50,13 @@ namespace GameManager
     public static float[,] missPositions = new float[3, 4]
     {
       {
-        79f,
-        10f,
-        -5f,
-        0.75f
+        79f, 10f, -5f, 0.75f
       },
       {
-        52f,
-        13f,
-        5f,
-        1f
+        52f, 13f, 5f, 1f
       },
       {
-        20f,
-        18f,
-        10f,
-        1.2f
+        20f, 18f, 10f, 1.2f
       }
     };
     public static MainScreen s_mainScreen = (MainScreen) null;
@@ -143,7 +134,7 @@ namespace GameManager
       if (nullable.HasValue && nullable.Value == 0)
       {
         SoundManager.GetInstance().AllowMusic();
-        SoundManager.GetInstance().SongPlay("Music-menu");
+        SoundManager.GetInstance().SongPlay("Background");//("Music-menu");
       }
       else
         SoundManager.GetInstance().CustomMusic = true;
@@ -183,8 +174,8 @@ namespace GameManager
       else
       {
         SoundManager.GetInstance().AllowMusic();
-        SoundManager.GetInstance().SongPlay("Music-menu");
-      }
+        SoundManager.GetInstance().SongPlay("Background");//("Music-menu");
+            }
     }
 
     private static void ShowDialog2()
@@ -222,8 +213,8 @@ namespace GameManager
           GameTask.ShowDialog();
         }
         else
-          SoundManager.GetInstance().SongPlay("Music-menu");
-      }
+          SoundManager.GetInstance().SongPlay("Background");//("Music-menu");
+            }
       else
       {
         if (GameTask.s_songPlaying == 1)

@@ -94,7 +94,11 @@ namespace GameManager
           if ((double) this.m_time <= 0.99900001287460327)
             break;
           this.m_time = 1f;
-          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+
+          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), 
+              (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), 
+              Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+
           this.m_quitButton.Init();
           this.m_quitButton.m_triggerOnBackPress = true;
           Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
@@ -128,7 +132,9 @@ namespace GameManager
       {
         this.m_texture.Set();
         MatrixManager.GetInstance().Reset();
-        MatrixManager.GetInstance().Scale(new Vector3((float) ((double) this.m_texture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) this.m_texture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
+        MatrixManager.GetInstance().Scale(new Vector3((float) ((double) this.m_texture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0),
+            (float) ((double) this.m_texture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
+
         float num1 = (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 + (double) this.m_texture.GetHeight() * 0.5);
         float num2 = (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - (double) CreditsScreen.ABOUT_CENTRE_Y - 60.0);
         float num3 = num1 - (num1 - num2) * this.m_time;

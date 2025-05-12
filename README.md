@@ -38,6 +38,7 @@ There are plans to keep 2D and a lightweight interface.
 - Fix R.E. bugs & update content(s)
 - Simplify UI (cut all Xbox live deals - achiev., etc.)
 - Add some cool music theme :) 
+- Add popular world-wide languages (Russian, Chinese, etc.) 
 
 ## .
 As is. No support. DIY. Learn purposes only.

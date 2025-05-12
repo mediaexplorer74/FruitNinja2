@@ -28,7 +28,8 @@
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
     <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
-    <PackageCertificateThumbprint>006EB8D37DDFF761A16AC45EC5C25C8138F8B2D7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>
+    </PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -239,7 +240,6 @@
     <Compile Include="Game\FruitNinja\WaveModifier.cs" />
     <Compile Include="Game\FruitNinja\WaveState.cs" />
     <Compile Include="Game\FruitNinja\WAVE_INFO.cs" />
-    <Compile Include="Game\InputManager.cs" />
     <Compile Include="Game\Mortar\AccelerationKey.cs" />
     <Compile Include="Game\Mortar\ALIGNMENT_TYPE.cs" />
     <Compile Include="Game\Mortar\AnimationManager.cs" />
@@ -307,7 +307,6 @@
     <Compile Include="Game\Mortar\Touch.cs" />
     <Compile Include="Game\Mortar\TouchKey.cs" />
     <Compile Include="Game\Mortar\XAttributeExtensions.cs" />
-    <Compile Include="Game\Player.cs" />
     <Compile Include="Glob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -5009,6 +5008,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="FruitNinja2_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\zh-Hans\Resources.resw" />
     <PRIResource Include="Strings\zh-CHS\Resources.resw" />
     <PRIResource Include="Strings\zh-CHS\Resources - copia.resw" />
