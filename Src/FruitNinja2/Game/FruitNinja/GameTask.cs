@@ -5,12 +5,11 @@
 
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Mortar;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-//using WPR.WindowsCompability;
 
 #nullable disable
 namespace GameManager
@@ -210,9 +209,9 @@ namespace GameManager
 
     public static void UpdateMusic(float dt)
     {
-      if (!Game.game_work.musicEnabled)
+      if (!Game2.game_work.musicEnabled)
         return;
-      if ((double) Game.game_work.gameOverTransition < 0.0)
+      if ((double) Game2.game_work.gameOverTransition < 0.0)
       {
         if (GameTask.s_songPlaying == -1)
           return;
@@ -247,18 +246,18 @@ namespace GameManager
       MortarRectangle windowSize = DisplayManager.GetInstance().GetWindowSize();
       Vector2 vector2 = new Vector2((float) (windowSize.right - windowSize.left), (float) (windowSize.bottom - windowSize.top));
       if (e.axis.axis == 116)
-        Game.game_work.mainPointer.X = (float) (((double) e.axis.absolutePos - (double) vector2.X / 2.0) * ((double) Game.SCREEN_WIDTH / (double) Game.SCREEN_SIZE_X));
+        Game2.game_work.mainPointer.X = (float) (((double) e.axis.absolutePos - (double) vector2.X / 2.0) * ((double) Game2.SCREEN_WIDTH / (double) Game2.SCREEN_SIZE_X));
       if (e.axis.axis == 117)
-        Game.game_work.mainPointer.Y = (float) (-((double) e.axis.absolutePos - (double) vector2.Y / 2.0) * ((double) Game.SCREEN_HEIGHT / (double) Game.SCREEN_SIZE_Y));
+        Game2.game_work.mainPointer.Y = (float) (-((double) e.axis.absolutePos - (double) vector2.Y / 2.0) * ((double) Game2.SCREEN_HEIGHT / (double) Game2.SCREEN_SIZE_Y));
       if (e.axis.axis >= 153 && e.axis.axis < 169)
       {
         GameTask.inputEnts[e.axis.axis - 153].TouchMoveX(e);
-        Game.game_work.touchPositions[e.axis.axis - 153].X = (float) (((double) e.axis.absolutePos - (double) vector2.X / 2.0) * ((double) Game.SCREEN_WIDTH / (double) Game.SCREEN_SIZE_X));
+        Game2.game_work.touchPositions[e.axis.axis - 153].X = (float) (((double) e.axis.absolutePos - (double) vector2.X / 2.0) * ((double) Game2.SCREEN_WIDTH / (double) Game2.SCREEN_SIZE_X));
       }
       if (e.axis.axis >= 169 && e.axis.axis < 185)
       {
         GameTask.inputEnts[e.axis.axis - 169].TouchMoveY(e);
-        Game.game_work.touchPositions[e.axis.axis - 169].Y = (float) (-((double) e.axis.absolutePos - (double) vector2.Y / 2.0) * ((double) Game.SCREEN_HEIGHT / (double) Game.SCREEN_SIZE_Y));
+        Game2.game_work.touchPositions[e.axis.axis - 169].Y = (float) (-((double) e.axis.absolutePos - (double) vector2.Y / 2.0) * ((double) Game2.SCREEN_HEIGHT / (double) Game2.SCREEN_SIZE_Y));
       }
       return true;
     }
@@ -268,8 +267,8 @@ namespace GameManager
       if (Mortar.Game1.exceptionThrown || e.button.key < 137U || e.button.key >= 153U)
         return true;
       GameTask.inputEnts[(int)(e.button.key - 137U)].TouchDown(e);
-      Game.game_work.touchPositions[(int) (e.button.key - 137U)].Z 
-                = (double) Game.game_work.touchPositions[(int) (e.button.key - 137U)].Z != -1.0 
+      Game2.game_work.touchPositions[(int) (e.button.key - 137U)].Z 
+                = (double) Game2.game_work.touchPositions[(int) (e.button.key - 137U)].Z != -1.0 
                 ? 1f
                 : 2f;
 
@@ -278,15 +277,15 @@ namespace GameManager
 
     public static bool PointerDownCallback(InputEvent e)
     {
-      Game.game_work.pointerDown = true;
-      Game.game_work.pointerPressed = true;
+      Game2.game_work.pointerDown = true;
+      Game2.game_work.pointerPressed = true;
       return true;
     }
 
     public static bool PointerUpCallback(InputEvent e)
     {
-      Game.game_work.pointerDown = false;
-      Game.game_work.pointerReleased = true;
+      Game2.game_work.pointerDown = false;
+      Game2.game_work.pointerReleased = true;
       return true;
     }
 
@@ -315,15 +314,15 @@ namespace GameManager
         GameTask.s_flashTexture = (Mortar.Texture) null;
         PSPParticleManager.GetInstance().ClearEmitters();
         InputManager.GetInstance().ClearActions(0U);
-        Game.game_work.hud.Release();
+        Game2.game_work.hud.Release();
         MissControl.CleanPool();
         ActorManager.GetInstance().Clear();
         ActorManager.GetInstance().ClearAllListeners();
-        Game.game_work.pause = false;
+        Game2.game_work.pause = false;
         GameTask.initialised = false;
         GameTask.backgroundTexture = (Mortar.Texture) null;
         //GC2.Collect();
-        Game.game_work.hud = (HUD) null;
+        Game2.game_work.hud = (HUD) null;
         GameTask.GameInit(1U);
         flag = true;
       }
@@ -339,61 +338,61 @@ namespace GameManager
         return;
       GameTask.debugMenu = false;
       GameTask.challengeOver = false;
-      if (Game.game_work.hud == null)
-        Game.game_work.hud = new HUD();
-      Game.game_work.hud.Release();
+      if (Game2.game_work.hud == null)
+        Game2.game_work.hud = new HUD();
+      Game2.game_work.hud.Release();
       int num1 = 0;
-      float num2 = num1 == 0 ? Game.HUD_SCALE : 1f;
-      for (int index = 0; index < (int) Game.MAX_FRUIT_MISSES; ++index)
+      float num2 = num1 == 0 ? Game2.HUD_SCALE : 1f;
+      for (int index = 0; index < (int) Game2.MAX_FRUIT_MISSES; ++index)
       {
         MissControl control = new MissControl();
         control.SetActive(true);
         if (num1 == 0)
-          control.m_pos = new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - (double) GameTask.missPositions[index, 0] * (double) num2), (float) ((double) Game.SCREEN_HEIGHT / 2.0 - (double) GameTask.missPositions[index, 1] * (double) num2), 50f);
+          control.m_pos = new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - (double) GameTask.missPositions[index, 0] * (double) num2), (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) GameTask.missPositions[index, 1] * (double) num2), 50f);
         else
-          control.m_pos = new Vector3((float) -((double) GameTask.missPositions[index, 0] - (double) GameTask.missPositions[1, 0] + 5.0) * num2, (float) ((double) Game.SCREEN_HEIGHT / 2.0 - ((double) GameTask.missPositions[index, 1] + 15.0) * (double) num2), 50f);
+          control.m_pos = new Vector3((float) -((double) GameTask.missPositions[index, 0] - (double) GameTask.missPositions[1, 0] + 5.0) * num2, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - ((double) GameTask.missPositions[index, 1] + 15.0) * (double) num2), 50f);
         control.m_rotation = -GameTask.missPositions[index, 2];
         control.m_scale = Vector3.Multiply(Vector3.Multiply(
             new Vector3(32f, 32f, 32f), GameTask.missPositions[index, 3]), num2);
         control.m_id = index;
         control.m_drawOrder = (HUD.HUD_ORDER) num1;
-        Game.game_work.hud.AddControl((HUDControl) control);
+        Game2.game_work.hud.AddControl((HUDControl) control);
       }
-      MissControl.CreatePool(12, Game.game_work.hud);
+      MissControl.CreatePool(12, Game2.game_work.hud);
       ScoreControl control1 = new ScoreControl();
       control1.m_texture = TextureManager.GetInstance().Load("textureswp7/hud_fruit.tex");
       control1.m_scroreTexture = TextureManager.GetInstance().Load("score.tex", true);
       control1.m_highScoreTexture = TextureManager.GetInstance().Load("new_best_score.tex", true);
       control1.m_scale = Vector3.Multiply(Vector3.One, 64f);
-      control1.m_pos = new Vector3((float) (-(double) Game.PIXEL_PLATFORMX(Game.SCREEN_WIDTH / 2f - Game.GAME_FONT_SIZE) + (double) control1.m_scale.X * 0.34999999403953552), Game.PIXEL_PLATFORMY((float) ((double) Game.SCREEN_HEIGHT / 2.0 + (double) Game.GAME_FONT_SIZE * 4.0)) - control1.m_scale.Y * 0.35f, 0.0f);
-      Game.game_work.hud.AddControl((HUDControl) control1);
-      Game.game_work.timeControl = new TimeControl();
-      Game.game_work.timeControl.Init();
-      Game.game_work.timeControl.CountDown(90.9f);
-      Game.game_work.hud.AddControl((HUDControl) Game.game_work.timeControl);
+      control1.m_pos = new Vector3((float) (-(double) Game2.PIXEL_PLATFORMX(Game2.SCREEN_WIDTH / 2f - Game2.GAME_FONT_SIZE) + (double) control1.m_scale.X * 0.34999999403953552), Game2.PIXEL_PLATFORMY((float) ((double) Game2.SCREEN_HEIGHT / 2.0 + (double) Game2.GAME_FONT_SIZE * 4.0)) - control1.m_scale.Y * 0.35f, 0.0f);
+      Game2.game_work.hud.AddControl((HUDControl) control1);
+      Game2.game_work.timeControl = new TimeControl();
+      Game2.game_work.timeControl.Init();
+      Game2.game_work.timeControl.CountDown(90.9f);
+      Game2.game_work.hud.AddControl((HUDControl) Game2.game_work.timeControl);
       if (GameTask.backgroundTexture == null)
-        GameTask.backgroundTexture = Game.IsFastHardware() ? TextureManager.GetInstance().Load("textureswp7/gb_game.tex") : TextureManager.GetInstance().Load("textureswp7/gb_game_sml.tex");
+        GameTask.backgroundTexture = Game2.IsFastHardware() ? TextureManager.GetInstance().Load("textureswp7/gb_game.tex") : TextureManager.GetInstance().Load("textureswp7/gb_game_sml.tex");
       GameTask.s_sliceModel[0] = MeshManager.GetInstance().Load("models/fruit/slice_fx.mmd");
       GameTask.s_sliceModel[1] = MeshManager.GetInstance().Load("models/fruit/slice_fx_crit.mmd");
       GameTask.s_slices = new LinkedList<GameTask.SliceEffect>();
       GameTask.s_slices.Clear();
-      GameTask.hud_font = Game.game_work.pGameFont;
-      Game.game_work.pause = false;
+      GameTask.hud_font = Game2.game_work.pGameFont;
+      Game2.game_work.pause = false;
       GameTask.unpause_game = false;
       GameTask.clearInput = false;
       GameTask.initialised = true;
       GameTask.s_mainScreen = new MainScreen();
       GameTask.s_mainScreen.Init();
-      Game.game_work.mainScreen = GameTask.s_mainScreen;
+      Game2.game_work.mainScreen = GameTask.s_mainScreen;
       GameTask.s_pauseScreen = new PauseScreen();
       GameTask.s_pauseScreen.Init();
-      Game.game_work.tutorialControl = new TutorialControl();
-      Game.game_work.tutorialControl.Init();
-      Game.game_work.gameOver = true;
-      Game.game_work.gameOverTransition = -1f;
-      Game.game_work.hud.AddControl((HUDControl) GameTask.s_mainScreen);
-      Game.game_work.hud.AddControl((HUDControl) GameTask.s_pauseScreen);
-      Game.game_work.hud.AddControl((HUDControl) Game.game_work.tutorialControl);
+      Game2.game_work.tutorialControl = new TutorialControl();
+      Game2.game_work.tutorialControl.Init();
+      Game2.game_work.gameOver = true;
+      Game2.game_work.gameOverTransition = -1f;
+      Game2.game_work.hud.AddControl((HUDControl) GameTask.s_mainScreen);
+      Game2.game_work.hud.AddControl((HUDControl) GameTask.s_pauseScreen);
+      Game2.game_work.hud.AddControl((HUDControl) Game2.game_work.tutorialControl);
       Entity.HeapCreate(131072U);
       ActorManager.GetInstance().Initialise(5);
       ActorManager.GetInstance().RegisterFactory(new ActorManager.ActorFactory(EntityFactory.CreateEntity));
@@ -415,8 +414,8 @@ namespace GameManager
       SplatEntity.CreatePool(128);
       WaveManager.GetInstance().Resume();
       BombFlash.CreatePool(32);
-      SoundManager.GetInstance().Initialise("Sound/Win32Project/Win/FruitNinja", Game.HEAP_SIZE_SOUND);
-      SoundManager.GetInstance().SetSFXVolume(Game.game_work.soundEnabled ? SoundDef.DEFAULT_SFX_VOL : 0.0f);
+      SoundManager.GetInstance().Initialise("Sound/Win32Project/Win/FruitNinja", Game2.HEAP_SIZE_SOUND);
+      SoundManager.GetInstance().SetSFXVolume(Game2.game_work.soundEnabled ? SoundDef.DEFAULT_SFX_VOL : 0.0f);
       if (flags != 1U || !Mortar.Game1.exceptionThrown)
         return;
             Mortar.Game1.exceptionThrown = false;
@@ -431,16 +430,16 @@ namespace GameManager
 
     public static void GameUpdate(float dt, bool update)
     {
-      Game.game_work.canFastForward = false;
-      Game.game_work.pointerReleased = false;
-      Game.game_work.pointerPressed = false;
+      Game2.game_work.canFastForward = false;
+      Game2.game_work.pointerReleased = false;
+      Game2.game_work.pointerPressed = false;
       PopOverControl.Update(dt);
       for (int index = 0; index < GameTask.MAX_SLASHES; ++index)
       {
-        if ((double) Game.game_work.touchPositions[index].Z > 0.0)
-          Game.game_work.touchPositions[index].Z = 0.0f;
-        else if ((double) Game.game_work.touchPositions[index].Z == 0.0)
-          Game.game_work.touchPositions[index].Z = -1f;
+        if ((double) Game2.game_work.touchPositions[index].Z > 0.0)
+          Game2.game_work.touchPositions[index].Z = 0.0f;
+        else if ((double) Game2.game_work.touchPositions[index].Z == 0.0)
+          Game2.game_work.touchPositions[index].Z = -1f;
       }
       float dt1 = dt;
       if ((double) GameTask.s_startFadeInTime <= 0.0)
@@ -454,7 +453,7 @@ namespace GameManager
         GameTask.s_startFadeInTime = Mortar.Math.MAX(GameTask.s_startFadeInTime - dt * 2f, 0.0f);
         dt = 0.0f;
         dt1 = 0.0f;
-        Game.game_work.dt = 0.0f;
+        Game2.game_work.dt = 0.0f;
         if ((double) GameTask.s_startFadeInTime <= 0.0)
           GameTask.s_HBlogo = (Mortar.Texture) null;
       }
@@ -464,33 +463,33 @@ namespace GameManager
       float dt2 = dt;
       if (update)
       {
-        Game.game_work.saveData.inGame = false;
+        Game2.game_work.saveData.inGame = false;
         float dt3 = dt1;
-        if ((double) Game.game_work.critHitTime > 0.0)
-          Game.game_work.critHitTime -= dt;
+        if ((double) Game2.game_work.critHitTime > 0.0)
+          Game2.game_work.critHitTime -= dt;
         float num = 1f;
         if ((double) GameTask.slowTimeTime > 0.0)
         {
           GameTask.slowTimeTime -= dt * GameTask.slowTimeSpeed;
           num += (GameTask.slowTime - num) * GameTask.slowTimeTime;
         }
-        GameTask.quickener = Mortar.Math.MAX(GameTask.quickener - dt * (Game.game_work.canFastForward ? 2.5f : 5f), 1f);
+        GameTask.quickener = Mortar.Math.MAX(GameTask.quickener - dt * (Game2.game_work.canFastForward ? 2.5f : 5f), 1f);
         dt *= GameTask.quickener * num;
         dt1 *= GameTask.quickener * num;
-        Game.game_work.dt *= GameTask.quickener * num;
+        Game2.game_work.dt *= GameTask.quickener * num;
         dt2 *= GameTask.quickener * num;
         SlashEntity.PreUpdate(dt3);
         SplatEntity.UpdateActiveSplats(dt3);
         float dt4;
-        if ((double) Game.game_work.hitBombTime > 0.0)
+        if ((double) Game2.game_work.hitBombTime > 0.0)
         {
           if (!GameTask.s_menuBombHit)
-            Game.game_work.canFastForward = true;
-          float hitBombTime = Game.game_work.hitBombTime;
-          Game.game_work.hitBombTime -= dt;
-          if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && (double) Game.game_work.gameOverTransition < 1.0)
-            Game.game_work.hitBombTime -= dt;
-          if ((double) Game.game_work.hitBombTime > (double) GameTask.BOMB_FLASH_FULL)
+            Game2.game_work.canFastForward = true;
+          float hitBombTime = Game2.game_work.hitBombTime;
+          Game2.game_work.hitBombTime -= dt;
+          if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && (double) Game2.game_work.gameOverTransition < 1.0)
+            Game2.game_work.hitBombTime -= dt;
+          if ((double) Game2.game_work.hitBombTime > (double) GameTask.BOMB_FLASH_FULL)
           {
             dt2 = -dt2;
           }
@@ -499,29 +498,29 @@ namespace GameManager
             GameTask.UpdateBombHit(hitBombTime);
             dt2 += dt2;
           }
-          if ((double) Game.game_work.hitBombTime <= (double) GameTask.BOMB_FLASH_START_GAME_OVER && (double) hitBombTime > (double) GameTask.BOMB_FLASH_START_GAME_OVER && !Game.game_work.gameOver && !GameTask.s_menuBombHit)
-            Game.GameOver();
-          if ((double) Game.game_work.hitBombTime < 0.0)
-            Game.game_work.hitBombTime = 0.0f;
+          if ((double) Game2.game_work.hitBombTime <= (double) GameTask.BOMB_FLASH_START_GAME_OVER && (double) hitBombTime > (double) GameTask.BOMB_FLASH_START_GAME_OVER && !Game2.game_work.gameOver && !GameTask.s_menuBombHit)
+            Game2.GameOver();
+          if ((double) Game2.game_work.hitBombTime < 0.0)
+            Game2.game_work.hitBombTime = 0.0f;
           dt4 = 0.0f;
         }
         else
         {
-          Game.game_work.saveData.inGame = true;
+          Game2.game_work.saveData.inGame = true;
           WaveManager.GetInstance().Update(dt);
           dt4 = dt1 * WaveManager.GetInstance().GetWavedt();
         }
-        if ((double) dt4 == 0.0 && (double) Game.game_work.gameOverTransition < 0.0)
+        if ((double) dt4 == 0.0 && (double) Game2.game_work.gameOverTransition < 0.0)
           dt4 = dt1;
         BombFlash.UpdateActiveFlashes(dt4);
         ActorManager.GetInstance().Update(dt4);
       }
       else
       {
-        if ((double) Mortar.Math.ABS(Game.game_work.gameOverTransition) > 0.99900001287460327)
-          Game.game_work.pause = false;
-        if (Game.game_work.pause)
-          Game.game_work.saveData.inGame = true;
+        if ((double) Mortar.Math.ABS(Game2.game_work.gameOverTransition) > 0.99900001287460327)
+          Game2.game_work.pause = false;
+        if (Game2.game_work.pause)
+          Game2.game_work.saveData.inGame = true;
         SlashEntity.PreUpdate(0.0f);
         for (int index = 0; index < GameTask.MAX_SLASHES; ++index)
         {
@@ -531,16 +530,16 @@ namespace GameManager
         WaveManager.GetInstance().Update(0.0f);
       }
       GameTask.paticlesDt = 1f;
-      if (!Game.game_work.pause)
+      if (!Game2.game_work.pause)
         GameTask.paticlesDt = Mortar.Math.MAX(1f, 1f / WaveManager.GetInstance().GetWavedt());
-      PSPParticleManager.GetInstance().Update(dt * GameTask.paticlesDt, Game.game_work.pause);
-      Game.game_work.camera.UpdateShake(dt2);
-      Game.game_work.hud.Update(0.0f);
-      Game.game_work.hud.Update(dt1);
-      if (Game.game_work.canFastForward)
-        GameTask.quickener = Mortar.Math.MIN(5f, GameTask.quickener * (Game.game_work.pointerPressed ? 1.75f : 1f));
-      float num1 = Game.game_work.gameOver ? 0.0f : Bomb.GetHeighestBomb();
-      if ((double) num1 > 0.0 && !Game.game_work.pause)
+      PSPParticleManager.GetInstance().Update(dt * GameTask.paticlesDt, Game2.game_work.pause);
+      Game2.game_work.camera.UpdateShake(dt2);
+      Game2.game_work.hud.Update(0.0f);
+      Game2.game_work.hud.Update(dt1);
+      if (Game2.game_work.canFastForward)
+        GameTask.quickener = Mortar.Math.MIN(5f, GameTask.quickener * (Game2.game_work.pointerPressed ? 1.75f : 1f));
+      float num1 = Game2.game_work.gameOver ? 0.0f : Bomb.GetHeighestBomb();
+      if ((double) num1 > 0.0 && !Game2.game_work.pause)
       {
         if (GameTask.s_bombSound == null || GameTask.s_bombSound.inst.State 
                     == Microsoft.Xna.Framework.Audio.SoundState.Stopped)
@@ -552,17 +551,17 @@ namespace GameManager
       }
       else if (GameTask.s_bombSound != null)
         GameTask.s_bombSound.SetVolume(0.0f);
-      if (!Game.game_work.inRetrySequence)
+      if (!Game2.game_work.inRetrySequence)
         return;
-      if ((double) Game.game_work.retryTimer <= 0.0)
+      if ((double) Game2.game_work.retryTimer <= 0.0)
       {
         GameTask.EndRetryLevel();
-        Game.game_work.retryTimer = 0.0f;
+        Game2.game_work.retryTimer = 0.0f;
       }
       else
       {
         GameTask.RetryUpdate(dt);
-        Game.game_work.retryTimer -= dt;
+        Game2.game_work.retryTimer -= dt;
       }
     }
 
@@ -570,7 +569,7 @@ namespace GameManager
     {
       Vector3 zero = Vector3.Zero;
       LinkedListNode<Entity> iterator = (LinkedListNode<Entity>) null;
-      float num1 = (GameTask.RETRY_TIME_DELAY - Game.game_work.retryTimer) / GameTask.RETRY_TIME_DELAY;
+      float num1 = (GameTask.RETRY_TIME_DELAY - Game2.game_work.retryTimer) / GameTask.RETRY_TIME_DELAY;
       float num2 = num1 * num1;
       for (Entity entity = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BOMB, ref iterator); entity != null; entity = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BOMB, ref iterator))
       {
@@ -595,36 +594,36 @@ namespace GameManager
       {
         float[] numArray = new float[3];
         for (int index = 0; index < 3; ++index)
-          numArray[index] = Game.game_work.hud.m_tint[index];
+          numArray[index] = Game2.game_work.hud.m_tint[index];
         DisplayManager.GetInstance().SetDepthBufferWrite(false);
         DisplayManager.GetInstance().SetDepthBuffer(false);
         Color color = new Color(64, 64, 64, (int) byte.MaxValue);
         Color white = Color.White;
         Color black = Color.Black;
         DisplayManager.GetInstance().SetGlobalAmbience(black);
-        DisplayManager.GetInstance().SetLightDirection(new Vector3(Game.game_work.mainPointer.X, Game.game_work.mainPointer.Y, 100f));
-        Game.game_work.camera.SetupPerspective();
+        DisplayManager.GetInstance().SetLightDirection(new Vector3(Game2.game_work.mainPointer.X, Game2.game_work.mainPointer.Y, 100f));
+        Game2.game_work.camera.SetupPerspective();
         if (GameTask.backgroundTexture == null)
           return;
         GameTask.backgroundTexture.Set();
         MatrixManager.instance.Reset();
-        if ((double) Game.game_work.camera.m_cameraShake.X == 0.0 && (double) Game.game_work.camera.m_cameraShake.Y == 0.0)
+        if ((double) Game2.game_work.camera.m_cameraShake.X == 0.0 && (double) Game2.game_work.camera.m_cameraShake.Y == 0.0)
         {
           MatrixManager.instance.SetMatrix(Matrix.Identity);
-          MatrixManager.instance.Scale(new Vector3(Game.SCREEN_WIDTH + 1f, Game.SCREEN_HEIGHT + 1f, 0.0f));
+          MatrixManager.instance.Scale(new Vector3(Game2.SCREEN_WIDTH + 1f, Game2.SCREEN_HEIGHT + 1f, 0.0f));
           MatrixManager.instance.UploadCurrentMatrices();
-          Mesh.DrawQuad(HUDControl.TintWhite(Game.game_work.hud.m_backTint), (float) (0.5 - (double) Game.SCREEN_WIDTH / 1024.0), (float) (0.5 + (double) Game.SCREEN_WIDTH / 1024.0), (float) (0.5 - (double) Game.SCREEN_HEIGHT / 1024.0), (float) (0.5 + (double) Game.SCREEN_HEIGHT / 1024.0));
+          Mesh.DrawQuad(HUDControl.TintWhite(Game2.game_work.hud.m_backTint), (float) (0.5 - (double) Game2.SCREEN_WIDTH / 1024.0), (float) (0.5 + (double) Game2.SCREEN_WIDTH / 1024.0), (float) (0.5 - (double) Game2.SCREEN_HEIGHT / 1024.0), (float) (0.5 + (double) Game2.SCREEN_HEIGHT / 1024.0));
         }
         else
         {
           MatrixManager.instance.Scale(new Vector3(513f, 361f, 0.0f));
           MatrixManager.instance.Translate(new Vector3(0.0f, 0.0f, -5999f));
           MatrixManager.instance.UploadCurrentMatrices();
-          Mesh.DrawQuad(HUDControl.TintWhite(Game.game_work.hud.m_backTint), 0.0f, 1f, 19f / 128f, 109f / 128f);
+          Mesh.DrawQuad(HUDControl.TintWhite(Game2.game_work.hud.m_backTint), 0.0f, 1f, 19f / 128f, 109f / 128f);
         }
         GameTask.backgroundTexture.UnSet();
         PopOverControl.DrawBack();
-        Game.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_BEFORE_SPLAT);
+        Game2.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_BEFORE_SPLAT);
         DisplayManager.GetInstance().SetDepthBufferWrite(true);
         DisplayManager.GetInstance().SetDepthBuffer(true);
         DisplayManager.GetInstance().SetGlobalAmbience(white);
@@ -632,45 +631,45 @@ namespace GameManager
         DisplayManager.GetInstance().SetGlobalAmbience(black);
         DisplayManager.GetInstance().SetDepthBuffer(true);
         DisplayManager.GetInstance().SetDepthBufferWrite(false);
-        Game.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_BEFORE_SPLAT);
+        Game2.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_BEFORE_SPLAT);
         if (!PopOverControl.IsInPopup)
           SplatEntity.DrawActiveSplats();
         BombBlast.DrawActiveBlasts();
         BombFlash.DrawActiveFlashes();
-        Game.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_AFTER_SPLAT);
-        PSPParticleManager.GetInstance().Draw(dt, Game.game_work.pause, -1);
+        Game2.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_AFTER_SPLAT);
+        PSPParticleManager.GetInstance().Draw(dt, Game2.game_work.pause, -1);
         DisplayManager.GetInstance().SetDepthBuffer(false);
-        if (!Game.game_work.inBonusScreen)
-          PSPParticleManager.GetInstance().Draw(dt, Game.game_work.pause, 0);
+        if (!Game2.game_work.inBonusScreen)
+          PSPParticleManager.GetInstance().Draw(dt, Game2.game_work.pause, 0);
         DisplayManager.GetInstance().SetGlobalAmbience(white);
         GameTask.DrawSlices(dt);
         DisplayManager.GetInstance().SetGlobalAmbience(black);
-        Game.game_work.hud.Draw();
-        PSPParticleManager.GetInstance().Draw(dt, Game.game_work.pause, 1);
-        if (Game.game_work.inBonusScreen)
-          PSPParticleManager.GetInstance().Draw(dt, Game.game_work.pause, 0);
+        Game2.game_work.hud.Draw();
+        PSPParticleManager.GetInstance().Draw(dt, Game2.game_work.pause, 1);
+        if (Game2.game_work.inBonusScreen)
+          PSPParticleManager.GetInstance().Draw(dt, Game2.game_work.pause, 0);
         for (int index = 0; index < 3; ++index)
-          Game.game_work.hud.m_tint[index] = 1f;
+          Game2.game_work.hud.m_tint[index] = 1f;
         WaveManager.GetInstance().Draw();
-        Game.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_POST);
-        if (Game.IsFastHardware() && (double) Game.game_work.critHitTime > 0.0)
+        Game2.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_POST);
+        if (Game2.IsFastHardware() && (double) Game2.game_work.critHitTime > 0.0)
           GameTask.DrawCritHit();
-        Game.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_BEFORE_BOMB);
-        if ((double) Game.game_work.hitBombTime > 0.0)
+        Game2.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_BEFORE_BOMB);
+        if ((double) Game2.game_work.hitBombTime > 0.0)
           GameTask.DrawBombHit();
-        Game.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_AFTER_BOMB);
+        Game2.game_work.hud.Draw(HUD.HUD_ORDER.HUD_ORDER_AFTER_BOMB);
         for (int index = 0; index < 3; ++index)
-          Game.game_work.hud.m_tint[index] = numArray[index];
+          Game2.game_work.hud.m_tint[index] = numArray[index];
         if ((double) GameTask.s_startFadeInTime > 0.0)
           GameTask.DrawStartFade();
         PopOverControl.DrawFront();
       }
-      if (GameTask.unpause_game && Game.game_work.pause)
+      if (GameTask.unpause_game && Game2.game_work.pause)
       {
         GameTask.unpause_game = false;
         InputManager.GetInstance().ClearActions(StringFunctions.StringHash("Input/PauseMenu.txt"));
         GameTask.debugMenu = false;
-        Game.game_work.pause = !Game.game_work.pause;
+        Game2.game_work.pause = !Game2.game_work.pause;
       }
       if (!GameTask.clearInput)
         return;
@@ -685,7 +684,7 @@ namespace GameManager
       LinkedListNode<Entity> iterator = (LinkedListNode<Entity>) null;
       for (Entity entity = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BOMB, ref iterator); entity != null; entity = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BOMB, ref iterator))
       {
-        entity.m_pos.Y = (float) (-(double) Game.SCREEN_HEIGHT * 1.5);
+        entity.m_pos.Y = (float) (-(double) Game2.SCREEN_HEIGHT * 1.5);
         entity.m_vel.Y = -1.5f;
         ((Bomb) entity).Chuck();
         entity.Update(0.0f);
@@ -693,7 +692,7 @@ namespace GameManager
       for (Entity entity = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BEGIN, ref iterator); entity != null; entity = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BEGIN, ref iterator))
       {
         ((Fruit) entity).Chuck();
-        if (Game.game_work.inRetrySequence)
+        if (Game2.game_work.inRetrySequence)
           ((Fruit) entity).m_isSliced = true;
         if (!((Fruit) entity).m_isSliced)
         {
@@ -706,9 +705,9 @@ namespace GameManager
           entity.CollisionResponse((Entity) null, 0U, 0U, ref proj);
           ((Fruit) entity).Slice();
         }
-        entity.m_pos.Y = (float) (-(double) Game.SCREEN_HEIGHT * 1.5);
+        entity.m_pos.Y = (float) (-(double) Game2.SCREEN_HEIGHT * 1.5);
         entity.m_vel.Y = -1.5f;
-        ((Fruit) entity).m_pos2.Y = (float) (-(double) Game.SCREEN_HEIGHT * 1.5);
+        ((Fruit) entity).m_pos2.Y = (float) (-(double) Game2.SCREEN_HEIGHT * 1.5);
         ((Fruit) entity).m_vel2.Y = -1.5f;
         entity.Update(0.0f);
       }
@@ -732,22 +731,22 @@ namespace GameManager
 
     public static void GameOver(int state, float time, int player)
     {
-      if (Game.game_work.gameOver)
+      if (Game2.game_work.gameOver)
         return;
-      Game.game_work.gameOver = true;
+      Game2.game_work.gameOver = true;
       WaveManager.GetInstance().ClearUnspawned();
-      Game.game_work.gameOverScreen = new GameOverScreen((string) null, state, time, Game.game_work.saveData.go_head, Game.game_work.saveData.go_body, Game.game_work.saveData.go_fruit, Game.game_work.saveData.go_fact);
-      Game.game_work.saveData.go_head = Game.game_work.saveData.go_body = Game.game_work.saveData.go_fruit = Game.game_work.saveData.go_fact = -1;
-      Game.game_work.gameOverScreen.Init();
-      Game.game_work.hud.AddControl((HUDControl) Game.game_work.gameOverScreen);
+      Game2.game_work.gameOverScreen = new GameOverScreen((string) null, state, time, Game2.game_work.saveData.go_head, Game2.game_work.saveData.go_body, Game2.game_work.saveData.go_fruit, Game2.game_work.saveData.go_fact);
+      Game2.game_work.saveData.go_head = Game2.game_work.saveData.go_body = Game2.game_work.saveData.go_fruit = Game2.game_work.saveData.go_fact = -1;
+      Game2.game_work.gameOverScreen.Init();
+      Game2.game_work.hud.AddControl((HUDControl) Game2.game_work.gameOverScreen);
     }
 
     public static void RetryLevel()
     {
-      Game.game_work.inRetrySequence = true;
-      Game.game_work.retryTimer = GameTask.RETRY_TIME_DELAY;
+      Game2.game_work.inRetrySequence = true;
+      Game2.game_work.retryTimer = GameTask.RETRY_TIME_DELAY;
       WaveManager.GetInstance().ResetGlobalDt();
-      Game.game_work.gameOver = true;
+      Game2.game_work.gameOver = true;
       for (int index = 0; index < SplatEntity.poolCount; ++index)
       {
         SplatEntity splatEntity = SplatEntity.pool[index];
@@ -763,35 +762,35 @@ namespace GameManager
     {
       GameTask.s_mainScreen.m_state = MainScreen.MS.MS_IN;
       GameTask.s_mainScreen.m_transitionWait = 0.5f;
-      Game.game_work.currentScore = 0;
-      Game.game_work.saveData.go_head = Game.game_work.saveData.go_body = Game.game_work.saveData.go_fruit = Game.game_work.saveData.go_fact = -1;
-      Game.game_work.levelStartCoins = Game.game_work.coins;
+      Game2.game_work.currentScore = 0;
+      Game2.game_work.saveData.go_head = Game2.game_work.saveData.go_body = Game2.game_work.saveData.go_fruit = Game2.game_work.saveData.go_fact = -1;
+      Game2.game_work.levelStartCoins = Game2.game_work.coins;
       GameTask.ResetGameEntities();
       GameTask.RemoveFlashEntities();
       WaveManager.GetInstance().Reset(true);
-      Game.game_work.gameOverTransition = 0.0f;
-      Game.game_work.gameOver = false;
-      Game.game_work.inRetrySequence = false;
-      Game.game_work.mainScreen.m_state = MainScreen.MS.MS_GAME;
+      Game2.game_work.gameOverTransition = 0.0f;
+      Game2.game_work.gameOver = false;
+      Game2.game_work.inRetrySequence = false;
+      Game2.game_work.mainScreen.m_state = MainScreen.MS.MS_GAME;
     }
 
     public static void QuitToMenu()
     {
       WaveManager.GetInstance().ResetGlobalDt();
-      Game.game_work.gameOver = true;
+      Game2.game_work.gameOver = true;
       GameTask.s_mainScreen.m_state = MainScreen.MS.MS_IN;
       GameTask.s_mainScreen.m_transitionWait = 0.5f;
-      Game.game_work.currentScore = 0;
+      Game2.game_work.currentScore = 0;
     }
 
     public static void HitBomb(Vector3 pos)
     {
-      if (Game.game_work.gameOver)
+      if (Game2.game_work.gameOver)
         return;
       uint hash = StringFunctions.StringHash("bomb");
-      Game.game_work.saveData.AddToTotal("bomb", hash, 1);
-      Game.game_work.hitBombTime = GameTask.HIT_BOMB_WAIT;
-      Game.game_work.camera.CreateCameraShake(pos, GameTask.HIT_BOMB_WAIT * 0.5f, 2f);
+      Game2.game_work.saveData.AddToTotal("bomb", hash, 1);
+      Game2.game_work.hitBombTime = GameTask.HIT_BOMB_WAIT;
+      Game2.game_work.camera.CreateCameraShake(pos, GameTask.HIT_BOMB_WAIT * 0.5f, 2f);
       GameTask.s_bombHitPos = pos;
       GameTask.s_menuBombHit = false;
       SoundManager.GetInstance().SFXPlay(SoundDef.SND_BOMB_EXPLODE);
@@ -800,21 +799,21 @@ namespace GameManager
     public static void HitMenuBomb(Vector3 pos)
     {
       SoundManager.GetInstance().SFXPlay(SoundDef.SND_MENU_BOMB);
-      Game.game_work.hitBombTime = GameTask.BOMB_FLASH_START;
+      Game2.game_work.hitBombTime = GameTask.BOMB_FLASH_START;
       GameTask.s_bombHitPos = pos;
       GameTask.s_menuBombHit = true;
     }
 
     public static bool BombFlashFull()
     {
-      return (double) Game.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_FULL && (double) Game.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_START_FADE;
+      return (double) Game2.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_FULL && (double) Game2.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_START_FADE;
     }
 
     public static void UpdateBombHit(float prev)
     {
-      if ((double) prev > (double) GameTask.BOMB_FLASH_FULL - 0.05000000074505806 && (double) Game.game_work.hitBombTime <= (double) GameTask.BOMB_FLASH_FULL - 0.05000000074505806)
+      if ((double) prev > (double) GameTask.BOMB_FLASH_FULL - 0.05000000074505806 && (double) Game2.game_work.hitBombTime <= (double) GameTask.BOMB_FLASH_FULL - 0.05000000074505806)
         GameTask.ResetGameEntities();
-      if ((double) Game.game_work.hitBombTime <= 0.0 || (double) Game.game_work.hitBombTime >= (double) GameTask.BOMB_FLASH_FULL)
+      if ((double) Game2.game_work.hitBombTime <= 0.0 || (double) Game2.game_work.hitBombTime >= (double) GameTask.BOMB_FLASH_FULL)
         return;
       GameTask.RemoveFlashEntities();
     }
@@ -823,7 +822,7 @@ namespace GameManager
     {
       if ((double) GameTask.s_startFadeInTime <= 0.0)
         return;
-      Game.game_work.camera.SetupPerspective(FruitCamera.PERSPECIVE_TYPE.ORIENTATION_NORMAL_NO_SHAKE, true);
+      Game2.game_work.camera.SetupPerspective(FruitCamera.PERSPECIVE_TYPE.ORIENTATION_NORMAL_NO_SHAKE, true);
       float num = 1f;
       float v;
       if ((double) GameTask.s_startFadeInTime > 0.5)
@@ -839,7 +838,7 @@ namespace GameManager
       GameTask.s_HBlogo.Set();
       MatrixManager.instance.Reset();
       MatrixManager.instance.Scale(Vector3.Multiply(new Vector3(
-          Game.SCREEN_WIDTH + 1f, Game.SCREEN_HEIGHT + 1f, 1f), num));
+          Game2.SCREEN_WIDTH + 1f, Game2.SCREEN_HEIGHT + 1f, 1f), num));
 
       MatrixManager.instance.UploadCurrentMatrices();
       Mortar.Math.CLAMP((int) ((double) v * (double) byte.MaxValue), 0, (int) byte.MaxValue);
@@ -850,15 +849,15 @@ namespace GameManager
     {
       if (GameTask.s_flashTexture == null)
         GameTask.s_flashTexture = TextureManager.GetInstance().Load("textureswp7/flash.tex");
-      if ((double) Game.game_work.hitBombTime >= (double) GameTask.BOMB_FLASH_START)
+      if ((double) Game2.game_work.hitBombTime >= (double) GameTask.BOMB_FLASH_START)
         return;
-      float num = Mortar.Math.CLAMP((float) (1.0 - ((double) Game.game_work.hitBombTime - (double) GameTask.BOMB_FLASH_FULL) / ((double) GameTask.BOMB_FLASH_START - (double) GameTask.BOMB_FLASH_FULL)), 0.0f, 1f) * 20000f;
+      float num = Mortar.Math.CLAMP((float) (1.0 - ((double) Game2.game_work.hitBombTime - (double) GameTask.BOMB_FLASH_FULL) / ((double) GameTask.BOMB_FLASH_START - (double) GameTask.BOMB_FLASH_FULL)), 0.0f, 1f) * 20000f;
       GameTask.s_flashTexture.Set();
       MatrixManager.instance.Reset();
       MatrixManager.instance.Scale(new Vector3(num, num, 1f));
       MatrixManager.instance.Translate(GameTask.s_bombHitPos);
       MatrixManager.instance.UploadCurrentMatrices();
-      Mesh.DrawQuad(new Color((int) byte.MaxValue, (int) byte.MaxValue, (int) byte.MaxValue, Mortar.Math.CLAMP((int) ((double) Game.game_work.hitBombTime * (double) byte.MaxValue / (double) GameTask.BOMB_FLASH_START_FADE), 0, (int) byte.MaxValue)));
+      Mesh.DrawQuad(new Color((int) byte.MaxValue, (int) byte.MaxValue, (int) byte.MaxValue, Mortar.Math.CLAMP((int) ((double) Game2.game_work.hitBombTime * (double) byte.MaxValue / (double) GameTask.BOMB_FLASH_START_FADE), 0, (int) byte.MaxValue)));
       GameTask.s_flashTexture.UnSet();
     }
 
@@ -866,36 +865,36 @@ namespace GameManager
     {
       GameTask.s_critHitPos = pos;
       GameTask.s_flashColor = col;
-      Game.game_work.critHitTime = Fruit.CRITICAL_FLASH_TIME;
+      Game2.game_work.critHitTime = Fruit.CRITICAL_FLASH_TIME;
     }
 
     public static void DrawCritHit()
     {
       if (GameTask.s_flashTexture == null)
         GameTask.s_flashTexture = TextureManager.GetInstance().Load("textureswp7/flash.tex");
-      if ((double) Game.game_work.critHitTime >= (double) Fruit.CRITICAL_FLASH_TIME)
+      if ((double) Game2.game_work.critHitTime >= (double) Fruit.CRITICAL_FLASH_TIME)
         return;
-      float v1 = Mortar.Math.CLAMP((float) (1.0 - ((double) Game.game_work.critHitTime - (double) Fruit.CRITICAL_FLASH_FULL) / ((double) Fruit.CRITICAL_FLASH_TIME - (double) Fruit.CRITICAL_FLASH_FULL)), 0.0f, 1f) * 15000f;
+      float v1 = Mortar.Math.CLAMP((float) (1.0 - ((double) Game2.game_work.critHitTime - (double) Fruit.CRITICAL_FLASH_FULL) / ((double) Fruit.CRITICAL_FLASH_TIME - (double) Fruit.CRITICAL_FLASH_FULL)), 0.0f, 1f) * 15000f;
       GameTask.s_flashTexture.UnSet();
       MatrixManager.instance.Reset();
-      if (Game.IsMultiplayer())
+      if (Game2.IsMultiplayer())
       {
-        MatrixManager.instance.Scale(new Vector3(Mortar.Math.MIN(v1, Game.SCREEN_WIDTH / 2f), Mortar.Math.MIN(v1, Game.SCREEN_HEIGHT), 1f));
+        MatrixManager.instance.Scale(new Vector3(Mortar.Math.MIN(v1, Game2.SCREEN_WIDTH / 2f), Mortar.Math.MIN(v1, Game2.SCREEN_HEIGHT), 1f));
         if ((double) GameTask.s_critHitPos.X < 0.0)
-          MatrixManager.instance.Translate(new Vector3((float) (-(double) Game.SCREEN_WIDTH / 4.0), 0.0f, 0.0f));
+          MatrixManager.instance.Translate(new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 4.0), 0.0f, 0.0f));
         else
-          MatrixManager.instance.Translate(new Vector3(Game.SCREEN_WIDTH / 4f, 0.0f, 0.0f));
+          MatrixManager.instance.Translate(new Vector3(Game2.SCREEN_WIDTH / 4f, 0.0f, 0.0f));
       }
       else
       {
-        MatrixManager.instance.Scale(new Vector3(Mortar.Math.MIN(v1, Game.SCREEN_WIDTH), Mortar.Math.MIN(v1, Game.SCREEN_HEIGHT), 1f));
+        MatrixManager.instance.Scale(new Vector3(Mortar.Math.MIN(v1, Game2.SCREEN_WIDTH), Mortar.Math.MIN(v1, Game2.SCREEN_HEIGHT), 1f));
         MatrixManager.instance.Translate(Vector3.Zero);
       }
       MatrixManager.instance.UploadCurrentMatrices();
       Mesh.DrawQuad(new Color((int) GameTask.s_flashColor.R, 
           (int)  GameTask.s_flashColor.G, 
           (int) GameTask.s_flashColor.B, 
-          Mortar.Math.CLAMP((int) ((double) Game.game_work.critHitTime 
+          Mortar.Math.CLAMP((int) ((double) Game2.game_work.critHitTime 
           * (double) GameTask.s_flashColor.A / (double) GameTask.BOMB_FLASH_START_FADE),
           0, (int) GameTask.s_flashColor.A)));
       GameTask.s_flashTexture.UnSet();
@@ -929,12 +928,12 @@ namespace GameManager
     {
       if (!atStart && (GameTask.s_pauseScreen == null || !GameTask.s_pauseScreen.IsEnabled()))
         return;
-      Game.game_work.gameOverTransition = 0.0f;
+      Game2.game_work.gameOverTransition = 0.0f;
       GameTask.s_pauseScreen.SkipTo();
-      Game.game_work.pause = true;
-      Game.game_work.gameOver = false;
+      Game2.game_work.pause = true;
+      Game2.game_work.gameOver = false;
       GameTask.s_mainScreen.Hide();
-      Game.game_work.hud.Skip();
+      Game2.game_work.hud.Skip();
     }
 
     public static void SkipToGameOver(
@@ -945,16 +944,16 @@ namespace GameManager
       int winner)
     {
       GameTask.s_mainScreen.Hide();
-      Game.game_work.hitBombTime = bombtime;
-      Game.game_work.gameOverTransition = transition;
-      Game.game_work.saveData.timer = 0.0f;
-      if (Game.game_work.timeControl != null)
-        Game.game_work.timeControl.SetTime(0.0f);
-      Game.game_work.gameOver = false;
+      Game2.game_work.hitBombTime = bombtime;
+      Game2.game_work.gameOverTransition = transition;
+      Game2.game_work.saveData.timer = 0.0f;
+      if (Game2.game_work.timeControl != null)
+        Game2.game_work.timeControl.SetTime(0.0f);
+      Game2.game_work.gameOver = false;
       if (state > -1 && (double) time > -1.0)
-        Game.GameOver(state, time, winner);
+        Game2.GameOver(state, time, winner);
       GameTask.s_menuBombHit = false;
-      Game.game_work.hud.Skip();
+      Game2.game_work.hud.Skip();
     }
 
     public static bool GetIsSavingBool() => GameTask.__isSaving;
@@ -963,39 +962,39 @@ namespace GameManager
 
     public static void SaveCurrentData(bool isClosingSave)
     {
-      if (Game.game_work.saveData == null)
+      if (Game2.game_work.saveData == null)
         return;
       GameTask.SetIsSavingBool(true);
       ItemManager.GetInstance().SaveItemInfo();
-      FruitSaveData saveData = Game.game_work.saveData.CLOAN();
-      saveData.hasDropped = Game.game_work.hasDroppedFruit;
-      saveData.score = Game.game_work.currentScore;
-      saveData.misses = (int) Game.game_work.currentMissCount;
-      saveData.criticalProgression = Game.game_work.criticalChance;
+      FruitSaveData saveData = Game2.game_work.saveData.CLOAN();
+      saveData.hasDropped = Game2.game_work.hasDroppedFruit;
+      saveData.score = Game2.game_work.currentScore;
+      saveData.misses = (int) Game2.game_work.currentMissCount;
+      saveData.criticalProgression = Game2.game_work.criticalChance;
       saveData.consecutiveType = Fruit.s_consecutiveType;
       saveData.consecutiveCount = Fruit.s_consecutiveCount;
-      saveData.mode = (int) Game.game_work.gameMode;
-      int num = Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE ? ((double) Game.game_work.gameOverTransition >= 0.0099999997764825821 || (double) Game.game_work.hitBombTime <= 0.0 ? 0 : (GameTask.s_mainScreen.m_state == MainScreen.MS.MS_GAME ? 1 : 0)) : (GameTask.s_menuBombHit ? 0 : ((double) Game.game_work.hitBombTime > 0.0 ? 1 : 0));
-      saveData.go_bombHitTime = num == 0 ? 0.0f : Game.game_work.hitBombTime;
-      if (Game.game_work.gameOverScreen != null && !Game.game_work.inRetrySequence && (Game.game_work.gameOverScreen.GetState() == 0 || Game.game_work.gameOverScreen.GetState() == 1 && (double) Game.game_work.gameOverTransition < 1.0))
+      saveData.mode = (int) Game2.game_work.gameMode;
+      int num = Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE ? ((double) Game2.game_work.gameOverTransition >= 0.0099999997764825821 || (double) Game2.game_work.hitBombTime <= 0.0 ? 0 : (GameTask.s_mainScreen.m_state == MainScreen.MS.MS_GAME ? 1 : 0)) : (GameTask.s_menuBombHit ? 0 : ((double) Game2.game_work.hitBombTime > 0.0 ? 1 : 0));
+      saveData.go_bombHitTime = num == 0 ? 0.0f : Game2.game_work.hitBombTime;
+      if (Game2.game_work.gameOverScreen != null && !Game2.game_work.inRetrySequence && (Game2.game_work.gameOverScreen.GetState() == 0 || Game2.game_work.gameOverScreen.GetState() == 1 && (double) Game2.game_work.gameOverTransition < 1.0))
       {
-        saveData.go_state = Game.game_work.gameOverScreen.GetState();
-        saveData.go_time = Game.game_work.gameOverScreen.GetTime();
-        saveData.go_transition = Game.game_work.gameOverTransition;
-        saveData.go_head = Game.game_work.gameOverScreen.m_head;
-        saveData.go_body = Game.game_work.gameOverScreen.m_body;
-        saveData.go_fruit = Game.game_work.gameOverScreen.m_fruit;
-        saveData.go_fact = Game.game_work.gameOverScreen.m_fact;
-        saveData.go_setScore = Game.game_work.gameOverScreen.m_hasSetScore;
+        saveData.go_state = Game2.game_work.gameOverScreen.GetState();
+        saveData.go_time = Game2.game_work.gameOverScreen.GetTime();
+        saveData.go_transition = Game2.game_work.gameOverTransition;
+        saveData.go_head = Game2.game_work.gameOverScreen.m_head;
+        saveData.go_body = Game2.game_work.gameOverScreen.m_body;
+        saveData.go_fruit = Game2.game_work.gameOverScreen.m_fruit;
+        saveData.go_fact = Game2.game_work.gameOverScreen.m_fact;
+        saveData.go_setScore = Game2.game_work.gameOverScreen.m_hasSetScore;
       }
       else
       {
-        if (Game.game_work.gameOverScreen != null)
+        if (Game2.game_work.gameOverScreen != null)
         {
           saveData.inGame = false;
-          saveData.score = Game.game_work.currentScore;
+          saveData.score = Game2.game_work.currentScore;
         }
-        else if (Game.game_work.inRetrySequence)
+        else if (Game2.game_work.inRetrySequence)
           saveData.inGame = false;
         saveData.go_state = -1;
         saveData.go_time = -1f;
@@ -1007,15 +1006,15 @@ namespace GameManager
         saveData.go_setScore = false;
         saveData.go_transition = 0.0f;
       }
-      saveData.shake_max_time = Game.game_work.camera.m_cameraShakeMaxTime;
-      saveData.shake_time = Game.game_work.camera.m_cameraShakeTime;
+      saveData.shake_max_time = Game2.game_work.camera.m_cameraShakeMaxTime;
+      saveData.shake_time = Game2.game_work.camera.m_cameraShakeTime;
       if (isClosingSave)
         WaveManager.GetInstance().SaveWaveInfo(saveData);
       else
         saveData.inGame = false;
-      if (!Game.game_work.soundEnabled)
+      if (!Game2.game_work.soundEnabled)
         saveData.AddToTotal("soundOff", StringFunctions.StringHash("soundOff"), 1, false);
-      if (!Game.game_work.musicEnabled)
+      if (!Game2.game_work.musicEnabled)
         saveData.AddToTotal("musicOff", StringFunctions.StringHash("musicOff"), 1, false);
       Save.SaveGame(saveData);
       GameTask.SetIsSavingBool(false);
@@ -1026,7 +1025,7 @@ namespace GameManager
       Coin.ClearCoins(true);
       if (!GameTask.GetIsSavingBool())
       {
-        Game.game_work.hud.Save();
+        Game2.game_work.hud.Save();
         GameTask.SaveCurrentData(true);
       }
       if (GameTask.s_bombSound != null)
@@ -1049,13 +1048,13 @@ namespace GameManager
       GameTask.s_flashTexture = (Mortar.Texture) null;
       PSPParticleManager.GetInstance().ClearEmitters();
       InputManager.GetInstance().ClearActions(0U);
-      Game.game_work.hud.Release();
-      Delete.SAFE_DELETE<HUD>(ref Game.game_work.hud);
-      Game.game_work.hud = (HUD) null;
+      Game2.game_work.hud.Release();
+      Delete.SAFE_DELETE<HUD>(ref Game2.game_work.hud);
+      Game2.game_work.hud = (HUD) null;
       MissControl.CleanPool();
       ActorManager.GetInstance().Clear();
       ActorManager.GetInstance().ClearAllListeners();
-      Game.game_work.pause = false;
+      Game2.game_work.pause = false;
       GameTask.initialised = false;
       GameTask.backgroundTexture = (Mortar.Texture) null;
       GameTask.s_HBlogo = (Mortar.Texture) null;
@@ -1065,7 +1064,7 @@ namespace GameManager
     {
       if (e == null)
         return true;
-      if (!Game.game_work.pause)
+      if (!Game2.game_work.pause)
         GameTask.PauseGame();
       else
         GameTask.UnpauseGame();
@@ -1117,7 +1116,7 @@ namespace GameManager
     public static void PauseGame()
     {
       GameTask.unpauseDelay = GameTask.UNPAUSE_DELAY_TIME;
-      Game.game_work.pause = true;
+      Game2.game_work.pause = true;
       GameTask.unpause_game = false;
     }
 
@@ -1171,9 +1170,9 @@ namespace GameManager
     {
       if (touch >= 0 && touch < GameTask.MAX_SLASHES)
       {
-        if ((double) Game.game_work.touchPositions[touch].Z == 1.0)
+        if ((double) Game2.game_work.touchPositions[touch].Z == 1.0)
           return 1;
-        if ((double) Game.game_work.touchPositions[touch].Z == 2.0)
+        if ((double) Game2.game_work.touchPositions[touch].Z == 2.0)
           return 2;
       }
       return 0;
@@ -1181,11 +1180,11 @@ namespace GameManager
 
     public static int TouchInRegion(float xMin, float xMax, float yMin, float yMax, int touch)
     {
-      if (touch >= 0 && touch < GameTask.MAX_SLASHES && (double) Game.game_work.touchPositions[touch].Z > 0.0 && (double) Game.game_work.touchPositions[touch].X >= (double) xMin && (double) Game.game_work.touchPositions[touch].X <= (double) xMax && (double) Game.game_work.touchPositions[touch].Y >= (double) yMin && (double) Game.game_work.touchPositions[touch].Y <= (double) yMax)
+      if (touch >= 0 && touch < GameTask.MAX_SLASHES && (double) Game2.game_work.touchPositions[touch].Z > 0.0 && (double) Game2.game_work.touchPositions[touch].X >= (double) xMin && (double) Game2.game_work.touchPositions[touch].X <= (double) xMax && (double) Game2.game_work.touchPositions[touch].Y >= (double) yMin && (double) Game2.game_work.touchPositions[touch].Y <= (double) yMax)
         return touch;
       for (int index = 0; index < GameTask.MAX_SLASHES; ++index)
       {
-        if ((double) Game.game_work.touchPositions[index].Z > 0.0 && (double) Game.game_work.touchPositions[index].X >= (double) xMin && (double) Game.game_work.touchPositions[index].X <= (double) xMax && (double) Game.game_work.touchPositions[index].Y >= (double) yMin && (double) Game.game_work.touchPositions[index].Y <= (double) yMax)
+        if ((double) Game2.game_work.touchPositions[index].Z > 0.0 && (double) Game2.game_work.touchPositions[index].X >= (double) xMin && (double) Game2.game_work.touchPositions[index].X <= (double) xMax && (double) Game2.game_work.touchPositions[index].Y >= (double) yMin && (double) Game2.game_work.touchPositions[index].Y <= (double) yMax)
           return index;
       }
       return -1;
@@ -1196,7 +1195,7 @@ namespace GameManager
       InputManager.GetInstance().LoadConfigFile("Input/Input.txt");
       for (int index = 0; index < GameTask.MAX_SLASHES; ++index)
       {
-        Game.game_work.touchPositions[index] = Vector3.Zero;
+        Game2.game_work.touchPositions[index] = Vector3.Zero;
         GameTask.inputEnts[index] = (SlashEntity) ActorManager.GetInstance().Add(EntityTypes.ENTITY_SLASH);
         Vector3 one = Vector3.One;
         GameTask.inputEnts[index].Init((byte[]) null, 0, new Vector3?(one));

@@ -5,7 +5,7 @@
 
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Mortar;
 using System;
 
@@ -33,24 +33,24 @@ namespace GameManager
     {
       if (Leaderboards.mode == Leaderboards.ReadMode.Reading)
         return true;
-      if (Game.isWP7TrialMode())
+      if (Game2.isWP7TrialMode())
         return false;
             
-      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-      if (signedInGamer == null)
+      //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+      /*if (signedInGamer == null)
       {
         Leaderboards.notifier = callback;
         Leaderboards.LeaderboardReadCallback((IAsyncResult) null);
         Leaderboards.notifier = (Leaderboards.ReadFinishedEventHandler) null;
         return false;
-      }
-      if (!signedInGamer.IsSignedInToLive)
+      }*/
+      /*if (!signedInGamer.IsSignedInToLive)
       {
         Leaderboards.notifier = callback;
         Leaderboards.LeaderboardReadCallback((IAsyncResult) null);
         Leaderboards.notifier = (Leaderboards.ReadFinishedEventHandler) null;
         return false;
-      }
+      }*/
       bool flag = false;
       Leaderboards.notifier = (Leaderboards.ReadFinishedEventHandler) null;
       Leaderboards.leaderboardReader = (LeaderboardReader) null;
@@ -61,40 +61,40 @@ namespace GameManager
           Leaderboards.notifier = callback;
           flag = true;
           Leaderboards.mode = Leaderboards.ReadMode.Reading;
-          Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 0);
-          LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
+          //Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 0);
+          //LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
           break;
         case 1:
           Leaderboards.gameMode = leaderboard;
           Leaderboards.notifier = callback;
           flag = true;
           Leaderboards.mode = Leaderboards.ReadMode.Reading;
-          Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 1);
-          LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
+          //Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 1);
+          //LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
           break;
         case 2:
           Leaderboards.gameMode = leaderboard;
           Leaderboards.notifier = callback;
           flag = true;
           Leaderboards.mode = Leaderboards.ReadMode.Reading;
-          Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 2);
-          LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
+          //Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 2);
+          //LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
           break;
         case 3:
           Leaderboards.gameMode = leaderboard;
           Leaderboards.notifier = callback;
           flag = true;
           Leaderboards.mode = Leaderboards.ReadMode.Reading;
-          Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 3);
-          LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
+          //Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 3);
+          //LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
           break;
         case 4:
           Leaderboards.gameMode = leaderboard;
           Leaderboards.notifier = callback;
           flag = true;
           Leaderboards.mode = Leaderboards.ReadMode.Reading;
-          Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 4);
-          LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
+          //Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, 4);
+          //LeaderboardReader.BeginRead(Leaderboards.id, (Gamer) signedInGamer, 25, new AsyncCallback(Leaderboards.LeaderboardReadCallback), (object) signedInGamer);
           break;
       }
       return flag;
@@ -102,10 +102,10 @@ namespace GameManager
 
     public static void Write(int mode, long value)
     {
-      if (Game.isWP7TrialMode())
+      if (Game2.isWP7TrialMode())
         return;
-      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-      if (signedInGamer == null || !signedInGamer.IsSignedInToLive)
+      //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+      //if (signedInGamer == null || !signedInGamer.IsSignedInToLive)
         return;
       switch (mode)
       {
@@ -114,16 +114,16 @@ namespace GameManager
         case 2:
         case 3:
         case 4:
-          Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, mode);
-          LeaderboardWriter leaderboardWriter = signedInGamer.LeaderboardWriter;
-          if (leaderboardWriter == null)
-            break;
-          LeaderboardEntry leaderboard = leaderboardWriter.GetLeaderboard(Leaderboards.id);
-          if (leaderboard == null)
-            break;
-          leaderboard.Rating = value;
-          leaderboard.Columns.SetValue("TimeStamp", DateTime.Now);
-          leaderboard.Columns.SetValue("Outcome", LeaderboardOutcome.Win);
+          //Leaderboards.id = LeaderboardIdentity.Create(LeaderboardKey.BestScoreLifeTime, mode);
+          //LeaderboardWriter leaderboardWriter = signedInGamer.LeaderboardWriter;
+          //if (leaderboardWriter == null)
+          //  break;
+          //LeaderboardEntry leaderboard = leaderboardWriter.GetLeaderboard(Leaderboards.id);
+          //if (leaderboard == null)
+          //  break;
+          //leaderboard.Rating = value;
+          //leaderboard.Columns.SetValue("TimeStamp", DateTime.Now);
+          //leaderboard.Columns.SetValue("Outcome", LeaderboardOutcome.Win);
           break;
       }
     }
@@ -132,10 +132,10 @@ namespace GameManager
     {
       Leaderboards.leaderboardReader = (LeaderboardReader) null;
       Leaderboards.mode = Leaderboards.ReadMode.None;
-      SignedInGamer signedInGamer = (SignedInGamer) null;
-      if (result != null)
-        signedInGamer = result.AsyncState as SignedInGamer;
-      if (signedInGamer != null)
+      //SignedInGamer signedInGamer = (SignedInGamer) null;
+      //if (result != null)
+      //  signedInGamer = result.AsyncState as SignedInGamer;
+      /*if (signedInGamer != null)
       {
         try
         {
@@ -151,7 +151,7 @@ namespace GameManager
                 switch (Leaderboards.gameMode)
                 {
                   case 0:
-                    int currentModeHighscore1 = Game.GetCurrentModeHighscore(0);
+                    int currentModeHighscore1 = Game2.GetCurrentModeHighscore(0);
                     if (currentModeHighscore1 > valueInt32)
                     {
                       Leaderboards.Write(Leaderboards.gameMode, (long) currentModeHighscore1);
@@ -160,7 +160,7 @@ namespace GameManager
                     }
                     goto label_19;
                   case 1:
-                    int currentModeHighscore2 = Game.GetCurrentModeHighscore(3);
+                    int currentModeHighscore2 = Game2.GetCurrentModeHighscore(3);
                     if (currentModeHighscore2 > valueInt32)
                     {
                       Leaderboards.Write(Leaderboards.gameMode, (long) currentModeHighscore2);
@@ -169,7 +169,7 @@ namespace GameManager
                     }
                     goto label_19;
                   case 2:
-                    int currentModeHighscore3 = Game.GetCurrentModeHighscore(2);
+                    int currentModeHighscore3 = Game2.GetCurrentModeHighscore(2);
                     if (currentModeHighscore3 > valueInt32)
                     {
                       Leaderboards.Write(Leaderboards.gameMode, (long) currentModeHighscore3);
@@ -215,7 +215,7 @@ label_19:
         }
       }
       else if (Leaderboards.notifier != null)
-        Leaderboards.notifier(0);
+        Leaderboards.notifier(0);*/
       Leaderboards.notifier = (Leaderboards.ReadFinishedEventHandler) null;
     }
 
@@ -237,4 +237,12 @@ label_19:
       Reading,
     }
   }
+
+    internal class LeaderboardIdentity
+    {
+        internal static LeaderboardIdentity Create(object bestScoreLifeTime, int v)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

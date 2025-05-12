@@ -5,7 +5,7 @@
 
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Mortar;
 using System;
@@ -304,7 +304,7 @@ namespace GameManager
 
     public static void Update(GameTime game)
     {
-      if (Game.isWP7TrialMode() && (Game.isWP7TrialMode() || Mortar.Game1.logInSucceeded))
+      if (Game2.isWP7TrialMode() && (Game2.isWP7TrialMode() || Mortar.Game1.logInSucceeded))
         return;
       if (AchievementManager.awardDelay > 0)
       {
@@ -329,7 +329,7 @@ namespace GameManager
     private static string GetTitle()
     {
       string title;
-      switch (Game.game_work.language)
+      switch (Game2.game_work.language)
       {
         case StringTableUtils.Language.LANGUAGE_FRENCH:
           title = "Tu as gagné un succès !";
@@ -353,7 +353,7 @@ namespace GameManager
     private static string GetLine1()
     {
       string line1;
-      switch (Game.game_work.language)
+      switch (Game2.game_work.language)
       {
         case StringTableUtils.Language.LANGUAGE_FRENCH:
           line1 = "Déverrouille le jeu complet pour conserver ce succès.";
@@ -487,24 +487,24 @@ namespace GameManager
 
     public static void GetAchievementsCallback(IAsyncResult result)
     {
-      if (!(result.AsyncState is SignedInGamer asyncState))
-        return;
-      lock (AchievementManager.achievementsLockObject)
-      {
-        try
-        {
-          AchievementManager.achievements = asyncState.EndGetAchievements(result);
-        }
-        catch
-        {
-        }
-      }
+      //if (!(result.AsyncState is SignedInGamer asyncState))
+      //  return;
+      //lock (AchievementManager.achievementsLockObject)
+      //{
+      //  try
+      //  {
+      //    AchievementManager.achievements = asyncState.EndGetAchievements(result);
+      //  }
+      //  catch
+      //  {
+      //  }
+      //}
     }
 
     public static string GetDesc(string achievementKey)
     {
       string desc = (string) null;
-      switch (Game.game_work.language)
+      switch (Game2.game_work.language)
       {
         case StringTableUtils.Language.LANGUAGE_FRENCH:
           foreach (AchievementData achievementData in AchievementManager.str_fr)
@@ -563,7 +563,7 @@ namespace GameManager
     public static string GetHow(string achievementKey)
     {
       string how = (string) null;
-      switch (Game.game_work.language)
+      switch (Game2.game_work.language)
       {
         case StringTableUtils.Language.LANGUAGE_FRENCH:
           foreach (AchievementData achievementData in AchievementManager.str1_fr)
@@ -619,7 +619,7 @@ namespace GameManager
       return how;
     }
 
-    public static int GetIndexForKey(string key)
+    /*public static int GetIndexForKey(string key)
     {
       try
       {
@@ -641,12 +641,12 @@ namespace GameManager
       {
       }
       return 0;
-    }
+    }*/
 
     public static string GetDescription(int index)
     {
       string description = "...";
-      try
+      /*try
       {
         lock (AchievementManager.achievementsLockObject)
         {
@@ -664,50 +664,60 @@ namespace GameManager
       }
       catch
       {
-      }
+      }*/
       return description;
     }
 
-    public static string GetKey(int index)
-    {
-      lock (AchievementManager.achievementsLockObject)
-      {
-        if (AchievementManager.achievements != null)
-          return AchievementManager.achievements[index].Key;
-      }
-      return (string) null;
-    }
+        public static string GetKey(int index)
+        {
+            lock (AchievementManager.achievementsLockObject)
+            {
+                if (AchievementManager.achievements != null && AchievementManager.achievements.achievemnts != null)
+                {
+                    int currentIndex = 0;
+                    foreach (var achievement in AchievementManager.achievements.achievemnts)
+                    {
+                        if (currentIndex == index)
+                        {
+                            return achievement.Key;
+                        }
+                        currentIndex++;
+                    }
+                }
+            }
+            return null;
+        }
 
     public static Texture2D GetPicture(int index)
     {
-      lock (AchievementManager.achievementsLockObject)
+      /*lock (AchievementManager.achievementsLockObject)
       {
         if (AchievementManager.achievements != null)
         {
           Achievement achievement = AchievementManager.achievements[index];
           return Texture2D.FromStream(Mortar.Game1.instance.graphics.GraphicsDevice, achievement.GetPicture());
         }
-      }
+      }*/
       return (Texture2D) null;
     }
 
     public static int GetGamerScore(int index)
     {
-      lock (AchievementManager.achievementsLockObject)
+      /*lock (AchievementManager.achievementsLockObject)
       {
         if (AchievementManager.achievements != null)
           return AchievementManager.achievements[index].GamerScore;
-      }
+      }*/
       return 0;
     }
 
     public static bool Unlocked(int index)
     {
-      lock (AchievementManager.achievementsLockObject)
+      /*lock (AchievementManager.achievementsLockObject)
       {
         if (AchievementManager.achievements != null)
           return AchievementManager.achievements[index].IsEarned;
-      }
+      }*/
       return false;
     }
 
@@ -725,9 +735,9 @@ namespace GameManager
 
     public static void AwardAchievementWP7(string achievementKey)
     {
-      if (Game.isWP7TrialMode() || !Mortar.Game1.logInSucceeded)
+      if (Game2.isWP7TrialMode() || !Mortar.Game1.logInSucceeded)
       {
-        if (Game.isWP7TrialMode())
+        if (Game2.isWP7TrialMode())
                     AchievementManager.AwardPretendAchievement(achievementKey);
         int achievementIndex = AchievementManager.FindAchievementIndex(achievementKey);
         if (achievementIndex < 0)
@@ -737,10 +747,10 @@ namespace GameManager
       }
       else
       {
-        SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-        if (signedInGamer == null)
+        //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+        //if (signedInGamer == null)
           return;
-        lock (AchievementManager.achievementsLockObject)
+        /*lock (AchievementManager.achievementsLockObject)
         {
           if (AchievementManager.achievements == null)
             return;
@@ -755,16 +765,16 @@ namespace GameManager
               break;
             }
           }
-        }
+        }*/
       }
     }
 
     public static void AwardAchievementWP7ByIndex(int index)
     {
-      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-      if (signedInGamer == null || !Mortar.Game1.logInSucceeded)
+      //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+      //if (signedInGamer == null || !Mortar.Game1.logInSucceeded)
         return;
-      lock (AchievementManager.achievementsLockObject)
+      /*lock (AchievementManager.achievementsLockObject)
       {
         if (AchievementManager.achievements == null)
           return;
@@ -781,16 +791,16 @@ namespace GameManager
           }
           ++num;
         }
-      }
+      }*/
     }
 
     private static void AwardAchievementCallback(IAsyncResult result)
     {
       AchievementManager.awarding = false;
-      if (!(result.AsyncState is SignedInGamer asyncState))
-        return;
-      asyncState.EndAwardAchievement(result);
-      asyncState.BeginGetAchievements(new AsyncCallback(AchievementManager.GetAchievementsCallback), (object) asyncState);
+      //if (!(result.AsyncState is SignedInGamer asyncState))
+      // return;
+      //asyncState.EndAwardAchievement(result);
+      //asyncState.BeginGetAchievements(new AsyncCallback(AchievementManager.GetAchievementsCallback), (object) asyncState);
     }
 
     public static int MAX_ORDER_LIST_TYPES => 10;
@@ -914,7 +924,7 @@ namespace GameManager
       bool flag = false;
       foreach (KeyValuePair<uint, AchievementInfo> keyValuePair in this.achievementTypeList[default])
       {
-        if (score >= keyValuePair.Value.total && (keyValuePair.Value.modeMask & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U && this.QueAchievement(keyValuePair.Value, keyValuePair.Key))
+        if (score >= keyValuePair.Value.total && (keyValuePair.Value.modeMask & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U && this.QueAchievement(keyValuePair.Value, keyValuePair.Key))
           flag = true;
       }
       return flag;
@@ -925,7 +935,7 @@ namespace GameManager
       bool flag = false;
       foreach (KeyValuePair<uint, AchievementInfo> keyValuePair in this.achievementTypeList[default])
       {
-        if (score >= keyValuePair.Value.total && (keyValuePair.Value.modeMask & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U && this.QueAchievement(keyValuePair.Value, keyValuePair.Key))
+        if (score >= keyValuePair.Value.total && (keyValuePair.Value.modeMask & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U && this.QueAchievement(keyValuePair.Value, keyValuePair.Key))
           flag = true;
       }
       return flag;
@@ -944,7 +954,7 @@ namespace GameManager
           break;
         }
       }
-      return achievement != null && total >= achievement.total && (achievement.modeMask & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U && this.QueAchievement(achievement, key);
+      return achievement != null && total >= achievement.total && (achievement.modeMask & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U && this.QueAchievement(achievement, key);
     }
 
     public bool UnlockEndScoreAchievement(int total, int pb)
@@ -953,7 +963,7 @@ namespace GameManager
       AchievementManager.keys.Clear();
       foreach (KeyValuePair<uint, AchievementInfo> keyValuePair in this.achievementTypeList[default])
       {
-        if ((total == keyValuePair.Value.total || keyValuePair.Value.total < 0 && total == pb) && (keyValuePair.Value.modeMask & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U && this.QueAchievement(keyValuePair.Value, keyValuePair.Key))
+        if ((total == keyValuePair.Value.total || keyValuePair.Value.total < 0 && total == pb) && (keyValuePair.Value.modeMask & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U && this.QueAchievement(keyValuePair.Value, keyValuePair.Key))
           flag = true;
       }
       foreach (AchievementManager.KeyRemove key in AchievementManager.keys)
@@ -977,7 +987,7 @@ namespace GameManager
       }
       bool flag1 = false;
       if (achievement1 != null && total >= achievement1.total 
-                && (achievement1.modeMask & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U)
+                && (achievement1.modeMask & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U)
         flag1 = this.QueAchievement(achievement1, key) || flag1;
       AchievementInfo achievement2 = (AchievementInfo) null;
       foreach (KeyValuePair<uint, AchievementInfo> keyValuePair 
@@ -990,7 +1000,7 @@ namespace GameManager
           break;
         }
       }
-      if (achievement2 != null && (achievement2.modeMask & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U)
+      if (achievement2 != null && (achievement2.modeMask & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U)
       {
         bool flag2 = this.QueAchievement(achievement2, key) || flag1;
       }
@@ -1009,7 +1019,7 @@ namespace GameManager
                 in this.achievementTypeList[default])
       {
         if (total >= keyValuePair.Value.total && (keyValuePair.Value.modeMask 
-                    & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U)
+                    & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U)
         {
           bool flag2 = true;
           if (keyValuePair.Value.specificOrder != null)
@@ -1027,7 +1037,7 @@ namespace GameManager
           if (flag2 && keyValuePair.Value.isGameOver)
           {
             flag2 = false;
-            if (Game.game_work.timeControl != null && total >= 3 && (double) Game.game_work.timeControl.GetTime() <= 0.0)
+            if (Game2.game_work.timeControl != null && total >= 3 && (double) Game2.game_work.timeControl.GetTime() <= 0.0)
               flag2 = true;
           }
           if (flag2 && this.QueAchievement(keyValuePair.Value, keyValuePair.Key))
@@ -1051,7 +1061,7 @@ namespace GameManager
           break;
         }
       }
-      return achievement != null && total >= achievement.total && (achievement.modeMask & Initialise.GetModeBitMask(Game.game_work.gameMode)) > 0U && this.QueAchievement(achievement, key);
+      return achievement != null && total >= achievement.total && (achievement.modeMask & Initialise.GetModeBitMask(Game2.game_work.gameMode)) > 0U && this.QueAchievement(achievement, key);
     }
 
     public bool UnlockSpecificOrderAchievement(uint nameHash)
@@ -1074,10 +1084,10 @@ namespace GameManager
         bool flag = false;
         if (Mortar.Math.BETWEEN((int) achievement.id[0], 48, 57))
         {
-          if (NetworkManager.GetInstance().UserHasEnabledNetwork() && Game.game_work.saveData.AddToQue(achievement.id, achievement.idHash))
+          if (NetworkManager.GetInstance().UserHasEnabledNetwork() && Game2.game_work.saveData.AddToQue(achievement.id, achievement.idHash))
             flag = true;
         }
-        else if (Game.game_work.saveData.AddToQue(achievement.id, achievement.idHash))
+        else if (Game2.game_work.saveData.AddToQue(achievement.id, achievement.idHash))
           flag = true;
         if (flag)
           AchievementManager.keys.AddLast(new AchievementManager.KeyRemove((uint) achievement.type, key));
@@ -1093,12 +1103,12 @@ namespace GameManager
       if (string.Compare(achievementInfo.name, "UNLOCKED NEW BLADE") == 0 || string.Compare(achievementInfo.name, "UNLOCKED NEW BACKGROUND") == 0)
       {
         uint hashCode = (uint) achievementInfo.id.GetHashCode();
-        for (int index = 0; index < Game.MAX_SYSTEM_ACHIEVEMENTS; ++index)
+        for (int index = 0; index < Game2.MAX_SYSTEM_ACHIEVEMENTS; ++index)
         {
           if ((int) hashCode == (int)Mortar.Game1.settings.achievements[index])
             return true;
         }
-        for (int index = 0; index < Game.MAX_SYSTEM_ACHIEVEMENTS; ++index)
+        for (int index = 0; index < Game2.MAX_SYSTEM_ACHIEVEMENTS; ++index)
         {
           if (Mortar.Game1.settings.achievements[index] == 0U)
           {
@@ -1130,4 +1140,9 @@ namespace GameManager
       public uint key = k;
     }
   }
+
+    public class AchievementCollection
+    {
+        public Dictionary<string, int> achievemnts;
+    }
 }

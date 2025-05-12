@@ -125,10 +125,10 @@ namespace GameManager
       }
       Save.ParseVector(parent.AttributeStr("scale"), ref this.scale);
       EffectImage effectImage1 = this;
-      effectImage1.scale = Vector3.Multiply(effectImage1.scale, Game.GAME_MODE_SCALE_FIX);
+      effectImage1.scale = Vector3.Multiply(effectImage1.scale, Game2.GAME_MODE_SCALE_FIX);
       float num = 1f;
       parent.QueryFloatAttribute("slowHardwareScale", ref num);
-      if (!Game.IsFastHardware())
+      if (!Game2.IsFastHardware())
       {
         EffectImage effectImage2 = this;
         effectImage2.scale = Vector3.Multiply(effectImage2.scale, num);

@@ -16,7 +16,7 @@ namespace GameManager
   {
     private int m_lastAwardSound;
     private int m_awardSoundCount;
-    private static Vector3 TRANSITION_MOVE = new Vector3(0.0f, Game.SCREEN_HEIGHT * 0.75f, 0.0f);
+    private static Vector3 TRANSITION_MOVE = new Vector3(0.0f, Game2.SCREEN_HEIGHT * 0.75f, 0.0f);
     private static float TRANSITION_IN_TIME = 0.333f;
     private static float TRANSITION_OUT_TIME = 0.25f;
     private static float FIRST_AWARD = 0.666f;
@@ -27,8 +27,8 @@ namespace GameManager
     private static float NUMBER_IN_TIME = 0.2f;
     private static float NUMBER_END_TIME = 0.3f;
     private static Vector3 TOTAL_POS = new Vector3(40f, -60f, 0.0f);
-    private static Vector3 PARTICLE_POS_RIGHT = new Vector3(Game.SCREEN_WIDTH * 0.45f, 0.0f, 0.0f);
-    private static Vector3 PARTICLE_POS_LEFT = new Vector3((float) (-(double) Game.SCREEN_WIDTH * 0.44999998807907104), 0.0f, 0.0f);
+    private static Vector3 PARTICLE_POS_RIGHT = new Vector3(Game2.SCREEN_WIDTH * 0.45f, 0.0f, 0.0f);
+    private static Vector3 PARTICLE_POS_LEFT = new Vector3((float) (-(double) Game2.SCREEN_WIDTH * 0.44999998807907104), 0.0f, 0.0f);
     private static float AWARD_Y_DIF = -42f;
     private static float POINTS_OFFSET_X = 250f;
     private static Vector3 FIRST_NAME_OFFSET = new Vector3(-105f, 40f, 0.0f);
@@ -70,9 +70,9 @@ namespace GameManager
       ++BonusScreen.oneInThree;
       if (BonusScreen.oneInThree == 3 || BonusScreen.oneInThree == 6 || BonusScreen.oneInThree >= 9)
       {
-        Vector3 origin= new Vector3((float)(-(double) Game.SCREEN_WIDTH / 2.0 + 20.0),
-            (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 20.0), 1f);
-        Game.game_work.camera.CreateCameraShake(origin, (float) (((double) BonusScreen.WORDS_END_TIME - (double) BonusScreen.WORDS_IN_TIME) * 1.5), 0.75f);
+        Vector3 origin= new Vector3((float)(-(double) Game2.SCREEN_WIDTH / 2.0 + 20.0),
+            (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 20.0), 1f);
+        Game2.game_work.camera.CreateCameraShake(origin, (float) (((double) BonusScreen.WORDS_END_TIME - (double) BonusScreen.WORDS_IN_TIME) * 1.5), 0.75f);
         SoundManager.GetInstance().SFXPlay("Bonus-Firework-Explode");
         PSPParticleEmitter pspParticleEmitter1 = PSPParticleManager.GetInstance().AddEmitter(StringFunctions.StringHash("bonus_mode_fx_red"), (Action<PSPParticleEmitter>) null);
         if (pspParticleEmitter1 != null)
@@ -81,8 +81,8 @@ namespace GameManager
         if (pspParticleEmitter2 != null)
         {
           PSPParticleEmitter pspParticleEmitter3 = pspParticleEmitter2;
-          double num1 = (double) Mortar.Math.g_random.RandF(Game.SCREEN_WIDTH * 0.05f) - (double) Game.SCREEN_WIDTH * 0.02500000037252903;
-          double num2 = (double) Game.SCREEN_WIDTH * 0.11999999731779099;
+          double num1 = (double) Mortar.Math.g_random.RandF(Game2.SCREEN_WIDTH * 0.05f) - (double) Game2.SCREEN_WIDTH * 0.02500000037252903;
+          double num2 = (double) Game2.SCREEN_WIDTH * 0.11999999731779099;
           double num3;
           switch (BonusScreen.oneInThree)
           {
@@ -97,20 +97,20 @@ namespace GameManager
               break;
           }
           double num4 = num2 * num3;
-          Vector3 vector3 = new Vector3((float) (num1 + num4), (float) ((double) Game.SCREEN_HEIGHT / 2.0 + (double) Mortar.Math.g_random.RandF(10f) + 3.0), 0.0f);
+          Vector3 vector3 = new Vector3((float) (num1 + num4), (float) ((double) Game2.SCREEN_HEIGHT / 2.0 + (double) Mortar.Math.g_random.RandF(10f) + 3.0), 0.0f);
           pspParticleEmitter3.pos = vector3;
         }
         if (BonusScreen.oneInThree >= 9)
           BonusScreen.oneInThree = 0;
       }
       SoundManager.GetInstance().SFXPlay("Bonus-Point-Get");
-      Game.AddToCurrentScore(coin.GetWorth());
+      Game2.AddToCurrentScore(coin.GetWorth());
     }
 
     public BonusScreen()
     {
       this.m_texture = TextureManager.GetInstance().Load("arcade_diolog_box.tex", true);
-      this.m_scale = Vector3.Multiply(new Vector3((float) (this.m_texture.GetWidth() / 2U), (float) (this.m_texture.GetHeight() / 2U), 0.0f), Game.GAME_MODE_SCALE_FIX);
+      this.m_scale = Vector3.Multiply(new Vector3((float) (this.m_texture.GetWidth() / 2U), (float) (this.m_texture.GetHeight() / 2U), 0.0f), Game2.GAME_MODE_SCALE_FIX);
       this.m_pos = Vector3.Zero;
       this.m_offset = Vector3.Zero;
       this.m_time = -BonusScreen.TRANSITION_IN_TIME;
@@ -135,7 +135,7 @@ namespace GameManager
 
     private void SET_DEFINES()
     {
-      BonusScreen.TRANSITION_MOVE = new Vector3(0.0f, Game.SCREEN_HEIGHT * 0.75f, 0.0f);
+      BonusScreen.TRANSITION_MOVE = new Vector3(0.0f, Game2.SCREEN_HEIGHT * 0.75f, 0.0f);
       BonusScreen.TRANSITION_IN_TIME = 0.333f;
       BonusScreen.TRANSITION_OUT_TIME = 0.25f;
       BonusScreen.FIRST_AWARD = 0.666f;
@@ -143,20 +143,20 @@ namespace GameManager
       BonusScreen.TOTAL_TIME = 7f;
       BonusScreen.AWARD_Y_DIF = -42f;
       BonusScreen.TOTAL_POS = new Vector3(50f, -88f, 0.0f);
-      BonusScreen.PARTICLE_POS_RIGHT = new Vector3(Game.SCREEN_WIDTH * 0.35f, 0.0f, 0.0f);
-      BonusScreen.PARTICLE_POS_LEFT = new Vector3((float) (-(double) Game.SCREEN_WIDTH * 0.34999999403953552), 0.0f, 0.0f);
+      BonusScreen.PARTICLE_POS_RIGHT = new Vector3(Game2.SCREEN_WIDTH * 0.35f, 0.0f, 0.0f);
+      BonusScreen.PARTICLE_POS_LEFT = new Vector3((float) (-(double) Game2.SCREEN_WIDTH * 0.34999999403953552), 0.0f, 0.0f);
     }
 
     public override void Update(float dt)
     {
       this.SET_DEFINES();
-      Game.game_work.canFastForward = true;
+      Game2.game_work.canFastForward = true;
       float num1 = this.m_time - dt;
       float num2 = BonusScreen.FIRST_AWARD + BonusScreen.TIME_PER_AWARD * ((float) this.m_awards.Count + 0.25f);
       if (this.m_drumRollSfx == null && (double) this.m_time > 0.0 && (double) this.m_time < (double) num2)
       {
         this.m_drumRollSfx = SoundManager.CreateNewSound();
-        if (Game.game_work.soundEnabled)
+        if (Game2.game_work.soundEnabled)
         {
           SoundManager.GetInstance().SFXPlay(SoundDef.SND_BONUS_DRUM_ROLL, 0U, this.m_drumRollSfx);
           if (this.m_drumRollSfx != null)
@@ -166,13 +166,13 @@ namespace GameManager
       if ((double) this.m_time > (double) BonusScreen.TOTAL_TIME + (double) BonusScreen.TRANSITION_OUT_TIME)
       {
         this.m_terminate = true;
-        Game.game_work.inBonusScreen = false;
+        Game2.game_work.inBonusScreen = false;
       }
       if ((double) this.m_time > (double) BonusScreen.TOTAL_TIME)
       {
         float num3 = (this.m_time - BonusScreen.TOTAL_TIME) / BonusScreen.TRANSITION_OUT_TIME;
         for (int index = 0; index < 3; ++index)
-          Game.game_work.hud.m_backTint[index] += (float) ((0.5 - (double) Game.game_work.hud.m_backTint[index]) * (1.0 - (double) num3));
+          Game2.game_work.hud.m_backTint[index] += (float) ((0.5 - (double) Game2.game_work.hud.m_backTint[index]) * (1.0 - (double) num3));
         float num4 = num3 * num3;
         this.m_offset = Vector3.Multiply(BonusScreen.TRANSITION_MOVE, num4);
       }
@@ -180,7 +180,7 @@ namespace GameManager
       {
         float num5 = 1f - Mortar.Math.ABS(this.m_time / BonusScreen.TRANSITION_IN_TIME);
         for (int index = 0; index < 3; ++index)
-          Game.game_work.hud.m_backTint[index] += (0.5f - Game.game_work.hud.m_backTint[index]) * num5;
+          Game2.game_work.hud.m_backTint[index] += (0.5f - Game2.game_work.hud.m_backTint[index]) * num5;
         this.m_offset = Vector3.Multiply(Vector3.Negate(BonusScreen.TRANSITION_MOVE), (float) (1.0 - (double) Mortar.Math.SinIdx(Mortar.Math.DEGREE_TO_IDX(100f * num5)) / (double) Mortar.Math.SinIdx(Mortar.Math.DEGREE_TO_IDX(100f))));
       }
       else
@@ -192,7 +192,7 @@ namespace GameManager
         }
         this.m_offset = Vector3.Zero;
         for (int index = 0; index < 3; ++index)
-          Game.game_work.hud.m_backTint[index] = 0.5f;
+          Game2.game_work.hud.m_backTint[index] = 0.5f;
       }
       this.m_currentTotal = 0;
       Vector3 vector3_1 = Vector3.Add(Vector3.Add(Vector3.Add(Vector3.Add(this.m_pos, this.m_offset), this.m_shake), BonusScreen.FIRST_NAME_OFFSET), Vector3.Multiply(Vector3.UnitX, BonusScreen.POINTS_OFFSET_X));
@@ -219,10 +219,10 @@ namespace GameManager
           {
             PSPParticleEmitter pspParticleEmitter1 = PSPParticleManager.GetInstance().AddEmitter(StringFunctions.StringHash("bonus_mode_fx_red"), (Action<PSPParticleEmitter>) null);
             if (pspParticleEmitter1 != null)
-              pspParticleEmitter1.pos = new Vector3((float) (-(double) Game.SCREEN_WIDTH * 0.31000000238418579 * (index % 2 != 0 ? 1.0 : -1.0)), vector3_1.Y, 0.0f);
+              pspParticleEmitter1.pos = new Vector3((float) (-(double) Game2.SCREEN_WIDTH * 0.31000000238418579 * (index % 2 != 0 ? 1.0 : -1.0)), vector3_1.Y, 0.0f);
             PSPParticleEmitter pspParticleEmitter2 = PSPParticleManager.GetInstance().AddEmitter(StringFunctions.StringHash("bonus_mode_fx_blue"), (Action<PSPParticleEmitter>) null);
             if (pspParticleEmitter2 != null)
-              pspParticleEmitter2.pos = new Vector3((float) ((double) Game.SCREEN_WIDTH * 0.31000000238418579 * (index % 2 != 0 ? 1.0 : -1.0)), vector3_1.Y, 0.0f);
+              pspParticleEmitter2.pos = new Vector3((float) ((double) Game2.SCREEN_WIDTH * 0.31000000238418579 * (index % 2 != 0 ? 1.0 : -1.0)), vector3_1.Y, 0.0f);
             PSPParticleEmitter pspParticleEmitter3 = PSPParticleManager.GetInstance().AddEmitter(StringFunctions.StringHash("impact_fx"), (Action<PSPParticleEmitter>) null);
             if (pspParticleEmitter3 != null)
               pspParticleEmitter3.pos = vector3_1;
@@ -254,7 +254,7 @@ namespace GameManager
         vector3_1.Y += BonusScreen.AWARD_Y_DIF;
         this.m_currentTotal += award.visiblePoints;
       }
-      if (this.m_drumRollSfx != null && Game.game_work.soundEnabled)
+      if (this.m_drumRollSfx != null && Game2.game_work.soundEnabled)
       {
         this.m_drumRollSfx.Repeat();
         this.m_drumRollSfx.SetVolume(v);
@@ -263,8 +263,8 @@ namespace GameManager
       {
         if ((double) num1 <= (double) num2)
         {
-          Vector3 vector3_2 = new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + 20.0), 
-              (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 20.0), 0.0f);
+          Vector3 vector3_2 = new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + 20.0), 
+              (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 20.0), 0.0f);
          
           if (this.m_total >= 5)
           {
@@ -273,18 +273,18 @@ namespace GameManager
           }
           else
             Coin.MakeCoins(this.m_total, 5, Vector3.Add(Vector3.Add(Vector3.Add(this.m_pos, this.m_offset), this.m_shake), BonusScreen.TOTAL_POS), (ushort) 0, Mortar.Math.DEGREE_TO_IDX(359f), new Vector3?(vector3_2), -0.05f, -0.3f, "bonus_star_trail", "bonus_star_impact", new Coin.CoinArrivedCallback(BonusScreen.AddToScoreOnArrival), false);
-          Game.game_work.camera.CreateCameraShake(Vector3.Add(Vector3.Add(Vector3.Add(this.m_pos, this.m_offset), this.m_shake), BonusScreen.TOTAL_POS), (float) (((double) BonusScreen.WORDS_END_TIME - (double) BonusScreen.WORDS_IN_TIME) * 2.0));
+          Game2.game_work.camera.CreateCameraShake(Vector3.Add(Vector3.Add(Vector3.Add(this.m_pos, this.m_offset), this.m_shake), BonusScreen.TOTAL_POS), (float) (((double) BonusScreen.WORDS_END_TIME - (double) BonusScreen.WORDS_IN_TIME) * 2.0));
           PSPParticleEmitter pspParticleEmitter = PSPParticleManager.GetInstance().AddEmitter(StringFunctions.StringHash("impact_fx"), (Action<PSPParticleEmitter>) null);
           if (pspParticleEmitter != null)
             pspParticleEmitter.pos = Vector3.Add(Vector3.Add(Vector3.Add(this.m_pos, this.m_offset), this.m_shake), BonusScreen.TOTAL_POS);
-          int num12 = Game.game_work.currentScore + this.m_total;
+          int num12 = Game2.game_work.currentScore + this.m_total;
           SoundManager.GetInstance().SFXPlay(SoundDef.SND_FAN_FARE);
           BonusScreen.oneInThree = 3;
-          if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && num12 < 20)
+          if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && num12 < 20)
             AchievementManager.AwardAchievementWP7("Underachiever");
-          if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && num12 > 400)
+          if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && num12 > 400)
             AchievementManager.AwardAchievementWP7("Overachiever");
-          if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && num12 > 250 && BonusScreen.bomb_magnet)
+          if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && num12 > 250 && BonusScreen.bomb_magnet)
             AchievementManager.AwardAchievementWP7("Bomb Magnet");
         }
         float num13 = Mortar.Math.CLAMP((float) (((double) this.m_time - (double) num2) / 0.20000000298023224), 0.0f, 1f);
@@ -323,7 +323,7 @@ namespace GameManager
           this.m_offset, this.m_shake));
       base.Draw(tintChannels);
       string stringToDraw1 = string.Format("{0}", (object) this.m_currentTotal);
-      Game.game_work.pNumberFontBlue2.DrawString(stringToDraw1, Vector3.Add(this.m_pos, 
+      Game2.game_work.pNumberFontBlue2.DrawString(stringToDraw1, Vector3.Add(this.m_pos, 
           BonusScreen.TOTAL_POS), Color.White, (float) (26.0 + 14.0 * (this.m_currentTotal > 0 ? (double) this.m_currentTotal / (double) this.m_total : 0.0)) * this.m_totalScale, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER);
       BonusScreen bonusScreen2 = this;
       bonusScreen2.m_pos = Vector3.Add(bonusScreen2.m_pos, BonusScreen.FIRST_NAME_OFFSET);
@@ -336,15 +336,15 @@ namespace GameManager
           {
             award.texture.Set();
             MatrixManager.GetInstance().SetMatrix(Matrix.Identity);
-            MatrixManager.GetInstance().Scale(new Vector3((float) ((double) award.texture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) award.texture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 0.0f));
+            MatrixManager.GetInstance().Scale(new Vector3((float) ((double) award.texture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) award.texture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 0.0f));
             MatrixManager.GetInstance().Translate(Vector3.Subtract(this.m_pos, Vector3.Multiply(Vector3.UnitX, 35f)));
             MatrixManager.GetInstance().UploadCurrentMatrices();
             Mesh.DrawQuad(award.colour);
             award.texture.UnSet();
           }
-          Game.game_work.pGameFont.DrawString(award.text, this.m_pos, award.colour, 16f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
+          Game2.game_work.pGameFont.DrawString(award.text, this.m_pos, award.colour, 16f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
           string stringToDraw2 = string.Format("{0}", (object) award.visiblePoints);
-          Game.game_work.pGameFont.DrawString(stringToDraw2, Vector3.Add(this.m_pos, Vector3.Multiply(Vector3.UnitX, BonusScreen.POINTS_OFFSET_X)), award.colour, 24f * award.numberScale, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER);
+          Game2.game_work.pGameFont.DrawString(stringToDraw2, Vector3.Add(this.m_pos, Vector3.Multiply(Vector3.UnitX, BonusScreen.POINTS_OFFSET_X)), award.colour, 24f * award.numberScale, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER);
           this.m_pos.Y += BonusScreen.AWARD_Y_DIF;
         }
         else
@@ -356,8 +356,8 @@ namespace GameManager
     private Vector3 ConvertPos(Vector3 pos)
     {
       Vector3 zero = Vector3.Zero;
-      pos.X -= Game.game_work.camera.m_cameraShake.X;
-      pos.Y -= Game.game_work.camera.m_cameraShake.Y;
+      pos.X -= Game2.game_work.camera.m_cameraShake.X;
+      pos.Y -= Game2.game_work.camera.m_cameraShake.Y;
       Vector3 vector3 = pos;
       vector3.X += 240f;
       vector3.Y += 160f;

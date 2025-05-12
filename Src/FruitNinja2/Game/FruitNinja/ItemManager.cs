@@ -7,6 +7,7 @@
 using Mortar;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Text;
@@ -108,7 +109,7 @@ namespace GameManager
                 itemInfo.type = itemType;
               }
               itemInfo.Parse(xelement);
-              if (Game.game_work.saveData.IsAchievementUnlocked(itemInfo.nameHash))
+              if (Game2.game_work.saveData.IsAchievementUnlocked(itemInfo.nameHash))
                 itemInfo.cost = -1;
               else if (!AchievementManager.GetInstance().AchievementExists(itemInfo.nameHash) && itemInfo.cost > 0)
               {
@@ -143,9 +144,9 @@ namespace GameManager
             if (true)
             {
               XElement element1 = dl.FirstChildElement("item_save_file");
-              element1.QueryIntAttribute("coins", ref Game.game_work.coins);
-              element1.QueryIntAttribute("coinsTotal", ref Game.game_work.coinsTotal);
-              element1.QueryIntAttribute("levelStartCoins", ref Game.game_work.levelStartCoins);
+              element1.QueryIntAttribute("coins", ref Game2.game_work.coins);
+              element1.QueryIntAttribute("coinsTotal", ref Game2.game_work.coinsTotal);
+              element1.QueryIntAttribute("levelStartCoins", ref Game2.game_work.levelStartCoins);
               XElement element2 = element1.FirstChildElement("boughtItems");
               if (element2 != null)
               {
@@ -178,7 +179,8 @@ namespace GameManager
             }
             Delete.SAFE_DELETE<XDocument>(ref dl);
           }
-          storageFileStream.Close();
+          storageFileStream.Flush();
+          storageFileStream.Dispose();
         }
       }
       catch (Exception ex)
@@ -192,19 +194,20 @@ namespace GameManager
 
     public void SaveItemInfo()
     {
-      IsolatedStorageFile storeForApplication = IsolatedStorageFile.GetUserStoreForApplication();
-      IsolatedStorageFileStream storageFileStream = (IsolatedStorageFileStream) null;
       try
       {
+        IsolatedStorageFile storeForApplication = IsolatedStorageFile.GetUserStoreForApplication();
+        IsolatedStorageFileStream storageFileStream = (IsolatedStorageFileStream) null;
+      
         if (!storeForApplication.DirectoryExists("FruitNinja"))
           storeForApplication.CreateDirectory("FruitNinja");
         XDocument xdocument = new XDocument();
         xdocument.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         XElement xelement1 = new XElement((XName) "item_save_file");
         xdocument.Add((object) xelement1);
-        xelement1.Add((object) new XAttribute((XName) "coins", (object) Game.game_work.coins));
-        xelement1.Add((object) new XAttribute((XName) "coinsTotal", (object) Game.game_work.coinsTotal));
-        xelement1.Add((object) new XAttribute((XName) "levelStartCoins", (object) Game.game_work.levelStartCoins));
+        xelement1.Add((object) new XAttribute((XName) "coins", (object) Game2.game_work.coins));
+        xelement1.Add((object) new XAttribute((XName) "coinsTotal", (object) Game2.game_work.coinsTotal));
+        xelement1.Add((object) new XAttribute((XName) "levelStartCoins", (object) Game2.game_work.levelStartCoins));
         if (this.itemInfoOrderedList.Count > 0)
         {
           XElement xelement2 = new XElement((XName) "boughtItems");
@@ -238,15 +241,19 @@ namespace GameManager
         Encoding.UTF8.GetString(array, 0, array.Length);
         storageFileStream = storeForApplication.OpenFile(ItemManager.SAVE_FILENAME, FileMode.Create);
         storageFileStream.Write(array, 3, array.Length - 3);
-        storageFileStream?.Close();
+
+        storageFileStream?.Flush();
+        storageFileStream?.Dispose();
       }
       catch (Exception ex)
       {
+          Debug.WriteLine("[ex] ItemManager - SaveItemInfo ex.: " + ex.Message);
       }
-      finally
-      {
-        storageFileStream?.Close();
-      }
+      //finally
+      //{
+      // storageFileStream?.Flush();
+       // storageFileStream?.Dispose();
+      //}
     }
 
     public bool IsEquipped(ItemInfo item)
@@ -307,9 +314,9 @@ namespace GameManager
       if (this.itemInfoList.TryGetValue(hash, out itemInfo1))
       {
         ItemInfo itemInfo2 = itemInfo1;
-        if (itemInfo2.cost >= 0 && Game.game_work.coins >= itemInfo2.cost)
+        if (itemInfo2.cost >= 0 && Game2.game_work.coins >= itemInfo2.cost)
         {
-          Game.AddCoins(-itemInfo2.cost);
+          Game2.AddCoins(-itemInfo2.cost);
           itemInfo2.cost = -1;
           return true;
         }

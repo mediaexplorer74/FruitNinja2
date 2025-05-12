@@ -45,8 +45,8 @@ namespace GameManager
         mortarRectangleDec.right = this.m_parentList.m_pos.X + this.m_parentList.GetWidth() / 2f;
         rect = new MortarRectangleDec?(mortarRectangleDec);
       }
-      Game.game_work.pGameFont.DrawString(this.m_text, Vector3.Add(new Vector3(mortarRectangleDec.left, vector3.Y, 0.0f), this.m_textOffset), this.m_colour, 18f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT, 1f, rect);
-      Game.game_work.pGameFont.DrawString(this.m_score.ToString(), Vector3.Add(new Vector3(mortarRectangleDec.right - this.m_parentList.GetWidth() * 0.1f, vector3.Y, 0.0f), this.m_textOffset), this.m_colour, 18f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_RIGHT, 1f, rect);
+      Game2.game_work.pGameFont.DrawString(this.m_text, Vector3.Add(new Vector3(mortarRectangleDec.left, vector3.Y, 0.0f), this.m_textOffset), this.m_colour, 18f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT, 1f, rect);
+      Game2.game_work.pGameFont.DrawString(this.m_score.ToString(), Vector3.Add(new Vector3(mortarRectangleDec.right - this.m_parentList.GetWidth() * 0.1f, vector3.Y, 0.0f), this.m_textOffset), this.m_colour, 18f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_RIGHT, 1f, rect);
     }
   }
 }

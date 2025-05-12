@@ -142,10 +142,10 @@ namespace GameManager
         if ((double) idx > (double) Mortar.Math.DEGREE_TO_IDX(90f) && (double) idx < 376740.0)
           v1 = (double) idx < (double) Mortar.Math.DEGREE_TO_IDX(180f) || (double) idx > 360360.0 ? Mortar.Math.MAX(v1, 0.65f) : 0.65f;
       }
-      else if (Game.FailureEnabled() && !Game.IsMultiplayer())
-        zero.Y += (float) ((double) Mortar.Math.Abs(Game.game_work.gameOverTransition) * ((double) Game.SCREEN_HEIGHT / 2.0 - (double) this.m_pos.Y) * 3.0);
+      else if (Game2.FailureEnabled() && !Game2.IsMultiplayer())
+        zero.Y += (float) ((double) Mortar.Math.Abs(Game2.game_work.gameOverTransition) * ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) this.m_pos.Y) * 3.0);
       else
-        zero.Y += (float) (1.0 * ((double) Game.SCREEN_HEIGHT / 2.0 - (double) this.m_pos.Y) * 3.0);
+        zero.Y += (float) (1.0 * ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) this.m_pos.Y) * 3.0);
       if (this.m_texture == null)
         return;
       this.m_texture.Set();
@@ -161,7 +161,7 @@ namespace GameManager
 
     public override void Update(float dt)
     {
-      int currentMissCount = (int) Game.game_work.currentMissCount;
+      int currentMissCount = (int) Game2.game_work.currentMissCount;
       if (!this.m_registered && currentMissCount >= this.m_id + 1)
       {
         this.m_color.A = byte.MaxValue;
@@ -203,7 +203,7 @@ namespace GameManager
       }
       if ((double) this.m_fadeAway > 0.0)
       {
-        if (Game.game_work.pause)
+        if (Game2.game_work.pause)
           return;
         float fadeAway = this.m_fadeAway;
         this.m_fadeAway -= dt;
@@ -264,7 +264,7 @@ namespace GameManager
         this.m_texture = texture;
         this.m_isCritical = true;
         this.m_fadeAway = 1.81f;
-        this.m_id = (int) Game.MAX_FRUIT_MISSES;
+        this.m_id = (int) Game2.MAX_FRUIT_MISSES;
         this.m_shakeTimer = (short) 0;
         this.m_registered = true;
         this.m_scale = new Vector3((float) (this.m_texture.GetWidth() + 1U), 
@@ -274,18 +274,18 @@ namespace GameManager
       else
       {
         this.m_fadeAway = 1.66f;
-        this.m_id = (int) Game.MAX_FRUIT_MISSES;
+        this.m_id = (int) Game2.MAX_FRUIT_MISSES;
         this.m_shakeTimer = forPlayer > 0 ? (short) 30 : (short) 0;
         this.m_registered = true;
         this.m_scale = Vector3.Multiply(Vector3.One, 48f);
         this.SetPlayer(forPlayer);
         this.m_scale = Vector3.Multiply(Vector3.One, 48f);
         this.m_pos.X = Mortar.Math.CLAMP(this.m_pos.X,
-            (float) (-((double) Game.SCREEN_WIDTH / 2.0) + (double) this.m_scale.X * 0.5), 
-            (float) ((double) Game.SCREEN_WIDTH / 2.0 - (double) this.m_scale.X * 0.5));
+            (float) (-((double) Game2.SCREEN_WIDTH / 2.0) + (double) this.m_scale.X * 0.5), 
+            (float) ((double) Game2.SCREEN_WIDTH / 2.0 - (double) this.m_scale.X * 0.5));
         this.m_pos.Y = Mortar.Math.CLAMP(this.m_pos.Y, (float) 
-            (-((double) Game.SCREEN_HEIGHT / 2.0) + (double) this.m_scale.Y * 0.5),
-            (float) ((double) Game.SCREEN_HEIGHT / 2.0 - (double) this.m_scale.Y * 0.5));
+            (-((double) Game2.SCREEN_HEIGHT / 2.0) + (double) this.m_scale.Y * 0.5),
+            (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) this.m_scale.Y * 0.5));
       }
     }
 
@@ -299,23 +299,23 @@ namespace GameManager
       this.m_pos = pos;
       this.m_fadeAway = 1.81f;
       this.m_color.A = byte.MaxValue;
-      this.m_id = (int) Game.MAX_FRUIT_MISSES;
+      this.m_id = (int) Game2.MAX_FRUIT_MISSES;
       this.m_shakeTimer = (short) 0;
       this.m_registered = true;
-      if (Game.game_work.language == StringTableUtils.Language.LANGUAGE_ITALIAN || Game.game_work.language == StringTableUtils.Language.LANGUAGE_FRENCH || Game.game_work.language == StringTableUtils.Language.LANGUAGE_GERMAN || Game.game_work.language == StringTableUtils.Language.LANGUAGE_SPANISH)
+      if (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ITALIAN || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_FRENCH || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_GERMAN || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_SPANISH)
         this.m_scale = new Vector3((float) (this.m_texture.GetWidth() * 2U), (float) (this.m_texture.GetHeight() * 2U), 0.0f);
       else
         this.m_scale = new Vector3((float) (this.m_texture.GetWidth() + 20U), (float) (this.m_texture.GetHeight() + 20U), 0.0f);
       MissControl missControl1 = this;
       missControl1.m_scale = Vector3.Multiply(missControl1.m_scale, 0.5f);
-      if ((double) this.m_pos.X + (double) this.m_scale.X > (double) Game.SCREEN_WIDTH * 0.5)
-        this.m_pos.X = Game.SCREEN_WIDTH * 0.5f - this.m_scale.X;
-      if ((double) this.m_pos.Y + (double) this.m_scale.Y > (double) Game.SCREEN_HEIGHT * 0.5)
-        this.m_pos.Y = Game.SCREEN_HEIGHT * 0.5f - this.m_scale.Y;
-      if ((double) this.m_pos.X - (double) this.m_scale.X < -(double) Game.SCREEN_WIDTH * 0.5)
-        this.m_pos.X = (float) (-(double) Game.SCREEN_WIDTH * 0.5) + this.m_scale.X;
-      if ((double) this.m_pos.Y - (double) this.m_scale.Y < -(double) Game.SCREEN_HEIGHT * 0.5)
-        this.m_pos.Y = (float) (-(double) Game.SCREEN_HEIGHT * 0.5) + this.m_scale.Y;
+      if ((double) this.m_pos.X + (double) this.m_scale.X > (double) Game2.SCREEN_WIDTH * 0.5)
+        this.m_pos.X = Game2.SCREEN_WIDTH * 0.5f - this.m_scale.X;
+      if ((double) this.m_pos.Y + (double) this.m_scale.Y > (double) Game2.SCREEN_HEIGHT * 0.5)
+        this.m_pos.Y = Game2.SCREEN_HEIGHT * 0.5f - this.m_scale.Y;
+      if ((double) this.m_pos.X - (double) this.m_scale.X < -(double) Game2.SCREEN_WIDTH * 0.5)
+        this.m_pos.X = (float) (-(double) Game2.SCREEN_WIDTH * 0.5) + this.m_scale.X;
+      if ((double) this.m_pos.Y - (double) this.m_scale.Y < -(double) Game2.SCREEN_HEIGHT * 0.5)
+        this.m_pos.Y = (float) (-(double) Game2.SCREEN_HEIGHT * 0.5) + this.m_scale.Y;
       MissControl missControl2 = this;
       missControl2.m_scale = Vector3.Add(missControl2.m_scale, this.m_scale);
       this.SetPlayer(forPlayer);
@@ -329,21 +329,21 @@ namespace GameManager
       this.m_pos = pos;
       this.m_fadeAway = 1.81f;
       this.m_color.A = byte.MaxValue;
-      this.m_id = (int) Game.MAX_FRUIT_MISSES;
+      this.m_id = (int) Game2.MAX_FRUIT_MISSES;
       this.m_shakeTimer = (short) 0;
       this.m_registered = true;
       this.m_scale = new Vector3((float) (this.m_texture.GetWidth() + 1U), (float) (this.m_texture.GetHeight() + 1U), 0.0f);
       this.m_dtMod = 0.5f;
       MissControl missControl1 = this;
       missControl1.m_scale = Vector3.Multiply(missControl1.m_scale, 0.5f);
-      if ((double) this.m_pos.X + (double) this.m_scale.X > (double) Game.SCREEN_WIDTH * 0.5)
-        this.m_pos.X = Game.SCREEN_WIDTH * 0.5f - this.m_scale.X;
-      if ((double) this.m_pos.Y + (double) this.m_scale.Y > (double) Game.SCREEN_HEIGHT * 0.5)
-        this.m_pos.Y = Game.SCREEN_HEIGHT * 0.5f - this.m_scale.Y;
-      if ((double) this.m_pos.X - (double) this.m_scale.X < -(double) Game.SCREEN_WIDTH * 0.5)
-        this.m_pos.X = (float) (-(double) Game.SCREEN_WIDTH * 0.5) + this.m_scale.X;
-      if ((double) this.m_pos.Y - (double) this.m_scale.Y < -(double) Game.SCREEN_HEIGHT * 0.5)
-        this.m_pos.Y = (float) (-(double) Game.SCREEN_HEIGHT * 0.5) + this.m_scale.Y;
+      if ((double) this.m_pos.X + (double) this.m_scale.X > (double) Game2.SCREEN_WIDTH * 0.5)
+        this.m_pos.X = Game2.SCREEN_WIDTH * 0.5f - this.m_scale.X;
+      if ((double) this.m_pos.Y + (double) this.m_scale.Y > (double) Game2.SCREEN_HEIGHT * 0.5)
+        this.m_pos.Y = Game2.SCREEN_HEIGHT * 0.5f - this.m_scale.Y;
+      if ((double) this.m_pos.X - (double) this.m_scale.X < -(double) Game2.SCREEN_WIDTH * 0.5)
+        this.m_pos.X = (float) (-(double) Game2.SCREEN_WIDTH * 0.5) + this.m_scale.X;
+      if ((double) this.m_pos.Y - (double) this.m_scale.Y < -(double) Game2.SCREEN_HEIGHT * 0.5)
+        this.m_pos.Y = (float) (-(double) Game2.SCREEN_HEIGHT * 0.5) + this.m_scale.Y;
       MissControl missControl2 = this;
       missControl2.m_scale = Vector3.Add(missControl2.m_scale, this.m_scale);
     }
@@ -357,28 +357,28 @@ namespace GameManager
       this.m_isCritical = true;
       this.m_isCombo = true;
       this.m_fruitsInCombo = combo;
-      if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
         this.m_fruitsInCombo = (int) ((double) WaveManager.GetInstance().GetSpeed() + 0.64999997615814209);
       this.m_pos = pos;
       this.m_fadeAway = 1.81f;
       this.m_color.A = byte.MaxValue;
-      this.m_id = (int) Game.MAX_FRUIT_MISSES;
+      this.m_id = (int) Game2.MAX_FRUIT_MISSES;
       this.m_shakeTimer = (short) 0;
       this.m_registered = true;
-      if (Game.game_work.language == StringTableUtils.Language.LANGUAGE_ITALIAN || Game.game_work.language == StringTableUtils.Language.LANGUAGE_FRENCH || Game.game_work.language == StringTableUtils.Language.LANGUAGE_GERMAN || Game.game_work.language == StringTableUtils.Language.LANGUAGE_SPANISH)
+      if (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ITALIAN || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_FRENCH || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_GERMAN || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_SPANISH)
         this.m_scale = new Vector3((float) (this.m_texture.GetWidth() * 2U), (float) (this.m_texture.GetHeight() * 2U), 0.0f);
       else
         this.m_scale = new Vector3((float) (this.m_texture.GetWidth() + 1U), (float) (this.m_texture.GetHeight() + 1U), 0.0f);
       MissControl missControl1 = this;
       missControl1.m_scale = Vector3.Multiply(missControl1.m_scale, 0.5f);
-      if ((double) this.m_pos.X + (double) this.m_scale.X > (double) Game.SCREEN_WIDTH * 0.5)
-        this.m_pos.X = Game.SCREEN_WIDTH * 0.5f - this.m_scale.X;
-      if ((double) this.m_pos.Y + (double) this.m_scale.Y > (double) Game.SCREEN_HEIGHT * 0.5)
-        this.m_pos.Y = Game.SCREEN_HEIGHT * 0.5f - this.m_scale.Y;
-      if ((double) this.m_pos.X - (double) this.m_scale.X < -(double) Game.SCREEN_WIDTH * 0.5)
-        this.m_pos.X = (float) (-(double) Game.SCREEN_WIDTH * 0.5) + this.m_scale.X;
-      if ((double) this.m_pos.Y - (double) this.m_scale.Y < -(double) Game.SCREEN_HEIGHT * 0.5)
-        this.m_pos.Y = (float) (-(double) Game.SCREEN_HEIGHT * 0.5) + this.m_scale.Y;
+      if ((double) this.m_pos.X + (double) this.m_scale.X > (double) Game2.SCREEN_WIDTH * 0.5)
+        this.m_pos.X = Game2.SCREEN_WIDTH * 0.5f - this.m_scale.X;
+      if ((double) this.m_pos.Y + (double) this.m_scale.Y > (double) Game2.SCREEN_HEIGHT * 0.5)
+        this.m_pos.Y = Game2.SCREEN_HEIGHT * 0.5f - this.m_scale.Y;
+      if ((double) this.m_pos.X - (double) this.m_scale.X < -(double) Game2.SCREEN_WIDTH * 0.5)
+        this.m_pos.X = (float) (-(double) Game2.SCREEN_WIDTH * 0.5) + this.m_scale.X;
+      if ((double) this.m_pos.Y - (double) this.m_scale.Y < -(double) Game2.SCREEN_HEIGHT * 0.5)
+        this.m_pos.Y = (float) (-(double) Game2.SCREEN_HEIGHT * 0.5) + this.m_scale.Y;
       MissControl missControl2 = this;
       missControl2.m_scale = Vector3.Add(missControl2.m_scale, this.m_scale);
       this.SetPlayer(forPlayer);
@@ -392,7 +392,7 @@ namespace GameManager
 
     public override void Skip()
     {
-      if ((int) Game.game_work.currentMissCount < this.m_id + 1)
+      if ((int) Game2.game_work.currentMissCount < this.m_id + 1)
         return;
       this.m_color.A = byte.MaxValue;
       this.m_shakeTimer = (short) 0;

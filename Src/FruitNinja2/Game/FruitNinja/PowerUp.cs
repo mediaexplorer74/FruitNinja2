@@ -62,7 +62,7 @@ namespace GameManager
       float num3 = num2 * num2;
       MatrixManager.GetInstance().SetMatrix(Matrix.Identity);
       MatrixManager.GetInstance().Scale(new Vector3((float) this.m_barTexture.GetWidth(), (float) this.m_barTexture.GetHeight(), 0.0f));
-      MatrixManager.GetInstance().Translate(new Vector3(num1, (float) ((double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_barTexture.GetHeight() * ((double) num3 - 0.5) + 1.0), 0.0f));
+      MatrixManager.GetInstance().Translate(new Vector3(num1, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_barTexture.GetHeight() * ((double) num3 - 0.5) + 1.0), 0.0f));
       MatrixManager.GetInstance().UploadCurrentMatrices();
       this.m_barTexture.Set();
       Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
@@ -121,7 +121,7 @@ namespace GameManager
         free.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (!fromSave && this.m_purchaseInfo != null)
-        Game.AddCoins(-this.m_purchaseInfo.GetCost());
+        Game2.AddCoins(-this.m_purchaseInfo.GetCost());
       foreach (GameModifier modifier in this.m_modifiers)
       {
         if (!modifier.IsWaiting())

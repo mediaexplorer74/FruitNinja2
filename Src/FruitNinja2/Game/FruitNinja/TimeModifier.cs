@@ -41,7 +41,7 @@ namespace GameManager
         --this.m_addClockWait;
         if (this.m_addClockWait <= 0)
         {
-          Game.game_work.timeControl.AddTime(this.m_addToClock);
+          Game2.game_work.timeControl.AddTime(this.m_addToClock);
           return true;
         }
       }

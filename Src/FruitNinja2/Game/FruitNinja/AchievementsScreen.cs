@@ -109,7 +109,7 @@ namespace GameManager
       this.m_state = 2;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Mortar.Math.g_random.RandF(5f) + 5f, -Mortar.Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public static void LoadContent()
@@ -243,7 +243,7 @@ namespace GameManager
         this.initialY = this.ty = -1f;
         this.textOffset = 0.0f;
       }
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
       switch (this.m_state)
       {
         case 0:
@@ -251,11 +251,11 @@ namespace GameManager
           if ((double) this.m_time <= 0.99900001287460327)
             break;
           this.m_time = 1f;
-          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) AchievementsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), (float) ((double) AchievementsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
           this.m_quitButton.Init();
           this.m_quitButton.m_triggerOnBackPress = true;
-          Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
-          Game.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+          Game2.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
           MenuButton quitButton = this.m_quitButton;
           quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
           Entity entity = this.m_quitButton.m_entity;
@@ -273,7 +273,7 @@ namespace GameManager
           this.m_time *= 0.75f;
           if ((double) this.m_time >= 1.0 / 1000.0)
             break;
-          Game.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
+          Game2.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
           this.m_terminate = true;
           break;
       }

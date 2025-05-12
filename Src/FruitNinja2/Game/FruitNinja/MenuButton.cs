@@ -80,7 +80,7 @@ namespace GameManager
     {
       if (this.m_touchInRegion == -1)
         return;
-      this.m_touchPos = Game.game_work.touchPositions[this.m_touchInRegion];
+      this.m_touchPos = Game2.game_work.touchPositions[this.m_touchInRegion];
     }
 
     public MenuButton(Texture texture, Vector3 pos, MenuButton.MenuCallback call)
@@ -232,7 +232,7 @@ namespace GameManager
           Entity link = this.m_link;
           link.m_cur_scale = Vector3.Multiply(link.m_cur_scale, 0.85f);
           if (!this.m_hasOwnScale)
-            this.m_originalScale = Vector3.Multiply(Vector3.Multiply(Vector3.One, 2f), Game.game_work.bombSize);
+            this.m_originalScale = Vector3.Multiply(Vector3.Multiply(Vector3.One, 2f), Game2.game_work.bombSize);
         }
       }
       else if (!this.m_hasOwnScale)
@@ -285,7 +285,7 @@ namespace GameManager
       if (this.m_fruitType < 0)
         this.m_callback();
       else if (this.m_link != null)
-        Game.game_work.tutorialControl.ButtonPressedAtPos(this);
+        Game2.game_work.tutorialControl.ButtonPressedAtPos(this);
       this.m_clickedCallback();
     }
 
@@ -333,10 +333,10 @@ namespace GameManager
               if ( (double) vector3.LengthSquared() > 0.10000000149011612 )
               {
                 this.m_callback();
-                Game.game_work.tutorialControl.ResetTutePos();
+                Game2.game_work.tutorialControl.ResetTutePos();
                 this.m_link.m_cur_scale = this.m_originalEntityScale;
                 if (this.m_clearOthers)
-                  Game.ClearMenuItems();
+                  Game2.ClearMenuItems();
               }
               this.m_link = (Entity) null;
             }
@@ -392,10 +392,10 @@ namespace GameManager
         float yMax = this.m_pos.Y + this.m_originalScale.Y * 0.5f + innerBoundY;
         if (this.m_touchInRegion == -1)
         {
-          this.m_touchInRegion = Game.TouchInRegion(xMin, xMax, yMin, yMax);
+          this.m_touchInRegion = Game2.TouchInRegion(xMin, xMax, yMin, yMax);
           if (this.m_touchInRegion != -1)
           {
-            if (Game.IsTouchDown(this.m_touchInRegion) != 2)
+            if (Game2.IsTouchDown(this.m_touchInRegion) != 2)
               this.m_touchInRegion = -1;
           }
           else
@@ -403,7 +403,7 @@ namespace GameManager
           if (this.m_fruitType < 0)
             this.m_scale = this.m_originalScale;
         }
-        else if (Game.IsTouchDown(this.m_touchInRegion) == 0)
+        else if (Game2.IsTouchDown(this.m_touchInRegion) == 0)
         {
           this.m_touchInRegion = -1;
           if ((double) this.m_touchPos.X >= (double) xMin && (double) this.m_touchPos.X <= (double) xMax && (double) this.m_touchPos.Y >= (double) yMin && (double) this.m_touchPos.Y <= (double) yMax)
@@ -475,7 +475,7 @@ namespace GameManager
           Mesh.DrawQuad(this.m_enabled ? HUDControl.TintColor(new Color((int) byte.MaxValue, (int) byte.MaxValue, (int) byte.MaxValue, num1), tintChannels) : HUDControl.TintColor(new Color(128, 128, 128, num1), tintChannels), this.m_uvs[0].X, this.m_uvs[1].X, this.m_uvs[0].Y, this.m_uvs[1].Y);
           this.m_texture.UnSet();
         }
-        if ((double) this.m_newSymbol >= 0.0 && !Game.isWP7TrialMode())
+        if ((double) this.m_newSymbol >= 0.0 && !Game2.isWP7TrialMode())
         {
           float num2 = this.m_scale.X / this.m_originalScale.X;
           MenuButton.s_newTexture.Set();

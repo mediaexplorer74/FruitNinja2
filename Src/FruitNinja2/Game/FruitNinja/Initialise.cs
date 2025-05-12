@@ -27,21 +27,21 @@ namespace GameManager
       StringFunctions.StringHash("ZEN")
     };
 
-    public static string GetModeName(Game.GAME_MODE mode) => Initialise.modeNames[(int) mode];
+    public static string GetModeName(Game2.GAME_MODE mode) => Initialise.modeNames[(int) mode];
 
-    public static Game.GAME_MODE ParseGameMode(uint hash)
+    public static Game2.GAME_MODE ParseGameMode(uint hash)
     {
       for (int gameMode = 0; gameMode < Initialise.names.Length; ++gameMode)
       {
         if ((int) Initialise.names[gameMode] == (int) hash)
-          return (Game.GAME_MODE) gameMode;
+          return (Game2.GAME_MODE) gameMode;
       }
-      return Game.GAME_MODE.GM_MAX;
+      return Game2.GAME_MODE.GM_MAX;
     }
 
-    public static uint GetModeBitMask(Game.GAME_MODE mode)
+    public static uint GetModeBitMask(Game2.GAME_MODE mode)
     {
-      return mode == Game.GAME_MODE.GM_MAX ? uint.MaxValue : 1U << (int) (mode & (Game.GAME_MODE) 31);
+      return mode == Game2.GAME_MODE.GM_MAX ? uint.MaxValue : 1U << (int) (mode & (Game2.GAME_MODE) 31);
     }
   }
 }

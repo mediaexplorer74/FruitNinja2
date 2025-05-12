@@ -57,7 +57,7 @@ namespace GameManager
       this.m_state = 2;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public static void LoadContent()
@@ -94,11 +94,11 @@ namespace GameManager
           if ((double) this.m_time <= 0.99900001287460327)
             break;
           this.m_time = 1f;
-          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
           this.m_quitButton.Init();
           this.m_quitButton.m_triggerOnBackPress = true;
-          Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
-          Game.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+          Game2.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
           MenuButton quitButton = this.m_quitButton;
           quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
           Entity entity = this.m_quitButton.m_entity;
@@ -128,11 +128,11 @@ namespace GameManager
       {
         this.m_texture.Set();
         MatrixManager.GetInstance().Reset();
-        MatrixManager.GetInstance().Scale(new Vector3((float) ((double) this.m_texture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) this.m_texture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 1f));
+        MatrixManager.GetInstance().Scale(new Vector3((float) ((double) this.m_texture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) this.m_texture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
         float num1 = (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 + (double) this.m_texture.GetHeight() * 0.5);
         float num2 = (float) ((double) CreditsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - (double) CreditsScreen.ABOUT_CENTRE_Y - 60.0);
         float num3 = num1 - (num1 - num2) * this.m_time;
-        MatrixManager.GetInstance().Translate(new Vector3((float) CreditsScreen.ABOUT_CENTRE_X - Game.SCREEN_WIDTH / 2f, num3, 0.0f));
+        MatrixManager.GetInstance().Translate(new Vector3((float) CreditsScreen.ABOUT_CENTRE_X - Game2.SCREEN_WIDTH / 2f, num3, 0.0f));
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
         this.m_texture.UnSet();
@@ -141,11 +141,11 @@ namespace GameManager
       {
         CreditsScreen.m_creditsTexture.Set();
         MatrixManager.GetInstance().Reset();
-        MatrixManager.GetInstance().Scale(new Vector3((float) (((double) CreditsScreen.m_creditsTexture.GetWidth() - (double) CreditsScreen.sx) * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) (((double) CreditsScreen.m_creditsTexture.GetHeight() - (double) CreditsScreen.sy) * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 1f));
-        float num4 = (float) (-((double) Game.SCREEN_HEIGHT / 2.0) - (double) CreditsScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game.GAME_MODE_SCALE_FIX);
-        float num5 = (float) -((double) Game.SCREEN_HEIGHT / 2.0) + (float) (320 - CreditsScreen.CREDITS_CENTRE_Y);
+        MatrixManager.GetInstance().Scale(new Vector3((float) (((double) CreditsScreen.m_creditsTexture.GetWidth() - (double) CreditsScreen.sx) * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) (((double) CreditsScreen.m_creditsTexture.GetHeight() - (double) CreditsScreen.sy) * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
+        float num4 = (float) (-((double) Game2.SCREEN_HEIGHT / 2.0) - (double) CreditsScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game2.GAME_MODE_SCALE_FIX);
+        float num5 = (float) -((double) Game2.SCREEN_HEIGHT / 2.0) + (float) (320 - CreditsScreen.CREDITS_CENTRE_Y);
         float num6 = num4 - (num4 - num5) * this.m_time;
-        MatrixManager.GetInstance().Translate(new Vector3((float) CreditsScreen.CREDITS_CENTRE_X - Game.SCREEN_WIDTH / 2f, num6, 0.0f));
+        MatrixManager.GetInstance().Translate(new Vector3((float) CreditsScreen.CREDITS_CENTRE_X - Game2.SCREEN_WIDTH / 2f, num6, 0.0f));
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
         CreditsScreen.m_creditsTexture.UnSet();
@@ -154,9 +154,9 @@ namespace GameManager
         return;
       CreditsScreen.m_senseiTexture.Set();
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Scale(new Vector3((float) ((double) CreditsScreen.m_senseiTexture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) CreditsScreen.m_senseiTexture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 1f));
-      float num7 = (float) ((double) CreditsScreen.m_senseiTexture.GetWidth() * 0.5 + (double) Game.SCREEN_WIDTH / 2.0);
-      float num8 = (float) CreditsScreen.SENSEI_CENTRE_X - Game.SCREEN_WIDTH / 2f;
+      MatrixManager.GetInstance().Scale(new Vector3((float) ((double) CreditsScreen.m_senseiTexture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) CreditsScreen.m_senseiTexture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
+      float num7 = (float) ((double) CreditsScreen.m_senseiTexture.GetWidth() * 0.5 + (double) Game2.SCREEN_WIDTH / 2.0);
+      float num8 = (float) CreditsScreen.SENSEI_CENTRE_X - Game2.SCREEN_WIDTH / 2f;
       float num9 = num7 - (num7 - num8) * this.m_time;
       MatrixManager.GetInstance().Translate(new Vector3(num9, CreditsScreen.ABOUT_SCREEN_HEIGHT / 2f - (float) CreditsScreen.SENSEI_CENTRE_Y, 0.0f));
       MatrixManager.GetInstance().UploadCurrentMatrices();

@@ -69,8 +69,8 @@ namespace GameManager
 
     public void SetUpBonusScreen(BonusScreen screen)
     {
-      Game.game_work.scoreBeforeBonuses = Game.game_work.currentScore;
-      Game.game_work.inBonusScreen = true;
+      Game2.game_work.scoreBeforeBonuses = Game2.game_work.currentScore;
+      Game2.game_work.inBonusScreen = true;
       BonusScreen.bomb_magnet = false;
       this.m_bestBonuses.Clear();
       List<int> intList1 = new List<int>();
@@ -116,16 +116,16 @@ namespace GameManager
 
     public void AddCombo(int length)
     {
-      Game.game_work.saveData.AddToTotal("combo_bonus", StringFunctions.StringHash("combo_bonus"), this.m_comboBonusPoints[Mortar.Math.CLAMP(length - 3, 0, this.m_comboBonusPoints.Count - 1)], false, false);
+      Game2.game_work.saveData.AddToTotal("combo_bonus", StringFunctions.StringHash("combo_bonus"), this.m_comboBonusPoints[Mortar.Math.CLAMP(length - 3, 0, this.m_comboBonusPoints.Count - 1)], false, false);
       uint hash = StringFunctions.StringHash("best_combo");
-      int total = Game.game_work.saveData.GetTotal(hash);
-      Game.game_work.saveData.AddToTotal("best_combo", hash, Mortar.Math.MAX(0, length - total), false, false);
+      int total = Game2.game_work.saveData.GetTotal(hash);
+      Game2.game_work.saveData.AddToTotal("best_combo", hash, Mortar.Math.MAX(0, length - total), false, false);
     }
 
     public static int GetBonusTotal(uint hash)
     {
       uint num = StringFunctions.StringHash("score");
-      return (int) hash == (int) num ? Game.game_work.currentScore : Game.game_work.saveData.GetTotal(hash);
+      return (int) hash == (int) num ? Game2.game_work.currentScore : Game2.game_work.saveData.GetTotal(hash);
     }
 
     public Bonus GetFirstBestBonus(ref LinkedListNode<Bonus> it)

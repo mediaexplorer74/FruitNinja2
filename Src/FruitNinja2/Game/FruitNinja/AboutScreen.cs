@@ -5,7 +5,7 @@
 
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
 using Mortar;
 using System;
@@ -66,7 +66,7 @@ namespace GameManager
       this.m_state = 2;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Mortar.Math.g_random.RandF(5f) + 5f, -Mortar.Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public static void LoadContent()
@@ -74,7 +74,7 @@ namespace GameManager
       AboutScreen.s_boardTexture = TextureManager.GetInstance().Load("haikus.tex", true);
       AboutScreen.m_creditsTexture = TextureManager.GetInstance().Load("options.tex", true);
       AboutScreen.m_senseiTexture = TextureManager.GetInstance().Load("textureswp7/sensei.tex");
-      AboutScreen.AboutScreenTime = (float) (-((double) Game.SCREEN_HEIGHT / 2.0) - (double) AboutScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game.GAME_MODE_SCALE_FIX);
+      AboutScreen.AboutScreenTime = (float) (-((double) Game2.SCREEN_HEIGHT / 2.0) - (double) AboutScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game2.GAME_MODE_SCALE_FIX);
     }
 
     public static void UnLoadContent()
@@ -133,35 +133,35 @@ namespace GameManager
 
     private void Callback_English()
     {
-      if (Game.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH_UK || Game.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH)
+      if (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH_UK || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH)
         return;
       this.ShowDialog(StringTableUtils.Language.LANGUAGE_ENGLISH);
     }
 
     private void Callback_French()
     {
-      if (Game.game_work.language == StringTableUtils.Language.LANGUAGE_FRENCH)
+      if (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_FRENCH)
         return;
       this.ShowDialog(StringTableUtils.Language.LANGUAGE_FRENCH);
     }
 
     private void Callback_Italian()
     {
-      if (Game.game_work.language == StringTableUtils.Language.LANGUAGE_ITALIAN)
+      if (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ITALIAN)
         return;
       this.ShowDialog(StringTableUtils.Language.LANGUAGE_ITALIAN);
     }
 
     private void Callback_German()
     {
-      if (Game.game_work.language == StringTableUtils.Language.LANGUAGE_GERMAN)
+      if (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_GERMAN)
         return;
       this.ShowDialog(StringTableUtils.Language.LANGUAGE_GERMAN);
     }
 
     private void Callback_Spanish()
     {
-      if (Game.game_work.language == StringTableUtils.Language.LANGUAGE_SPANISH)
+      if (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_SPANISH)
         return;
       this.ShowDialog(StringTableUtils.Language.LANGUAGE_SPANISH);
     }
@@ -189,35 +189,35 @@ namespace GameManager
               new MenuButton.MenuCallback(this.Callback_English), 
               -1, scale, false);
           AboutScreen.m_englishTexture.Init();
-          Game.game_work.hud.AddControl((HUDControl) AboutScreen.m_englishTexture);
+          Game2.game_work.hud.AddControl((HUDControl) AboutScreen.m_englishTexture);
           AboutScreen.m_englishTexture.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         }
         if (AboutScreen.m_frenchTexture == null)
         {
           AboutScreen.m_frenchTexture = new MenuButton("francais.tex", new Vector3(0.0f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.Callback_French), -1, scale, false);
           AboutScreen.m_frenchTexture.Init();
-          Game.game_work.hud.AddControl((HUDControl) AboutScreen.m_frenchTexture);
+          Game2.game_work.hud.AddControl((HUDControl) AboutScreen.m_frenchTexture);
           AboutScreen.m_frenchTexture.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         }
         if (AboutScreen.m_italianTexture == null)
         {
           AboutScreen.m_italianTexture = new MenuButton("italiano.tex", new Vector3(0.0f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.Callback_Italian), -1, scale, false);
           AboutScreen.m_italianTexture.Init();
-          Game.game_work.hud.AddControl((HUDControl) AboutScreen.m_italianTexture);
+          Game2.game_work.hud.AddControl((HUDControl) AboutScreen.m_italianTexture);
           AboutScreen.m_italianTexture.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         }
         if (AboutScreen.m_germanTexture == null)
         {
           AboutScreen.m_germanTexture = new MenuButton("deusch.tex", new Vector3(0.0f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.Callback_German), -1, scale, false);
           AboutScreen.m_germanTexture.Init();
-          Game.game_work.hud.AddControl((HUDControl) AboutScreen.m_germanTexture);
+          Game2.game_work.hud.AddControl((HUDControl) AboutScreen.m_germanTexture);
           AboutScreen.m_germanTexture.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         }
         if (AboutScreen.m_spanishTexture == null)
         {
           AboutScreen.m_spanishTexture = new MenuButton("espanol.tex", new Vector3(0.0f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.Callback_Spanish), -1, scale, false);
           AboutScreen.m_spanishTexture.Init();
-          Game.game_work.hud.AddControl((HUDControl) AboutScreen.m_spanishTexture);
+          Game2.game_work.hud.AddControl((HUDControl) AboutScreen.m_spanishTexture);
           AboutScreen.m_spanishTexture.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         }
       }
@@ -225,8 +225,8 @@ namespace GameManager
       float num2 = 40f;
       if ((double) GameTask.GetPauseAmount() == 0.0)
       {
-        float num3 = (float) (-((double) Game.SCREEN_HEIGHT / 2.0) - (double) AboutScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game.GAME_MODE_SCALE_FIX);
-        float num4 = (float) -((double) Game.SCREEN_HEIGHT / 2.0) + (float) (320 - (AboutScreen.CREDITS_CENTRE_Y + 10));
+        float num3 = (float) (-((double) Game2.SCREEN_HEIGHT / 2.0) - (double) AboutScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game2.GAME_MODE_SCALE_FIX);
+        float num4 = (float) -((double) Game2.SCREEN_HEIGHT / 2.0) + (float) (320 - (AboutScreen.CREDITS_CENTRE_Y + 10));
         float num5 = num3 - (num3 - num4) * this.m_time;
         if (AboutScreen.m_englishTexture != null)
         {
@@ -267,11 +267,11 @@ namespace GameManager
           if ((double) this.m_time <= 0.99900001287460327)
             break;
           this.m_time = 1f;
-          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) AboutScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), (float) ((double) AboutScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
           this.m_quitButton.Init();
           this.m_quitButton.m_triggerOnBackPress = true;
-          Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
-          Game.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+          Game2.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
           MenuButton quitButton = this.m_quitButton;
           quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
           Entity entity = this.m_quitButton.m_entity;
@@ -289,7 +289,7 @@ namespace GameManager
           this.m_time *= 0.75f;
           if ((double) this.m_time >= 1.0 / 1000.0)
             break;
-          Game.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
+          Game2.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
           this.m_terminate = true;
           break;
       }
@@ -303,11 +303,11 @@ namespace GameManager
         {
           this.m_texture.Set();
           MatrixManager.GetInstance().Reset();
-          MatrixManager.GetInstance().Scale(new Vector3(400f * Game.GAME_MODE_SCALE_FIX, 320f * Game.GAME_MODE_SCALE_FIX, 1f));
+          MatrixManager.GetInstance().Scale(new Vector3(400f * Game2.GAME_MODE_SCALE_FIX, 320f * Game2.GAME_MODE_SCALE_FIX, 1f));
           float num1 = (float) ((double) AboutScreen.ABOUT_SCREEN_HEIGHT / 2.0 + 110.0);
           float num2 = (float) ((double) AboutScreen.ABOUT_SCREEN_HEIGHT / 2.0 - (double) AboutScreen.ABOUT_CENTRE_Y - 16.0);
           float num3 = num1 - (num1 - num2) * this.m_time;
-          MatrixManager.GetInstance().Translate(new Vector3((float) AboutScreen.ABOUT_CENTRE_X - Game.SCREEN_WIDTH / 2f, num3, 0.0f));
+          MatrixManager.GetInstance().Translate(new Vector3((float) AboutScreen.ABOUT_CENTRE_X - Game2.SCREEN_WIDTH / 2f, num3, 0.0f));
           MatrixManager.GetInstance().UploadCurrentMatrices();
           Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
           this.m_texture.UnSet();
@@ -316,11 +316,11 @@ namespace GameManager
         {
           AboutScreen.m_creditsTexture.Set();
           MatrixManager.GetInstance().Reset();
-          MatrixManager.GetInstance().Scale(new Vector3((float) (390.0 * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) (160.0 * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 1f));
-          float num4 = (float) (-((double) Game.SCREEN_HEIGHT / 2.0) - (double) AboutScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game.GAME_MODE_SCALE_FIX);
-          float num5 = (float) -((double) Game.SCREEN_HEIGHT / 2.0) + (float) (320 - AboutScreen.CREDITS_CENTRE_Y);
+          MatrixManager.GetInstance().Scale(new Vector3((float) (390.0 * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) (160.0 * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
+          float num4 = (float) (-((double) Game2.SCREEN_HEIGHT / 2.0) - (double) AboutScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game2.GAME_MODE_SCALE_FIX);
+          float num5 = (float) -((double) Game2.SCREEN_HEIGHT / 2.0) + (float) (320 - AboutScreen.CREDITS_CENTRE_Y);
           float num6 = num4 - (num4 - num5) * this.m_time;
-          MatrixManager.GetInstance().Translate(new Vector3((float) AboutScreen.CREDITS_CENTRE_X - Game.SCREEN_WIDTH / 2f, num6, 0.0f));
+          MatrixManager.GetInstance().Translate(new Vector3((float) AboutScreen.CREDITS_CENTRE_X - Game2.SCREEN_WIDTH / 2f, num6, 0.0f));
           MatrixManager.GetInstance().UploadCurrentMatrices();
           Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
           AboutScreen.m_creditsTexture.UnSet();
@@ -329,9 +329,9 @@ namespace GameManager
         {
           AboutScreen.m_senseiTexture.Set();
           MatrixManager.GetInstance().Reset();
-          MatrixManager.GetInstance().Scale(new Vector3((float) AboutScreen.m_senseiTexture.GetWidth() * Game.GAME_MODE_SCALE_FIX, (float) AboutScreen.m_senseiTexture.GetHeight() * Game.GAME_MODE_SCALE_FIX, 1f));
-          float num7 = (float) ((double) AboutScreen.m_senseiTexture.GetWidth() * 0.5 + (double) Game.SCREEN_WIDTH / 2.0);
-          float num8 = (float) AboutScreen.SENSEI_CENTRE_X - Game.SCREEN_WIDTH / 2f;
+          MatrixManager.GetInstance().Scale(new Vector3((float) AboutScreen.m_senseiTexture.GetWidth() * Game2.GAME_MODE_SCALE_FIX, (float) AboutScreen.m_senseiTexture.GetHeight() * Game2.GAME_MODE_SCALE_FIX, 1f));
+          float num7 = (float) ((double) AboutScreen.m_senseiTexture.GetWidth() * 0.5 + (double) Game2.SCREEN_WIDTH / 2.0);
+          float num8 = (float) AboutScreen.SENSEI_CENTRE_X - Game2.SCREEN_WIDTH / 2f;
           float num9 = num7 - (num7 - num8) * this.m_time;
           MatrixManager.GetInstance().Translate(new Vector3(num9, AboutScreen.ABOUT_SCREEN_HEIGHT / 2f - (float) AboutScreen.SENSEI_CENTRE_Y, 0.0f));
           MatrixManager.GetInstance().UploadCurrentMatrices();
@@ -342,7 +342,7 @@ namespace GameManager
           return;
         string str1 = "v1.1  ";
         string str2;
-        switch (Game.game_work.language)
+        switch (Game2.game_work.language)
         {
           case StringTableUtils.Language.LANGUAGE_FRENCH:
             str2 = str1 + "Contactez-nous:";

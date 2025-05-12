@@ -16,7 +16,6 @@ Here are a couple of posts from there:
 3) Levelling - there is;
 
 4) And there is a design that matches all similar games.;
-
 Surely a permanent Internet connection is also necessary
 
 raincandy_U: Mes_360, it says Online, so you need a permanent connection. The game has completely collapsed. "

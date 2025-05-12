@@ -57,7 +57,7 @@ namespace GameManager
       this.m_state = 2;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public static void LoadContent()
@@ -88,9 +88,9 @@ namespace GameManager
 
     public override void Update(float dt)
     {
-      if (Game.isWP7TrialMode())
+      if (Game2.isWP7TrialMode())
       {
-        Game.ShowBuyMessageBox();
+        Game2.ShowBuyMessageBox();
         if (this.m_mode == 0)
         {
           this.m_dojoScreen.Reset();
@@ -99,7 +99,7 @@ namespace GameManager
         {
           GameModeScreen control = new GameModeScreen(false);
           control.Init();
-          Game.game_work.hud.AddControl((HUDControl) control);
+          Game2.game_work.hud.AddControl((HUDControl) control);
         }
         this.m_terminate = true;
       }
@@ -112,10 +112,10 @@ namespace GameManager
             if ((double) this.m_time <= 0.99900001287460327)
               break;
             this.m_time = 1f;
-            this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) ConstructionScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+            this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), (float) ((double) ConstructionScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
             this.m_quitButton.Init();
-            Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
-            Game.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
+            Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+            Game2.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
             MenuButton quitButton = this.m_quitButton;
             quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
             Entity entity = this.m_quitButton.m_entity;
@@ -134,7 +134,7 @@ namespace GameManager
             {
               GameModeScreen control = new GameModeScreen(false);
               control.Init();
-              Game.game_work.hud.AddControl((HUDControl) control);
+              Game2.game_work.hud.AddControl((HUDControl) control);
             }
             this.m_terminate = true;
             break;
@@ -161,11 +161,11 @@ namespace GameManager
       {
         ConstructionScreen.m_creditsTexture.Set();
         MatrixManager.GetInstance().Reset();
-        MatrixManager.GetInstance().Scale(new Vector3((float) ((double) ConstructionScreen.m_creditsTexture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) ConstructionScreen.m_creditsTexture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 1f));
-        float num4 = (float) (-((double) Game.SCREEN_HEIGHT / 2.0) - (double) ConstructionScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game.GAME_MODE_SCALE_FIX);
-        float num5 = (float) -((double) Game.SCREEN_HEIGHT / 2.0) + (float) (320 - ConstructionScreen.CREDITS_CENTRE_Y);
+        MatrixManager.GetInstance().Scale(new Vector3((float) ((double) ConstructionScreen.m_creditsTexture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) ConstructionScreen.m_creditsTexture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
+        float num4 = (float) (-((double) Game2.SCREEN_HEIGHT / 2.0) - (double) ConstructionScreen.m_creditsTexture.GetHeight() * 0.5 * (double) Game2.GAME_MODE_SCALE_FIX);
+        float num5 = (float) -((double) Game2.SCREEN_HEIGHT / 2.0) + (float) (320 - ConstructionScreen.CREDITS_CENTRE_Y);
         float num6 = num4 - (num4 - num5) * this.m_time;
-        MatrixManager.GetInstance().Translate(new Vector3((float) ConstructionScreen.CREDITS_CENTRE_X - Game.SCREEN_WIDTH / 2f, num6, 0.0f));
+        MatrixManager.GetInstance().Translate(new Vector3((float) ConstructionScreen.CREDITS_CENTRE_X - Game2.SCREEN_WIDTH / 2f, num6, 0.0f));
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
         ConstructionScreen.m_creditsTexture.UnSet();
@@ -174,9 +174,9 @@ namespace GameManager
         return;
       ConstructionScreen.m_senseiTexture.Set();
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Scale(new Vector3((float) ((double) ConstructionScreen.m_senseiTexture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) ConstructionScreen.m_senseiTexture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 1f));
-      float num7 = (float) ((double) ConstructionScreen.m_senseiTexture.GetWidth() * 0.5 + (double) Game.SCREEN_WIDTH / 2.0);
-      float num8 = (float) ConstructionScreen.SENSEI_CENTRE_X - Game.SCREEN_WIDTH / 2f;
+      MatrixManager.GetInstance().Scale(new Vector3((float) ((double) ConstructionScreen.m_senseiTexture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) ConstructionScreen.m_senseiTexture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 1f));
+      float num7 = (float) ((double) ConstructionScreen.m_senseiTexture.GetWidth() * 0.5 + (double) Game2.SCREEN_WIDTH / 2.0);
+      float num8 = (float) ConstructionScreen.SENSEI_CENTRE_X - Game2.SCREEN_WIDTH / 2f;
       float num9 = num7 - (num7 - num8) * this.m_time;
       MatrixManager.GetInstance().Translate(new Vector3(num9, ConstructionScreen.ABOUT_SCREEN_HEIGHT / 2f - (float) ConstructionScreen.SENSEI_CENTRE_Y, 0.0f));
       MatrixManager.GetInstance().UploadCurrentMatrices();

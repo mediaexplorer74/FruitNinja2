@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GameManager
 {
-    class Player : Entity
+    class Player //: Entity
     {
-        public enum direction {up, down, left, right, none }
+        /*public enum direction {up, down, left, right, none }
         public Player(Vector2 possition, LevelState levelstate, bool skipSpawnAnim = false) :
             base(possition, 8, 14, new AnimationManager("Miner", 24, new int[] { 14, 14, 14, 14, 14, 4 }, startFrames: new int[] { 0, 0, 0, 1, 1, 0 }), levelstate, maxHealth: 1)
         {
@@ -143,12 +143,7 @@ namespace GameManager
                     {
                         target = prevPos;
                     }
-                    /*
-                    if (levelstate.map.IsSolid(target.X, target.Y) && moveTimer == 20)
-                    {
-                        target = prevPos;
-                    }
-                    */
+                 
                 }
                 else if (curInput == direction.down || curInput == direction.up)
                 {
@@ -226,6 +221,6 @@ namespace GameManager
             Gib();
             levelstate.cam.ScreenShake();
             ResourceManager.PlaySFX("Explosion");
-        }
+        }*/
     }
 }

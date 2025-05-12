@@ -104,7 +104,7 @@ namespace GameManager
         mortarRectangleDec.right = this.m_parentList.m_pos.X + this.m_parentList.GetWidth() / 2f;
         rect = new MortarRectangleDec?(mortarRectangleDec);
       }
-      Game.game_work.pGameFont.DrawString(this.m_text, pos, this.m_colour, 30f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER, 1f, rect);
+      Game2.game_work.pGameFont.DrawString(this.m_text, pos, this.m_colour, 30f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER, 1f, rect);
     }
 
     public delegate void ClickedMenuItemCallback(ScrollingMenuItem fdsdf);

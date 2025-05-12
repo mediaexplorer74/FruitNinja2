@@ -269,7 +269,7 @@ namespace GameManager
       else if ((double) SplatEntity.sprinkleWait >= -(double) SplatEntity.SPLAT_SPRINKLE_SEPARATION)
         SplatEntity.sprinkleWait -= dt;
       SplatEntity.splatSpeed = 1.25f + Math.CLAMP((float) ((double) ((long) ActorManager.GetInstance().GetNumEntities() + (long) SplatEntity.NumActiveSplats()) / 15.0 - 0.15000000596046448), 0.0f, 3f);
-      if (!Game.IsFastHardware() || Game.IsMultiplayer())
+      if (!Game2.IsFastHardware() || Game2.IsMultiplayer())
         SplatEntity.splatSpeed *= 1.5f;
       int num = 0;
       int index1 = 0;
@@ -355,7 +355,7 @@ namespace GameManager
       SplatEntity.m_points[index1 + 5].Y = this.m_pos.Y + (-this.m_xVec.Y - this.m_yVec.Y) * this.m_cur_scale.Y;
       SplatEntity.m_points[index1 + 5].u = num1;
       SplatEntity.m_points[index1 + 5].v = num4;
-      Color color = Game.TintColour(this.m_colour, Game.game_work.hud.m_backTint);
+      Color color = Game2.TintColour(this.m_colour, Game2.game_work.hud.m_backTint);
       ref Color local1 = ref color;
 
       local1.R = (byte) ((int)local1.R 
@@ -386,7 +386,7 @@ namespace GameManager
     public virtual void Update(float dt)
     {
       SplatEntity splatEntity1 = this;
-      splatEntity1.m_pos = Vector3.Add(splatEntity1.m_pos, Vector3.Multiply(this.m_vel, Game.game_work.dt));
+      splatEntity1.m_pos = Vector3.Add(splatEntity1.m_pos, Vector3.Multiply(this.m_vel, Game2.game_work.dt));
       if (this.m_onWall < 0)
       {
         if ((double) this.m_pos.Z < (double) -SplatEntity.WALL_DIST)
@@ -415,30 +415,30 @@ namespace GameManager
             this.PlaySplat(2);
           else
             this.PlaySplat(1);
-          if (Game.IsMultiplayer())
+          if (Game2.IsMultiplayer())
           {
             SplatEntity splatEntity3 = this;
-            splatEntity3.m_cur_scale = Vector3.Multiply(splatEntity3.m_cur_scale, Game.SPLIT_SCREEN_SCALE);
+            splatEntity3.m_cur_scale = Vector3.Multiply(splatEntity3.m_cur_scale, Game2.SPLIT_SCREEN_SCALE);
           }
           this.m_fadeTime = Math.g_random.RandF(SplatEntity.SPLAT_FADE_LENGTH * 0.5f) + SplatEntity.SPLAT_FADE_LENGTH * 0.75f;
           this.m_fadeSpeed = Math.g_random.RandF(SplatEntity.SPLAT_FADE_SPEED * 0.5f) + SplatEntity.SPLAT_FADE_SPEED * 0.75f;
           if (Math.g_random.Rand32(10) == 0 && (double) SplatEntity.sprinkleWait < -(double) SplatEntity.SPLAT_SPRINKLE_SEPARATION)
             SplatEntity.sprinkleWait = SplatEntity.SPLAT_SPRINKLE_WAIT;
         }
-        if (Game.IsMultiplayer())
+        if (Game2.IsMultiplayer())
         {
-          float num = Game.game_work.dt * 10f;
+          float num = Game2.game_work.dt * 10f;
           this.m_vel.X += (double) this.m_pos.X < 0.0 ? -num : num;
         }
         else
-          this.m_vel.Y -= Game.game_work.dt * 10f;
+          this.m_vel.Y -= Game2.game_work.dt * 10f;
       }
       else
       {
         dt *= SplatEntity.splatSpeed;
         if ((double) this.m_fadeTime <= 1.25)
         {
-          if (Game.IsMultiplayer())
+          if (Game2.IsMultiplayer())
           {
             float num = dt * SplatEntity.wallMaxDrop[this.m_onWall];
             this.m_vel.X += (double) this.m_pos.X < 0.0 ? -num : num;
@@ -456,7 +456,7 @@ namespace GameManager
         }
         if ((double) this.m_criticalFadeTime > 0.0)
         {
-          this.m_criticalFadeTime -= Game.game_work.dt;
+          this.m_criticalFadeTime -= Game2.game_work.dt;
           if ((double) this.m_criticalFadeTime <= 0.0)
             this.m_criticalFadeTime = 0.0f;
           float num = 1f - Math.CLAMP(this.m_criticalFadeTime / SplatEntity.CRITICAL_FADE_TIME, 

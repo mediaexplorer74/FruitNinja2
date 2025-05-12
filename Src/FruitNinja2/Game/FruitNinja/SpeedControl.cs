@@ -31,19 +31,19 @@ namespace GameManager
     private static bool first = true;
     private static bool firstFrame = true;
 
-    public static float MIN_SCALE => 40f * Game.HUD_SCALE;
+    public static float MIN_SCALE => 40f * Game2.HUD_SCALE;
 
-    public static float MAX_SCALE => 50f * Game.HUD_SCALE;
+    public static float MAX_SCALE => 50f * Game2.HUD_SCALE;
 
-    public static float GAME_SCREEN_X_IN => 2f * Game.HUD_SCALE;
+    public static float GAME_SCREEN_X_IN => 2f * Game2.HUD_SCALE;
 
-    public static float GAME_SCREEN_Y_IN => 2f * Game.HUD_SCALE;
+    public static float GAME_SCREEN_Y_IN => 2f * Game2.HUD_SCALE;
 
     public static Vector3 IN_GAME_POS
     {
       get
       {
-        return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + (double) SpeedControl.MIN_SCALE / 2.0) + SpeedControl.GAME_SCREEN_X_IN, (float) ((double) Game.SCREEN_HEIGHT / 2.0 - (double) SpeedControl.MIN_SCALE / 2.0) - SpeedControl.GAME_SCREEN_Y_IN, 0.0f);
+        return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + (double) SpeedControl.MIN_SCALE / 2.0) + SpeedControl.GAME_SCREEN_X_IN, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) SpeedControl.MIN_SCALE / 2.0) - SpeedControl.GAME_SCREEN_Y_IN, 0.0f);
       }
     }
 
@@ -59,7 +59,7 @@ namespace GameManager
       this.m_texture = TextureManager.GetInstance().Load("extra/white");
       this.m_pulseTime = (ushort) 0;
       this.m_pulseSpeed = 0.0f;
-      this.m_originalScale = this.m_scale = Vector3.Multiply(new Vector3((float) this.m_texture.GetWidth(), (float) this.m_texture.GetHeight() * 0.125f, 0.0f), Game.GAME_MODE_SCALE_FIX);
+      this.m_originalScale = this.m_scale = Vector3.Multiply(new Vector3((float) this.m_texture.GetWidth(), (float) this.m_texture.GetHeight() * 0.125f, 0.0f), Game2.GAME_MODE_SCALE_FIX);
       this.m_onScreenTime = 0.0f;
       this.m_canBeTinted = false;
       this.m_lossTime = 1f;
@@ -81,20 +81,20 @@ namespace GameManager
     {
       if (SpeedControl.firstFrame)
       {
-        if (Game.game_work.pause && (double) this.m_pulseSpeed > 0.0)
+        if (Game2.game_work.pause && (double) this.m_pulseSpeed > 0.0)
         {
           this.m_onScreenTime = 1f;
           this.m_alpha = Math.CLAMP(this.m_lossTime * 1.333f, 0.0f, 1f);
         }
         SpeedControl.firstFrame = false;
       }
-      if (Game.game_work.pause)
+      if (Game2.game_work.pause)
         return;
       float valTo1 = 0.0f;
       float valTo2 = 1f;
       if ((double) this.m_pulseSpeed != 0.0)
       {
-        if (Game.game_work.gameMode != Game.GAME_MODE.GM_ARCADE || Game.game_work.gameOver)
+        if (Game2.game_work.gameMode != Game2.GAME_MODE.GM_ARCADE || Game2.game_work.gameOver)
         {
           this.m_pulseSpeed = 0.0f;
         }
@@ -117,7 +117,7 @@ namespace GameManager
       }
       this.m_alpha += (float) (((double) Math.CLAMP(this.m_lossTime * 1.333f, 0.0f, 1f) - (double) this.m_alpha) * 0.10000000149011612);
       this.m_alpha += (float) (((double) Math.CLAMP(this.m_lossTime * 1.333f, 0.0f, 1f) - (double) this.m_alpha) * 0.10000000149011612);
-      if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
       {
         SoundManager.GetInstance().soundFadeOut = this.LINEAR_TRANSITION_TO(SoundManager.GetInstance().soundFadeOut, valTo2, dt);
         if (SpeedControl.first)
@@ -180,21 +180,21 @@ namespace GameManager
         data[index].v = 0.5f;
         if (index / 2 != 1)
         {
-          data[index].X = (float) ((index > 2 ? 1.0 : -1.0) * (double) Game.SCREEN_WIDTH / 2.0);
-          data[index].Y = (float) (-(double) Game.SCREEN_WIDTH / 2.0);
+          data[index].X = (float) ((index > 2 ? 1.0 : -1.0) * (double) Game2.SCREEN_WIDTH / 2.0);
+          data[index].Y = (float) (-(double) Game2.SCREEN_WIDTH / 2.0);
         }
         if (index % 2 == 1)
-          data[index].Y -= Game.SCREEN_WIDTH / 6f;
+          data[index].Y -= Game2.SCREEN_WIDTH / 6f;
       }
       this.m_texture.Set();
-      float num = (float) this.m_pulseTime / 65536f * (Game.SCREEN_WIDTH / 3f) - Game.SCREEN_HEIGHT / 2f;
+      float num = (float) this.m_pulseTime / 65536f * (Game2.SCREEN_WIDTH / 3f) - Game2.SCREEN_HEIGHT / 2f;
       for (int index = 0; index < 4; ++index)
       {
         MatrixManager.GetInstance().Reset();
         MatrixManager.GetInstance().Translate(new Vector3(0.0f, num, -5550f));
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawPrimitives2((PrimitiveType) 1, data, 6, true, 4, 0);
-        num += Game.SCREEN_WIDTH / 3f;
+        num += Game2.SCREEN_WIDTH / 3f;
       }
       this.m_texture.UnSet();
     }

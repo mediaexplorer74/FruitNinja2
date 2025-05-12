@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Mortar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,6 +124,39 @@ namespace GameManager
                 retVal[pair.Key] = pair.Value;
             }
             return retVal;
+        }
+
+        public static InputObject GetInstance()
+        {
+            return default;
+        }
+    }
+
+    public class InputObject
+    {
+        internal void ClearActions(uint v)
+        {
+            //
+        }
+
+        internal void Init()
+        {
+            //
+        }
+
+        internal void LoadConfigFile(string v)
+        {
+            //
+        }
+
+        internal void RegisterInputCallback(string hash1, InputActionMapper.InputCallback inputCallback)
+        {
+            //
+        }
+
+        internal void Update(float dt)
+        {
+            //
         }
     }
 }

@@ -94,10 +94,10 @@ namespace GameManager
       {
         float max = effectImage.timeStart * totalTime;
         float min = effectImage.timeEnd * totalTime;
-        if (Game.game_work.hud != null && !effectImage.added)
+        if (Game2.game_work.hud != null && !effectImage.added)
         {
           effectImage.added = true;
-          Game.game_work.hud.AddControl((HUDControl) effectImage.control);
+          Game2.game_work.hud.AddControl((HUDControl) effectImage.control);
         }
         bool flag = true;
         if ((double) effectImage.transitionTime > 0.0)
@@ -150,14 +150,14 @@ namespace GameManager
         float num5 = screenTint.timeStart * totalTime;
         float num6 = screenTint.timeEnd * totalTime;
         screenTint.transitionAmount = (double) screenTint.transitionTime <= 0.0 ? 1f : ((double) timeLeft > (double) num5 ? 0.0f : ((double) timeLeft <= (double) num6 + (double) screenTint.transitionTime ? Mortar.Math.CLAMP((timeLeft - num6) / screenTint.transitionTime, 0.0f, 1f) : Mortar.Math.MIN(1f, screenTint.transitionAmount + dt / screenTint.transitionTime)));
-        if (Game.game_work.hud != null)
+        if (Game2.game_work.hud != null)
         {
           for (int index = 0; index < 3; ++index)
           {
-            Game.game_work.hud.m_backTint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.backTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
-            Game.game_work.hud.m_backTint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.backTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
-            Game.game_work.hud.m_tint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.hudTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
-            Game.game_work.hud.m_tint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.hudTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
+            Game2.game_work.hud.m_backTint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.backTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
+            Game2.game_work.hud.m_backTint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.backTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
+            Game2.game_work.hud.m_tint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.hudTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
+            Game2.game_work.hud.m_tint[index] *= Mortar.Math.CLAMP((float) (1.0 + ((double) screenTint.hudTint[index] - 1.0) * (double) screenTint.transitionAmount), 0.0f, 1f);
           }
         }
       }
@@ -230,8 +230,8 @@ namespace GameManager
           effectImage.control.m_scale = effectImage.scale;
         if (((int) effectImage.transitionMask & 2) != 0)
           effectImage.control.m_color.A = (byte) 0;
-        if (Game.game_work.hud != null)
-          Game.game_work.hud.AddControl((HUDControl) effectImage.control);
+        if (Game2.game_work.hud != null)
+          Game2.game_work.hud.AddControl((HUDControl) effectImage.control);
         else
           effectImage.added = false;
       }
@@ -250,11 +250,11 @@ namespace GameManager
         switch (str)
         {
           case "fast":
-            if (!Game.IsFastHardware())
+            if (!Game2.IsFastHardware())
               break;
             goto default;
           default:
-            if (str == null || !(str == "slow") || !Game.IsFastHardware())
+            if (str == null || !(str == "slow") || !Game2.IsFastHardware())
             {
               if (xelement.Name == (XName) "image")
               {

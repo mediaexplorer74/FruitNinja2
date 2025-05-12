@@ -101,35 +101,35 @@ namespace GameManager
 
     public void _Draw()
     {
-      float num1 = (float) ((double) Game.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0);
+      float num1 = (float) ((double) Game2.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0);
       if ((double) this.m_time < 1.0)
       {
         float num2 = num1 + (float) ((1.0 - (double) this.m_time) * (double) ShopScreen.SHOP_BACK_RIGHT_SIDE * 1.5);
         this.backgroundTex.Set();
         float num3 = ShopScreen.SHOP_LIST_POS_X - (float) ((1.0 - (double) this.m_time) * (double) ShopScreen.SHOP_BACK_LEFT_SIDE * 1.5);
-        Matrix mtx = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE + 1f, Game.SCREEN_HEIGHT + 1f, 0.0f)), Matrix.CreateTranslation(new Vector3(num3, 0.0f, 0.0f)));
+        Matrix mtx = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE + 1f, Game2.SCREEN_HEIGHT + 1f, 0.0f)), Matrix.CreateTranslation(new Vector3(num3, 0.0f, 0.0f)));
         MatrixManager.instance.Reset();
         MatrixManager.instance.SetMatrix(mtx);
         MatrixManager.instance.UploadCurrentMatrices();
-        Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game.SCREEN_WIDTH) / 2.0) / 512.0), (float) ((512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0));
-        Math.Scale44(new Vector3(ShopScreen.SHOP_BACK_RIGHT_SIDE + 1f, Game.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
+        Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0) / 512.0), (float) ((512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0));
+        Math.Scale44(new Vector3(ShopScreen.SHOP_BACK_RIGHT_SIDE + 1f, Game2.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
         Vector3 scl = new Vector3(num2, 0.0f, 0.0f);
         Math.GlobalTranslate44(ref mtx, scl);
         MatrixManager.instance.Reset();
         MatrixManager.instance.SetMatrix(mtx);
         MatrixManager.instance.UploadCurrentMatrices();
-        Mesh.DrawQuad(Color.White, (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game.SCREEN_WIDTH) / 2.0) / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0));
+        Mesh.DrawQuad(Color.White, (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0) / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0));
         this.backgroundTex.UnSet();
       }
       else
       {
         Matrix mtx;
-        Math.Scale44(new Vector3(Game.SCREEN_WIDTH + 1f, Game.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
+        Math.Scale44(new Vector3(Game2.SCREEN_WIDTH + 1f, Game2.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
         MatrixManager.instance.Reset();
         MatrixManager.instance.SetMatrix(mtx);
         MatrixManager.instance.UploadCurrentMatrices();
         this.backgroundTex.Set();
-        Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0));
+        Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0));
         this.backgroundTex.UnSet();
       }
     }

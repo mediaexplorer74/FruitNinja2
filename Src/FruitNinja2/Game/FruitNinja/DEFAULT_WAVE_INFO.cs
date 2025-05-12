@@ -23,7 +23,7 @@ namespace GameManager
     public bool waitForEntities;
     public float speedLoss;
     public int overideProbabilty;
-    public int[] players = new int[Game.MAX_PLAYERS + 1];
+    public int[] players = new int[Game2.MAX_PLAYERS + 1];
 
     public void Reset()
     {

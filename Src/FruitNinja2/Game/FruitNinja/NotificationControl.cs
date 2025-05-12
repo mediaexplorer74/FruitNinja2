@@ -26,12 +26,12 @@ namespace GameManager
 
     public static Vector3 NOTIFICATION_START_POS(NotificationControl.NotificationType type)
     {
-      return type == NotificationControl.NotificationType.ITEM_UNLOCK ? new Vector3(-95f, (float) ((double) Game.SCREEN_HEIGHT / 2.0 + 32.0), 0.0f) : new Vector3(-95f, (float) ((double) Game.SCREEN_HEIGHT / 2.0 + 24.0), 0.0f);
+      return type == NotificationControl.NotificationType.ITEM_UNLOCK ? new Vector3(-95f, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 + 32.0), 0.0f) : new Vector3(-95f, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 + 24.0), 0.0f);
     }
 
     public static Vector3 NOTIFICATION_DEST_POS(NotificationControl.NotificationType type)
     {
-      return type == NotificationControl.NotificationType.ITEM_UNLOCK ? new Vector3(-95f, (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 32.0), 0.0f) : new Vector3(-95f, (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 13.0), 0.0f);
+      return type == NotificationControl.NotificationType.ITEM_UNLOCK ? new Vector3(-95f, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 32.0), 0.0f) : new Vector3(-95f, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 13.0), 0.0f);
     }
 
     public static Vector3 NOTIFICATION_POS_DELTA(NotificationControl.NotificationType type)
@@ -112,7 +112,7 @@ namespace GameManager
       this.m_type = type;
       if (type == NotificationControl.NotificationType.ITEM_UNLOCK)
         SoundManager.GetInstance().SFXPlay(SoundDef.SND_FAN_FARE);
-      float num2 = Game.game_work.pGameFont.MeasureString(this.m_text) * this.m_textScale;
+      float num2 = Game2.game_work.pGameFont.MeasureString(this.m_text) * this.m_textScale;
       if ((double) num2 > (double) num1)
         this.m_textScale *= num1 / num2;
       this.m_time = 0.0f;
@@ -160,7 +160,7 @@ namespace GameManager
       PSPParticleEmitter pspParticleEmitter = PSPParticleManager.GetInstance().AddEmitter(hash, (Action<PSPParticleEmitter>) null);
       if (pspParticleEmitter != null)
       {
-        pspParticleEmitter.pos = new Vector3((float) ((double) Mortar.Math.g_random.RandF(20f) - 10.0 - 100.0) + (float) (100 * (int) ((double) time * 8.0)), (float) ((double) Game.SCREEN_HEIGHT / 2.0 - (double) Mortar.Math.g_random.Rand32(5) - 25.0), 0.0f);
+        pspParticleEmitter.pos = new Vector3((float) ((double) Mortar.Math.g_random.RandF(20f) - 10.0 - 100.0) + (float) (100 * (int) ((double) time * 8.0)), (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) Mortar.Math.g_random.Rand32(5) - 25.0), 0.0f);
         pspParticleEmitter.updateEvenIfPaused = true;
         pspParticleEmitter.sizeScale = 1f;
       }
@@ -200,10 +200,10 @@ namespace GameManager
           }
           float num1 = 18f;
           float num2 = 186f;
-          Game.game_work.pGameFont.DrawString(this.m_text, this.m_pos.X + num1, this.m_pos.Y, 0.0f, new Color(50, 50, 50, (int) byte.MaxValue), this.m_textScale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER);
+          Game2.game_work.pGameFont.DrawString(this.m_text, this.m_pos.X + num1, this.m_pos.Y, 0.0f, new Color(50, 50, 50, (int) byte.MaxValue), this.m_textScale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER);
           if (this.m_numberText.Length <= 0)
             break;
-          Game.game_work.pGameFont.DrawString(this.m_numberText, this.m_pos.X + num2, this.m_pos.Y, 0.0f, new Color(50, 50, 50, (int) byte.MaxValue), this.m_textScale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER);
+          Game2.game_work.pGameFont.DrawString(this.m_numberText, this.m_pos.X + num2, this.m_pos.Y, 0.0f, new Color(50, 50, 50, (int) byte.MaxValue), this.m_textScale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER);
           break;
         case NotificationControl.NotificationType.ITEM_UNLOCK:
           if (NotificationControl.s_unlockBanner != null)
@@ -226,7 +226,7 @@ namespace GameManager
             Mesh.DrawQuad(Color.White);
             this.m_texture.UnSet();
           }
-          Game.game_work.pGameFont.DrawString(this.m_text, this.m_pos.X + 18f, this.m_pos.Y + 16f, 0.0f, new Color(50, 50, 50, (int) byte.MaxValue), this.m_textScale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER);
+          Game2.game_work.pGameFont.DrawString(this.m_text, this.m_pos.X + 18f, this.m_pos.Y + 16f, 0.0f, new Color(50, 50, 50, (int) byte.MaxValue), this.m_textScale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER);
           break;
       }
     }

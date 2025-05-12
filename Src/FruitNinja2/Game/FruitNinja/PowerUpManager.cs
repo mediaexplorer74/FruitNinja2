@@ -76,8 +76,8 @@ namespace GameManager
       this.ClearScoreMultipliers();
       for (int index = 0; index < 3; ++index)
       {
-        Game.game_work.hud.m_backTint[index] = 1f;
-        Game.game_work.hud.m_tint[index] = 1f;
+        Game2.game_work.hud.m_backTint[index] = 1f;
+        Game2.game_work.hud.m_tint[index] = 1f;
       }
     }
 
@@ -126,11 +126,11 @@ namespace GameManager
       this.ClearScoreMultipliers();
       for (int index = 0; index < 3; ++index)
       {
-        Game.game_work.hud.m_backTint[index] = 1f;
-        Game.game_work.hud.m_tint[index] = 1f;
+        Game2.game_work.hud.m_backTint[index] = 1f;
+        Game2.game_work.hud.m_tint[index] = 1f;
       }
       if (newGame)
-        Game.game_work.timeControl.Reset();
+        Game2.game_work.timeControl.Reset();
       int index1 = 0;
       while (index1 < this.m_activePowerUps.Count)
       {
@@ -197,8 +197,8 @@ namespace GameManager
       this.ClearScoreMultipliers();
       for (int index = 0; index < 3; ++index)
       {
-        Game.game_work.hud.m_backTint[index] = 1f;
-        Game.game_work.hud.m_tint[index] = 1f;
+        Game2.game_work.hud.m_backTint[index] = 1f;
+        Game2.game_work.hud.m_tint[index] = 1f;
       }
       int num2 = 0;
       int index1 = 0;
@@ -396,7 +396,7 @@ namespace GameManager
             int score = -1;
             element.QueryIntAttribute("deferedPoints", ref score);
             if (score >= 0)
-              Game.AddToCurrentScore(score);
+              Game2.AddToCurrentScore(score);
           }
         }
       }
@@ -451,13 +451,13 @@ namespace GameManager
             ScoreModifier scoreModifier = (ScoreModifier) gameModifier;
             if (scoreModifier.DoesDeferPoint())
             {
-              Game.SetScoreDelegate(new Game.ScoreDelegate(scoreModifier.DeferPoints));
+              Game2.SetScoreDelegate(new Game2.ScoreDelegate(scoreModifier.DeferPoints));
               return true;
             }
           }
         }
       }
-      Game.SetScoreDelegate();
+      Game2.SetScoreDelegate();
       return false;
     }
   }

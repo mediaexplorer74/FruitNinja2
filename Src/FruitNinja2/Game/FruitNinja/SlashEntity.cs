@@ -88,7 +88,7 @@ namespace GameManager
 
     public static float START_THICKNESS => 9f;
 
-    public static float START_MP_THICKNESS => SlashEntity.START_THICKNESS * Game.SPLIT_SCREEN_SCALE;
+    public static float START_MP_THICKNESS => SlashEntity.START_THICKNESS * Game2.SPLIT_SCREEN_SCALE;
 
     public static float FADE_OUT_TIME => 0.2f;
 
@@ -102,9 +102,9 @@ namespace GameManager
       get => SlashEntity.START_MP_THICKNESS / SlashEntity.FADE_OUT_TIME;
     }
 
-    public static float START_CHANGED_DIST => 50f * Game.GAME_MODE_SCALE_FIX;
+    public static float START_CHANGED_DIST => 50f * Game2.GAME_MODE_SCALE_FIX;
 
-    public static float CHANGED_DIST => 5f * Game.GAME_MODE_SCALE_FIX;
+    public static float CHANGED_DIST => 5f * Game2.GAME_MODE_SCALE_FIX;
 
     public static float MAX_POINTS => 110f;
 
@@ -197,11 +197,11 @@ namespace GameManager
       }
       if ((double) this.m_slashLength < 1.0)
       {
-        this.m_slashLength += 45f * Game.game_work.dt;
+        this.m_slashLength += 45f * Game2.game_work.dt;
         if ((double) this.m_slashLength > 1.0)
           this.m_slashLength = 1f;
       }
-      Vector3 vector3_2 = !Game.IsMultiplayer() ? Vector3.Multiply(vector3_1, SlashEntity.START_THICKNESS * this.m_slashLength) : Vector3.Multiply(vector3_1, SlashEntity.START_MP_THICKNESS * this.m_slashLength);
+      Vector3 vector3_2 = !Game2.IsMultiplayer() ? Vector3.Multiply(vector3_1, SlashEntity.START_THICKNESS * this.m_slashLength) : Vector3.Multiply(vector3_1, SlashEntity.START_MP_THICKNESS * this.m_slashLength);
       Vector3 vector3_3 = Vector3.Subtract(pos, vector3_2);
       this.ValFloat(vector3_3.X);
       this.ValFloat(vector3_3.Y);
@@ -230,7 +230,7 @@ namespace GameManager
 
     protected void UpdatePoints(float dt)
     {
-      if ((double) dt == 0.0 && (double) Game.game_work.hitBombTime > 0.0)
+      if ((double) dt == 0.0 && (double) Game2.game_work.hitBombTime > 0.0)
       {
         if (this.m_hitBomb)
         {
@@ -286,7 +286,7 @@ namespace GameManager
           Vector3 vector3_11 = Vector3.Subtract(vector3_10, vector3_8);
 
           float num2 = vector3_11.Length();
-          float num3 = !Game.IsMultiplayer()
+          float num3 = !Game2.IsMultiplayer()
                         ? num2 - SlashEntity.FADE_FRAME_AMOUNT * dt 
                         : num2 - SlashEntity.FADE_MP_FRAME_AMOUNT * dt;
 
@@ -513,7 +513,7 @@ namespace GameManager
       SlashEntity.UpdateModColor(ref black, dt);
     }
 
-    private bool CombosEnabled() => Game.game_work.gameMode != Game.GAME_MODE.GM_CASINO;
+    private bool CombosEnabled() => Game2.game_work.gameMode != Game2.GAME_MODE.GM_CASINO;
 
     public override void Update(float dt)
     {
@@ -521,9 +521,9 @@ namespace GameManager
       if ((double) dt > 0.0)
       {
         SlashEntity.updated = true;
-        dt = Game.game_work.dt;
-        num1 = Game.game_work.dt;
-        if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+        dt = Game2.game_work.dt;
+        num1 = Game2.game_work.dt;
+        if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
         {
           num1 *= 0.666f;
           if ((double) PowerUpManager.GetInstance().GetDtMod() < 0.89999997615814209)
@@ -533,7 +533,7 @@ namespace GameManager
       this.UpdatePoints(dt);
       if (this.m_touchDown != (byte) 0 && ((int) SlashEntity.ModPowerMask & 64) == 0)
       {
-        if ((double) Game.game_work.hitBombTime <= 0.0)
+        if ((double) Game2.game_work.hitBombTime <= 0.0)
         {
           LinkedListNode<Entity> iterator = (LinkedListNode<Entity>) null;
           for (Entity ent = ActorManager.GetInstance().GetEntityFirst(EntityTypes.ENTITY_BEGIN, ref iterator); ent != null && !SlashEntity.STOP; ent = ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BEGIN, ref iterator))
@@ -712,17 +712,17 @@ namespace GameManager
         {
           if (this.m_comboLength > 1 && this.m_comboFruitTypes[0] >= 0)
           {
-            Game.game_work.criticalChance = Mortar.Math.MAX(2, Game.game_work.criticalChance - this.m_comboLength);
+            Game2.game_work.criticalChance = Mortar.Math.MAX(2, Game2.game_work.criticalChance - this.m_comboLength);
             if (this.m_comboLength > 2 && this.m_comboFruitTypes[1] >= 0)
             {
-              if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+              if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
               {
                 WaveManager.GetInstance().AddSpeed((float) this.m_comboLength / 3f);
-                Game.AddToCurrentScore(this.m_comboLength, this.m_comboPlayer);
+                Game2.AddToCurrentScore(this.m_comboLength, this.m_comboPlayer);
                 BonusManager.GetInstance().AddCombo(this.m_comboLength);
               }
               else
-                Game.AddToCurrentScore(this.m_comboLength, this.m_comboPlayer);
+                Game2.AddToCurrentScore(this.m_comboLength, this.m_comboPlayer);
               int numberOfCoins = 0;
               for (int index = 0; index < this.m_comboLength; ++index)
               {
@@ -747,27 +747,27 @@ namespace GameManager
                 {
                   string str = "strawberry_combo_total";
                   uint hash = StringFunctions.StringHash(str);
-                  Game.game_work.saveData.AddToTotal(str, hash, 1, true, false);
+                  Game2.game_work.saveData.AddToTotal(str, hash, 1, true, false);
                   break;
                 }
               }
             }
-            if (this.m_comboLength > Game.game_work.saveData.numFruitTypesInSliceCombo)
+            if (this.m_comboLength > Game2.game_work.saveData.numFruitTypesInSliceCombo)
             {
               for (int index = 0; index < 11; ++index)
-                Game.game_work.saveData.sliceComboFruitTypes[index] = this.m_comboFruitTypes[index];
-              Game.game_work.saveData.numFruitTypesInSliceCombo = this.m_comboLength;
+                Game2.game_work.saveData.sliceComboFruitTypes[index] = this.m_comboFruitTypes[index];
+              Game2.game_work.saveData.numFruitTypesInSliceCombo = this.m_comboLength;
               SlashEntity.s_combo = ComboChecker.CheckCombo(this.m_comboFruitTypes, this.m_comboLength);
             }
-            else if (this.m_comboLength == Game.game_work.saveData.numFruitTypesInSliceCombo)
+            else if (this.m_comboLength == Game2.game_work.saveData.numFruitTypesInSliceCombo)
             {
               if (SlashEntity.s_combo == COMBO_TYPE.CT_NONE)
-                SlashEntity.s_combo = ComboChecker.CheckCombo(Game.game_work.saveData.sliceComboFruitTypes, Game.game_work.saveData.numFruitTypesInSliceCombo);
+                SlashEntity.s_combo = ComboChecker.CheckCombo(Game2.game_work.saveData.sliceComboFruitTypes, Game2.game_work.saveData.numFruitTypesInSliceCombo);
               if (ComboChecker.CheckCombo(this.m_comboFruitTypes, this.m_comboLength) > SlashEntity.s_combo)
               {
                 for (int index = 0; index < 11; ++index)
-                  Game.game_work.saveData.sliceComboFruitTypes[index] = this.m_comboFruitTypes[index];
-                Game.game_work.saveData.numFruitTypesInSliceCombo = this.m_comboLength;
+                  Game2.game_work.saveData.sliceComboFruitTypes[index] = this.m_comboFruitTypes[index];
+                Game2.game_work.saveData.numFruitTypesInSliceCombo = this.m_comboLength;
               }
             }
           }
@@ -786,12 +786,12 @@ namespace GameManager
           this.m_comboFruitTypes[index] = -1;
         this.missControl = (MissControl) null;
       }
-      bool flag = (double) this.m_lastDir.Length() > 35.0 * (double) Game.GAME_MODE_SCALE_FIX;
+      bool flag = (double) this.m_lastDir.Length() > 35.0 * (double) Game2.GAME_MODE_SCALE_FIX;
       if ((double) this.m_swipeWait > 0.0 
                 && (double) this.m_swipeWait < (double) SlashEntity.SWIPE_SFX_WAIT 
                 || (double) this.m_lastDir.Length()
-                < 20.0 * (double) Game.GAME_MODE_SCALE_FIX)
-        this.m_swipeWait -= Game.game_work.dt;
+                < 20.0 * (double) Game2.GAME_MODE_SCALE_FIX)
+        this.m_swipeWait -= Game2.game_work.dt;
 
       else if ((double) this.m_swipeWait <= 0.0 && flag)
       {
@@ -868,7 +868,7 @@ namespace GameManager
 
     public bool CollideWithEntity(Entity ent)
     {
-      if (this.m_col_box != null && (double) this.m_col_length > 0.0 && ent != null && ent.m_col_box != null && !Game.game_work.pause && !Game.game_work.inRetrySequence)
+      if (this.m_col_box != null && (double) this.m_col_length > 0.0 && ent != null && ent.m_col_box != null && !Game2.game_work.pause && !Game2.game_work.inRetrySequence)
       {
         if (ent.m_col_box.GetType() != COLISIONOBJECT.COL_SPHERE)
           return this.m_col_box.Collide(ent.m_col_box, out Vector3 _);
@@ -904,24 +904,24 @@ namespace GameManager
 
     public bool TouchMoveX(InputEvent e)
     {
-      if ((double) Game.game_work.hitBombTime > 0.0)
+      if ((double) Game2.game_work.hitBombTime > 0.0)
         return false;
       MortarRectangle windowSize = DisplayManager.GetInstance().GetWindowSize();
       Vector2 vector2 = new Vector2((float) (windowSize.right - windowSize.left),
           (float) (windowSize.bottom - windowSize.top));
       this.m_pos.X = (float) (((double) e.axis.absolutePos
                 - (double) vector2.X / 2.0) * 
-                ((double) Game.SCREEN_WIDTH / (double) Game.SCREEN_SIZE_X));
+                ((double) Game2.SCREEN_WIDTH / (double) Game2.SCREEN_SIZE_X));
       return true;
     }
 
     public bool TouchMoveY(InputEvent e)
     {
-      if ((double) Game.game_work.hitBombTime > 0.0)
+      if ((double) Game2.game_work.hitBombTime > 0.0)
         return false;
       MortarRectangle windowSize = DisplayManager.GetInstance().GetWindowSize();
       Vector2 vector2 = new Vector2((float) (windowSize.right - windowSize.left), (float) (windowSize.bottom - windowSize.top));
-      this.m_pos.Y = (float) (-((double) e.axis.absolutePos - (double) vector2.Y / 2.0) * ((double) Game.SCREEN_HEIGHT / (double) Game.SCREEN_SIZE_Y));
+      this.m_pos.Y = (float) (-((double) e.axis.absolutePos - (double) vector2.Y / 2.0) * ((double) Game2.SCREEN_HEIGHT / (double) Game2.SCREEN_SIZE_Y));
       return true;
     }
 
@@ -954,7 +954,7 @@ namespace GameManager
       }
       if (this.m_emitter != null)
         this.m_emitter.pos = this.m_pos;
-      if ((double) Game.game_work.hitBombTime > 0.0 || !SlashEntity.updated_last_frame)
+      if ((double) Game2.game_work.hitBombTime > 0.0 || !SlashEntity.updated_last_frame)
         return false;
       if (this.m_touchDown == (byte) 0)
       {

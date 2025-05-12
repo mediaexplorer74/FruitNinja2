@@ -5,7 +5,7 @@
 
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
 using Mortar;
 using System;
@@ -56,7 +56,7 @@ namespace GameManager
       this.m_state = PauseScreen.PS.PS_DISABLED;
       this.m_selfCleanUp = false;
       this.m_time = 0.0f;
-      this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT - (double) this.m_scale.Y) * 0.5), 0.0f);
+      this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT - (double) this.m_scale.Y) * 0.5), 0.0f);
       this.m_terminate = false;
       this.m_resumeButton = (MenuButton) null;
       this.m_quitButton = (MenuButton) null;
@@ -102,10 +102,10 @@ namespace GameManager
       int? nullable = default;//Guide.EndShowMessageBox(result);
       if (!nullable.HasValue || !nullable.HasValue || nullable.Value != 1)
         return;
-      Game.game_work.saveData.ClearTotals();
-      Game.game_work.saveData.ClearCombo();
+      Game2.game_work.saveData.ClearTotals();
+      Game2.game_work.saveData.ClearCombo();
       this.m_state = PauseScreen.PS.PS_QUIT;
-      Game.game_work.loadedSaveState = false;
+      Game2.game_work.loadedSaveState = false;
     }
 
     public void QuitGameCallback()
@@ -129,10 +129,10 @@ namespace GameManager
       {
         if (this.m_state != PauseScreen.PS.PS_PAUSED)
           return;
-        Game.game_work.saveData.ClearTotals();
-        Game.game_work.saveData.ClearCombo();
+        Game2.game_work.saveData.ClearTotals();
+        Game2.game_work.saveData.ClearCombo();
         this.m_state = PauseScreen.PS.PS_QUIT;
-        Game.game_work.loadedSaveState = false;
+        Game2.game_work.loadedSaveState = false;
       }
     }
 
@@ -142,7 +142,7 @@ namespace GameManager
       {
         LeaderboardsScreen control = new LeaderboardsScreen();
         control.Init();
-        Game.game_work.hud.AddControl((HUDControl) control);
+        Game2.game_work.hud.AddControl((HUDControl) control);
       }));
     }
 
@@ -154,10 +154,10 @@ namespace GameManager
     {
       if (this.m_state != PauseScreen.PS.PS_PAUSED)
         return;
-      Game.game_work.saveData.ClearTotals();
-      Game.game_work.saveData.ClearCombo();
+      Game2.game_work.saveData.ClearTotals();
+      Game2.game_work.saveData.ClearCombo();
       this.m_state = PauseScreen.PS.PS_RETRY;
-      Game.game_work.loadedSaveState = false;
+      Game2.game_work.loadedSaveState = false;
     }
 
     public override void Draw(float[] tintChannels)
@@ -184,11 +184,11 @@ namespace GameManager
     {
       if (this.m_pauseButton == null)
       {
-        this.m_pauseButton = new MenuButton("pause_button.tex", new Vector3(Game.SCREEN_WIDTH / 2f, (float) (-(double) Game.SCREEN_HEIGHT / 2.0), 0.0f), new MenuButton.MenuCallback(this.PauseGameCallback));
+        this.m_pauseButton = new MenuButton("pause_button.tex", new Vector3(Game2.SCREEN_WIDTH / 2f, (float) (-(double) Game2.SCREEN_HEIGHT / 2.0), 0.0f), new MenuButton.MenuCallback(this.PauseGameCallback));
         this.m_pauseButton.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_pauseButton);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_pauseButton);
         this.m_pauseButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
-        this.m_pauseButtonScale = this.m_pauseButton.m_originalScale = Vector3.Multiply(Vector3.Multiply(Vector3.One, 64f), Game.HUD_SCALE);
+        this.m_pauseButtonScale = this.m_pauseButton.m_originalScale = Vector3.Multiply(Vector3.Multiply(Vector3.One, 64f), Game2.HUD_SCALE);
         this.m_pauseButton.m_outerBound = 500f;
         this.m_pauseButton.m_triggerOnBackPress = true;
         this.m_pauseTexture = this.m_pauseButton.m_texture;
@@ -196,21 +196,21 @@ namespace GameManager
       }
       if (this.m_quitButton == null)
       {
-        this.m_quitButton = new MenuButton("quit_title.tex", new Vector3(0.0f, Game.SCREEN_HEIGHT, 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), -1, Vector3.Zero, true);
+        this.m_quitButton = new MenuButton("quit_title.tex", new Vector3(0.0f, Game2.SCREEN_HEIGHT, 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), -1, Vector3.Zero, true);
         this.m_quitButton.Init();
         this.m_quitButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         MenuButton quitButton = this.m_quitButton;
-        quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, Game.GAME_MODE_SCALE_FIX);
-        Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+        quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, Game2.GAME_MODE_SCALE_FIX);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
       }
       if (this.m_retryButton == null)
       {
-        this.m_retryButton = new MenuButton("retry_button.tex", new Vector3(0.0f, Game.SCREEN_HEIGHT, 0.0f), new MenuButton.MenuCallback(this.RetryGameCallback));
+        this.m_retryButton = new MenuButton("retry_button.tex", new Vector3(0.0f, Game2.SCREEN_HEIGHT, 0.0f), new MenuButton.MenuCallback(this.RetryGameCallback));
         this.m_retryButton.Init();
         this.m_retryButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         MenuButton retryButton = this.m_retryButton;
-        retryButton.m_originalScale = Vector3.Multiply(retryButton.m_originalScale, Game.GAME_MODE_SCALE_FIX);
-        Game.game_work.hud.AddControl((HUDControl) this.m_retryButton);
+        retryButton.m_originalScale = Vector3.Multiply(retryButton.m_originalScale, Game2.GAME_MODE_SCALE_FIX);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_retryButton);
       }
       switch (this.m_state)
       {
@@ -233,7 +233,7 @@ namespace GameManager
         case PauseScreen.PS.PS_TO_MENU:
           this.m_enabled = 0.0f;
           this.m_time = 1f;
-          if (Game.BombFlashFull())
+          if (Game2.BombFlashFull())
           {
             this.m_time = 0.0f;
             this.m_enabled = 1f;
@@ -244,7 +244,7 @@ namespace GameManager
           break;
         case PauseScreen.PS.PS_IN:
           this.m_time += (float) ((1.0 - (double) this.m_time) * 0.25);
-          Game.game_work.pause = true;
+          Game2.game_work.pause = true;
           if ((double) this.m_time > 0.99900001287460327)
           {
             this.m_time = 1f;
@@ -254,7 +254,7 @@ namespace GameManager
           break;
         case PauseScreen.PS.PS_PAUSED:
           this.m_pauseButton.m_enabled = true;
-          Game.game_work.pause = true;
+          Game2.game_work.pause = true;
           GamePadState state = GamePad.GetState((PlayerIndex) 0);
           GamePadButtons buttons = state.Buttons;
           if (buttons.Back == ButtonState.Pressed)
@@ -271,8 +271,8 @@ namespace GameManager
             this.m_time = 0.0f;
             if (this.m_state == PauseScreen.PS.PS_QUIT)
             {
-              Game.QuitToMenu();
-              Game.HitMenuBomb(this.m_quitButton.m_pos);
+              Game2.QuitToMenu();
+              Game2.HitMenuBomb(this.m_quitButton.m_pos);
               this.m_enabled = 0.0f;
               this.m_time = 1f;
               this.m_state = PauseScreen.PS.PS_TO_MENU;
@@ -295,7 +295,7 @@ namespace GameManager
             GameTask.UnpauseGame();
             break;
           }
-          Game.game_work.pause = true;
+          Game2.game_work.pause = true;
           break;
         case PauseScreen.PS.PS_QUIT:
           this.m_time *= 0.5f;
@@ -324,11 +324,11 @@ namespace GameManager
       else
       {
         this.m_pauseButton.m_texture = this.m_pauseTexture;
-        this.m_pauseButton.m_rotation = Game.IsMultiplayer() ? 90f : 0.0f;
+        this.m_pauseButton.m_rotation = Game2.IsMultiplayer() ? 90f : 0.0f;
       }
-      this.m_pos.Y = (float) ((double) Game.SCREEN_HEIGHT * 0.5 + (double) this.m_scale.Y - ((double) Game.SCREEN_HEIGHT * 0.5 - (double) PauseScreen.PAUSE_TITLE_Y) * (double) this.m_time);
+      this.m_pos.Y = (float) ((double) Game2.SCREEN_HEIGHT * 0.5 + (double) this.m_scale.Y - ((double) Game2.SCREEN_HEIGHT * 0.5 - (double) PauseScreen.PAUSE_TITLE_Y) * (double) this.m_time);
       if (this.m_resumeButton != null)
-        this.m_resumeButton.m_pos.Y = (float) ((double) Game.SCREEN_HEIGHT * 1.5 - (double) PauseScreen.RESUME_TITLE_Y - (double) Game.SCREEN_HEIGHT * (double) this.m_time);
+        this.m_resumeButton.m_pos.Y = (float) ((double) Game2.SCREEN_HEIGHT * 1.5 - (double) PauseScreen.RESUME_TITLE_Y - (double) Game2.SCREEN_HEIGHT * (double) this.m_time);
       if (this.m_retryButton != null)
       {
         this.m_retryButton.m_pos.Y = -20f;
@@ -336,37 +336,37 @@ namespace GameManager
       }
       if (this.m_quitButton != null)
       {
-        this.m_quitButton.m_pos.Y = (float) -((double) Game.SCREEN_HEIGHT / 2.0 - (double) this.m_quitButton.m_originalScale.Y * 0.5 - 5.0 + (1.0 - (double) this.m_time) * ((double) this.m_quitButton.m_originalScale.Y + 10.0));
-        this.m_quitButton.m_pos.X = (float) ((double) Game.SCREEN_WIDTH / 2.0 - (double) this.m_quitButton.m_originalScale.X * 0.5);
+        this.m_quitButton.m_pos.Y = (float) -((double) Game2.SCREEN_HEIGHT / 2.0 - (double) this.m_quitButton.m_originalScale.Y * 0.5 - 5.0 + (1.0 - (double) this.m_time) * ((double) this.m_quitButton.m_originalScale.Y + 10.0));
+        this.m_quitButton.m_pos.X = (float) ((double) Game2.SCREEN_WIDTH / 2.0 - (double) this.m_quitButton.m_originalScale.X * 0.5);
         this.m_quitButton.SetActive((double) this.m_time > 0.0099999997764825821);
       }
       if (this.m_leaderboardsButton != null)
       {
-        this.m_leaderboardsButton.m_pos.Y = (float) -((double) Game.SCREEN_HEIGHT / 2.0 - (double) this.m_quitButton.m_originalScale.Y * 0.5 - 5.0 + (1.0 - (double) this.m_time) * ((double) this.m_quitButton.m_originalScale.Y + 10.0));
+        this.m_leaderboardsButton.m_pos.Y = (float) -((double) Game2.SCREEN_HEIGHT / 2.0 - (double) this.m_quitButton.m_originalScale.Y * 0.5 - 5.0 + (1.0 - (double) this.m_time) * ((double) this.m_quitButton.m_originalScale.Y + 10.0));
         this.m_leaderboardsButton.m_pos.X = (float) (-(double) this.m_quitButton.m_originalScale.X * 0.5 - 20.0);
         this.m_leaderboardsButton.SetActive((double) this.m_time > 0.0099999997764825821);
       }
       if (this.m_achivementsButton != null)
       {
-        this.m_achivementsButton.m_pos.Y = (float) -((double) Game.SCREEN_HEIGHT / 2.0 - (double) this.m_quitButton.m_originalScale.Y * 0.5 - 5.0 + (1.0 - (double) this.m_time) * ((double) this.m_quitButton.m_originalScale.Y + 10.0));
+        this.m_achivementsButton.m_pos.Y = (float) -((double) Game2.SCREEN_HEIGHT / 2.0 - (double) this.m_quitButton.m_originalScale.Y * 0.5 - 5.0 + (1.0 - (double) this.m_time) * ((double) this.m_quitButton.m_originalScale.Y + 10.0));
         this.m_achivementsButton.m_pos.X = (float) (-(double) this.m_quitButton.m_originalScale.X * 0.5 + 80.0);
         this.m_achivementsButton.SetActive((double) this.m_time > 0.0099999997764825821);
       }
-      this.m_pauseButton.m_pos.Y = (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_pauseButton.m_originalScale.Y * 0.5 - 5.0);
-      if (Game.IsMultiplayer())
+      this.m_pauseButton.m_pos.Y = (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_pauseButton.m_originalScale.Y * 0.5 - 5.0);
+      if (Game2.IsMultiplayer())
       {
         this.m_pauseButton.m_pos.X = 0.0f;
         this.m_pauseButton.m_pos.Y -= Mortar.Math.Abs(this.m_enabled) * (this.m_pauseButton.m_originalScale.X + 10f);
       }
       else
-        this.m_pauseButton.m_pos.X = (float) -((double) Game.SCREEN_WIDTH / 2.0 - (double) this.m_pauseButton.m_originalScale.X * 0.5 + 4.0 + (double) Mortar.Math.Abs(this.m_enabled) * ((double) this.m_pauseButton.m_originalScale.X + 10.0));
+        this.m_pauseButton.m_pos.X = (float) -((double) Game2.SCREEN_WIDTH / 2.0 - (double) this.m_pauseButton.m_originalScale.X * 0.5 + 4.0 + (double) Mortar.Math.Abs(this.m_enabled) * ((double) this.m_pauseButton.m_originalScale.X + 10.0));
       MenuButton pauseButton = this.m_pauseButton;
       pauseButton.m_pos = Vector3.Add(pauseButton.m_pos, Vector3.Multiply(
           Vector3.Subtract(new Vector3(-50f, -20f, 0.0f), this.m_pauseButton.m_pos), this.m_time));
       this.m_pauseButton.m_originalScale = Vector3.Multiply(this.m_pauseButtonScale,
           (float) (0.75 + (double) this.m_time * 1.25));
       this.m_pauseButton.SetActive((double) Mortar.Math.Abs(
-          Game.game_work.gameOverTransition) < 0.99000000953674316);
+          Game2.game_work.gameOverTransition) < 0.99000000953674316);
       this.m_time = time;
       this.m_enabled = enabled;
     }
@@ -394,7 +394,7 @@ namespace GameManager
 
     public bool IsEnabled()
     {
-      return (double) Mortar.Math.Abs(Game.game_work.gameOverTransition) < 1.0 / 1000.0 && (double) Game.game_work.hitBombTime <= 0.0 && !Game.game_work.gameOver;
+      return (double) Mortar.Math.Abs(Game2.game_work.gameOverTransition) < 1.0 / 1000.0 && (double) Game2.game_work.hitBombTime <= 0.0 && !Game2.game_work.gameOver;
     }
 
     public float GetTime() => this.m_state != PauseScreen.PS.PS_QUIT ? this.m_time : 1f;

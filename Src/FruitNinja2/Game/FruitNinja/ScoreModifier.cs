@@ -51,7 +51,7 @@ namespace GameManager
       if (this.m_deferPoints)
       {
         this.m_parent.AddDeferedPoints(0);
-        Game.SetScoreDelegate(new Game.ScoreDelegate(this.DeferPoints));
+        Game2.SetScoreDelegate(new Game2.ScoreDelegate(this.DeferPoints));
       }
       ++this.m_count;
     }
@@ -60,7 +60,7 @@ namespace GameManager
     {
       if (!this.m_deferPoints)
         return;
-      Game.SetScoreDelegate();
+      Game2.SetScoreDelegate();
     }
 
     public override bool UpdateSpecific(float dt)

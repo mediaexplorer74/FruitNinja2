@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
-//using WPR.WindowsCompability;
 
 #nullable disable
 namespace Mortar
@@ -29,7 +28,9 @@ namespace Mortar
         return model;
       byte[] d = binaryReader1.ReadBytes((int) (binaryReader1.BaseStream.Length
           - binaryReader1.BaseStream.Position));
-      binaryReader1.Close();
+
+      binaryReader1.Dispose();
+
       BinaryReader binaryReader2 = new BinaryReader((Stream) new MortarFile.ByteStream(d));
       Matrix matrix1 = new Matrix();
       Vector3 vector3 = new Vector3();

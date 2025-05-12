@@ -45,34 +45,34 @@ namespace GameManager
 
     public static float SCALE_DOWN_RATE => ScoreControl.HALF_PULSE / ScoreControl.SCALE_DOWN_TIME;
 
-    public static float MIN_SCALE => 40f * Game.HUD_SCALE;
+    public static float MIN_SCALE => 40f * Game2.HUD_SCALE;
 
-    public static float MAX_SCALE => 50f * Game.HUD_SCALE;
+    public static float MAX_SCALE => 50f * Game2.HUD_SCALE;
 
-    public static float GAME_SCREEN_X_IN => 2f * Game.HUD_SCALE;
+    public static float GAME_SCREEN_X_IN => 2f * Game2.HUD_SCALE;
 
-    public static float GAME_SCREEN_Y_IN => 2f * Game.HUD_SCALE;
+    public static float GAME_SCREEN_Y_IN => 2f * Game2.HUD_SCALE;
 
     public static Vector3 IN_GAME_POS
     {
       get
       {
-        return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + (double) ScoreControl.MIN_SCALE / 2.0) + ScoreControl.GAME_SCREEN_X_IN, (float) ((double) Game.SCREEN_HEIGHT / 2.0 - (double) ScoreControl.MIN_SCALE / 2.0) - ScoreControl.GAME_SCREEN_Y_IN, 0.0f);
+        return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + (double) ScoreControl.MIN_SCALE / 2.0) + ScoreControl.GAME_SCREEN_X_IN, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) ScoreControl.MIN_SCALE / 2.0) - ScoreControl.GAME_SCREEN_Y_IN, 0.0f);
       }
     }
 
     public static float GAMEOVER_SCREEN_X_IN => 80f;
 
-    public static float GAMEOVER_SCREEN_Y_IN => !Game.USE_ARCADE_GO_SCREEN ? 80f : 240f;
+    public static float GAMEOVER_SCREEN_Y_IN => !Game2.USE_ARCADE_GO_SCREEN ? 80f : 240f;
 
     public static Vector3 GAMEOVER_GAME_POS(float len)
     {
-      return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0) + ScoreControl.GAMEOVER_SCREEN_X_IN - len, 160f - ScoreControl.GAMEOVER_SCREEN_Y_IN, 0.0f);
+      return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0) + ScoreControl.GAMEOVER_SCREEN_X_IN - len, 160f - ScoreControl.GAMEOVER_SCREEN_Y_IN, 0.0f);
     }
 
     public static float FONT_SIZE => 48f;
 
-    public static float GAME_OVER_SCALE => (Game.USE_ARCADE_GO_SCREEN ? 1.5f : 2f) * Game.HUD_SCALE;
+    public static float GAME_OVER_SCALE => (Game2.USE_ARCADE_GO_SCREEN ? 1.5f : 2f) * Game2.HUD_SCALE;
 
     public static float NEW_HIGHSCORE_FLASH => 1000f;
 
@@ -117,9 +117,9 @@ namespace GameManager
 
     public override void Update(float dt)
     {
-      int currentScore1 = Game.game_work.currentScore;
+      int currentScore1 = Game2.game_work.currentScore;
       this.m_multiplyer = Math.MIN(Fruit.s_consecutiveCount - 1, ScoreControl.MAX_MULTIPLYERS - 1);
-      if (this.m_multiplyer > 0 && Game.game_work.gameMode == Game.GAME_MODE.GM_CASINO)
+      if (this.m_multiplyer > 0 && Game2.game_work.gameMode == Game2.GAME_MODE.GM_CASINO)
       {
         if (this.m_multiplyerType != Fruit.s_consecutiveType)
         {
@@ -194,7 +194,7 @@ namespace GameManager
         this.firstRun = false;
       }
       int currentScore2 = this.m_currentScore;
-      this.m_scoreWait += Math.MIN((float) (((double) currentScore1 + 0.60000002384185791 - (double) this.m_scoreWait) * 0.10000000149011612), (float) (0.30000001192092896 * (double) Game.GetScoreMultiplyer() * (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE ? 10.0 : 1.0)));
+      this.m_scoreWait += Math.MIN((float) (((double) currentScore1 + 0.60000002384185791 - (double) this.m_scoreWait) * 0.10000000149011612), (float) (0.30000001192092896 * (double) Game2.GetScoreMultiplyer() * (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE ? 10.0 : 1.0)));
       this.m_currentScore = (int) this.m_scoreWait;
       if (this.m_currentScore > currentScore2)
         this.m_pulseTimer = (ushort) ScoreControl.FULL_PULSE;
@@ -207,31 +207,31 @@ namespace GameManager
           this.m_pulseTimer = (ushort) 0;
       }
       float num = ScoreControl.MIN_SCALE + (ScoreControl.MAX_SCALE - ScoreControl.MIN_SCALE) * Math.SinIdx(this.m_pulseTimer);
-      this.m_overAllScale = Math.CLAMP(Game.game_work.gameOverTransition, 0.0f, 1f) * (ScoreControl.GAME_OVER_SCALE - Game.HUD_SCALE) + Game.HUD_SCALE;
+      this.m_overAllScale = Math.CLAMP(Game2.game_work.gameOverTransition, 0.0f, 1f) * (ScoreControl.GAME_OVER_SCALE - Game2.HUD_SCALE) + Game2.HUD_SCALE;
       
-      if (!Game.game_work.gameOver || currentScore1 == 0)
-        this.m_highScore = Game.GetCurrentModeHighscore() != 0 
-                    ? Math.MAX(Game.GetCurrentModeHighscore(), this.m_currentScore)
+      if (!Game2.game_work.gameOver || currentScore1 == 0)
+        this.m_highScore = Game2.GetCurrentModeHighscore() != 0 
+                    ? Math.MAX(Game2.GetCurrentModeHighscore(), this.m_currentScore)
                     : 0;
 
       this.m_pos = Vector3.Subtract(ScoreControl.IN_GAME_POS,
           Vector3.Multiply(new Vector3(ScoreControl.MAX_SCALE * 2f, 0.0f, 0.0f), 
-          Math.Abs(Game.game_work.gameOverTransition)));
-      if ((double) Game.game_work.gameOverTransition > 0.0)
+          Math.Abs(Game2.game_work.gameOverTransition)));
+      if ((double) Game2.game_work.gameOverTransition > 0.0)
       {
         this.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         this.m_textPos = Vector3.Add(ScoreControl.IN_GAME_POS, new Vector3(ScoreControl.MIN_SCALE * 0.6f, 0.0f, 0.0f));
         string stringToDraw = string.Format("{0}", (object) currentScore1);
-        float len = (float) ((double) Game.game_work.pNumberFont.MeasureString(stringToDraw) * (double) this.m_overAllScale * (double) ScoreControl.FONT_SIZE * 0.5);
+        float len = (float) ((double) Game2.game_work.pNumberFont.MeasureString(stringToDraw) * (double) this.m_overAllScale * (double) ScoreControl.FONT_SIZE * 0.5);
         ScoreControl scoreControl = this;
-        scoreControl.m_textPos = Vector3.Add(scoreControl.m_textPos, Vector3.Multiply(Vector3.Subtract(ScoreControl.GAMEOVER_GAME_POS(len), this.m_textPos), Game.game_work.gameOverTransition));
+        scoreControl.m_textPos = Vector3.Add(scoreControl.m_textPos, Vector3.Multiply(Vector3.Subtract(ScoreControl.GAMEOVER_GAME_POS(len), this.m_textPos), Game2.game_work.gameOverTransition));
       }
       else
       {
         this.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_NORMAL;
         this.m_textPos = Vector3.Add(this.m_pos, new Vector3(ScoreControl.MIN_SCALE * 0.6f, 0.0f, 0.0f));
       }
-      if ((double) Game.game_work.gameOverTransition > 0.99900001287460327 && Game.game_work.saveData.go_showHighScore)
+      if ((double) Game2.game_work.gameOverTransition > 0.99900001287460327 && Game2.game_work.saveData.go_showHighScore)
       {
         float highscoreTime = this.m_highscoreTime;
         this.m_highscoreTime = Math.MIN(1f, this.m_highscoreTime + dt * 5f);
@@ -251,46 +251,46 @@ namespace GameManager
     public override void PreDraw(float[] tintChannels)
     {
       string stringToDraw1 = "";
-      if ((double) Game.game_work.gameOverTransition > -1.0)
+      if ((double) Game2.game_work.gameOverTransition > -1.0)
       {
         stringToDraw1 = string.Format("{0}", (object) this.m_currentScore);
-        Game.game_work.pNumberFont.DrawString(stringToDraw1, this.m_textPos.X, this.m_textPos.Y, 0.0f, HUDControl.TintWhite(tintChannels), this.m_overAllScale * ScoreControl.FONT_SIZE, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
+        Game2.game_work.pNumberFont.DrawString(stringToDraw1, this.m_textPos.X, this.m_textPos.Y, 0.0f, HUDControl.TintWhite(tintChannels), this.m_overAllScale * ScoreControl.FONT_SIZE, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
       }
-      switch (Game.game_work.gameMode)
+      switch (Game2.game_work.gameMode)
       {
-        case Game.GAME_MODE.GM_CASINO:
+        case Game2.GAME_MODE.GM_CASINO:
           this.m_texture = Fruit.FruitInfo(Math.CLAMP(Fruit.s_consecutiveType, 0, Fruit.MAX_FRUIT_TYPES - 1)).icon;
           Color factColor = Fruit.FruitInfo(Math.CLAMP(Fruit.s_consecutiveType, 0, Fruit.MAX_FRUIT_TYPES - 1)).factColor;
-          float num1 = (float) ((double) Game.game_work.pNumberFont.MeasureString(stringToDraw1) * (double) this.m_overAllScale * (double) ScoreControl.FONT_SIZE + 5.0);
+          float num1 = (float) ((double) Game2.game_work.pNumberFont.MeasureString(stringToDraw1) * (double) this.m_overAllScale * (double) ScoreControl.FONT_SIZE + 5.0);
           for (int index = 0; index < ScoreControl.MAX_MULTIPLYERS; ++index)
           {
             if ((double) this.m_multiplyerScales[index] > 0.0)
             {
               string stringToDraw2 = string.Format("{0}", (object) (1 << index + 1));
               float scale = Math.SinIdx(Math.DEGREE_TO_IDX(this.m_multiplyerScales[index] * 135f)) * (float) ((double) index * 6.0 + 45.0);
-              Game.game_work.pGameFont.DrawString(stringToDraw2, this.m_textPos.X + num1, (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 5.0), 0.0f, factColor, scale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_LEFT);
-              num1 += (float) ((double) Game.game_work.pGameFont.MeasureString(stringToDraw2) * (double) scale + 5.0);
+              Game2.game_work.pGameFont.DrawString(stringToDraw2, this.m_textPos.X + num1, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 5.0), 0.0f, factColor, scale, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_LEFT);
+              num1 += (float) ((double) Game2.game_work.pGameFont.MeasureString(stringToDraw2) * (double) scale + 5.0);
             }
           }
           break;
-        case Game.GAME_MODE.GM_ARCADE:
-          if (PowerUpManager.GetInstance().GetScoreGainMultiplier() > 1 && !Game.game_work.gameOver)
+        case Game2.GAME_MODE.GM_ARCADE:
+          if (PowerUpManager.GetInstance().GetScoreGainMultiplier() > 1 && !Game2.game_work.gameOver)
           {
-            double num2 = (double) Game.game_work.pNumberFont.MeasureString(stringToDraw1);
+            double num2 = (double) Game2.game_work.pNumberFont.MeasureString(stringToDraw1);
             double fontSize = (double) ScoreControl.FONT_SIZE;
             string stringToDraw3 = string.Format("x{0}", (object) PowerUpManager.GetInstance().GetScoreGainMultiplier());
-            Game.game_work.pNumberFontBlue2.DrawString(stringToDraw3, this.m_pos.X - ScoreControl.MIN_SCALE * 0.45f, this.m_pos.Y - ScoreControl.MIN_SCALE * 1.3f, 0.0f, HUDControl.TintWhite(tintChannels), (float) ((double) this.m_overAllScale * (double) ScoreControl.FONT_SIZE * 0.75), 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
+            Game2.game_work.pNumberFontBlue2.DrawString(stringToDraw3, this.m_pos.X - ScoreControl.MIN_SCALE * 0.45f, this.m_pos.Y - ScoreControl.MIN_SCALE * 1.3f, 0.0f, HUDControl.TintWhite(tintChannels), (float) ((double) this.m_overAllScale * (double) ScoreControl.FONT_SIZE * 0.75), 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
             break;
           }
           break;
       }
-      if ((double) Math.Abs(Game.game_work.gameOverTransition) < 1.0 && this.m_highScore > 0)
+      if ((double) Math.Abs(Game2.game_work.gameOverTransition) < 1.0 && this.m_highScore > 0)
       {
         string str1 = string.Format("{0}", (object) this.m_highScore);
         Color color1 = new Color(180, 128, 5, 200);
         if (this.m_highScore == this.m_currentScore)
         {
-          ScoreControl.cycle += Game.game_work.pause ? 0 : 6;
+          ScoreControl.cycle += Game2.game_work.pause ? 0 : 6;
           if (ScoreControl.cycle >= 180)
             ScoreControl.cycle = 180;
           float num3 = Math.CosIdx(Math.DEGREE_TO_IDX((float) ScoreControl.cycle)) * -0.5f + 0.5f;
@@ -306,55 +306,55 @@ namespace GameManager
         }
         color1 = HUDControl.TintColor(color1, tintChannels);
         string str2 = Mortar.Game1.instance.stringTable.GetString(165) + " " + str1;
-        float num4 = 20f * Game.HUD_SCALE;
-        float num5 = (float) ((double) Game.game_work.pGameFont.MeasureString(str2) 
+        float num4 = 20f * Game2.HUD_SCALE;
+        float num5 = (float) ((double) Game2.game_work.pGameFont.MeasureString(str2) 
                     * (double) num4 - 48.0);
-        Game.game_work.pGameFont.DrawString(str2, new Vector3((float) ((double) this.m_pos.X 
+        Game2.game_work.pGameFont.DrawString(str2, new Vector3((float) ((double) this.m_pos.X 
             + (double) num5 + (double) ScoreControl.MIN_SCALE * 0.699999988079071), 
-            this.m_pos.Y - (float) ((double) Game.HUD_SCALE
+            this.m_pos.Y - (float) ((double) Game2.HUD_SCALE
             * (double) ScoreControl.FONT_SIZE * 0.60000002384185791), 0.0f), 
-            color1, 20f * Game.HUD_SCALE, Vector2.Zero,
+            color1, 20f * Game2.HUD_SCALE, Vector2.Zero,
             ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_RIGHT, 0.9f);
       }
       else
         ScoreControl.cycle = 0;
-      if ((double) Game.game_work.gameOverTransition <= 0.0)
+      if ((double) Game2.game_work.gameOverTransition <= 0.0)
         return;
-      if (Game.USE_ARCADE_GO_SCREEN)
+      if (Game2.USE_ARCADE_GO_SCREEN)
       {
         Color colour = new Color(180, 128, 5, 200);
         string stringToDraw4 = Mortar.Game1.instance.stringTable.GetString(165) +
                     " " + (object) this.m_highScore;
-        Game.game_work.pGameFont.DrawString(stringToDraw4,
-            (float) (-(double) Game.SCREEN_WIDTH / 2.0) + ScoreControl.GAMEOVER_SCREEN_X_IN, 
+        Game2.game_work.pGameFont.DrawString(stringToDraw4,
+            (float) (-(double) Game2.SCREEN_WIDTH / 2.0) + ScoreControl.GAMEOVER_SCREEN_X_IN, 
             (float) (160.0 - (double) ScoreControl.GAMEOVER_SCREEN_Y_IN - 50.0
-            - (1.0 - (double) Game.game_work.gameOverTransition) * 200.0), 0.0f, 
-            colour, 20f * Game.HUD_SCALE, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
+            - (1.0 - (double) Game2.game_work.gameOverTransition) * 200.0), 0.0f, 
+            colour, 20f * Game2.HUD_SCALE, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
       }
       if (this.m_scroreTexture != null)
       {
         this.m_scroreTexture.Set();
         MatrixManager.GetInstance().Reset();
-        if (Game.USE_ARCADE_GO_SCREEN)
+        if (Game2.USE_ARCADE_GO_SCREEN)
         {
           MatrixManager.GetInstance().Scale(
               new Vector3((float) ((double) this.m_scroreTexture.GetWidth() 
-              * (double) Game.GAME_MODE_SCALE_FIX * 0.75),
+              * (double) Game2.GAME_MODE_SCALE_FIX * 0.75),
               (float) ((double) this.m_scroreTexture.GetHeight()
-              * (double) Game.GAME_MODE_SCALE_FIX * 0.75), 0.0f));
+              * (double) Game2.GAME_MODE_SCALE_FIX * 0.75), 0.0f));
 
           MatrixManager.GetInstance().Translate(
-              new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0) 
+              new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0) 
               + ScoreControl.GAMEOVER_SCREEN_X_IN, this.m_textPos.Y 
               + ScoreControl.FONT_SIZE * 0.85f, 0.0f));
         }
         else
         {
-          MatrixManager.GetInstance().Scale(new Vector3((float) this.m_scroreTexture.GetWidth() * Game.GAME_MODE_SCALE_FIX, (float) this.m_scroreTexture.GetHeight() * Game.GAME_MODE_SCALE_FIX, 0.0f));
-          if (Game.IsMultiplayer())
-            MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 - (double) ScoreControl.GAMEOVER_SCREEN_X_IN + (double) ScoreControl.GAMEOVER_SCREEN_X_IN * 2.0 * (double) Game.game_work.gameOverTransition), (float) ((double) this.m_textPos.Y + (double) ScoreControl.FONT_SIZE + 5.0), 0.0f));
+          MatrixManager.GetInstance().Scale(new Vector3((float) this.m_scroreTexture.GetWidth() * Game2.GAME_MODE_SCALE_FIX, (float) this.m_scroreTexture.GetHeight() * Game2.GAME_MODE_SCALE_FIX, 0.0f));
+          if (Game2.IsMultiplayer())
+            MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 - (double) ScoreControl.GAMEOVER_SCREEN_X_IN + (double) ScoreControl.GAMEOVER_SCREEN_X_IN * 2.0 * (double) Game2.game_work.gameOverTransition), (float) ((double) this.m_textPos.Y + (double) ScoreControl.FONT_SIZE + 5.0), 0.0f));
           else
-            MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0) + ScoreControl.GAMEOVER_SCREEN_X_IN, (float) ((double) this.m_textPos.Y + (double) ScoreControl.FONT_SIZE + 5.0), 0.0f));
+            MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0) + ScoreControl.GAMEOVER_SCREEN_X_IN, (float) ((double) this.m_textPos.Y + (double) ScoreControl.FONT_SIZE + 5.0), 0.0f));
         }
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
@@ -365,9 +365,9 @@ namespace GameManager
       this.m_highScoreTexture.Set();
       MatrixManager.GetInstance().Reset();
       Matrix mtx;
-      Math.Scale44(Vector3.Multiply(Vector3.Divide(Vector3.Multiply(new Vector3((float) ((double) this.m_highScoreTexture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) this.m_highScoreTexture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 0.0f), Math.SinIdx((ushort) ((double) Math.DEGREE_TO_IDX(120f) * (double) this.m_highscoreTime))), Math.SinIdx(Math.DEGREE_TO_IDX(120f))), (float) (1.0 + (double) Math.SinIdx(this.m_highscorePulse) * 0.15000000596046448)), out mtx);
+      Math.Scale44(Vector3.Multiply(Vector3.Divide(Vector3.Multiply(new Vector3((float) ((double) this.m_highScoreTexture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) this.m_highScoreTexture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 0.0f), Math.SinIdx((ushort) ((double) Math.DEGREE_TO_IDX(120f) * (double) this.m_highscoreTime))), Math.SinIdx(Math.DEGREE_TO_IDX(120f))), (float) (1.0 + (double) Math.SinIdx(this.m_highscorePulse) * 0.15000000596046448)), out mtx);
       Math.RotZ44(ref mtx, Math.DEGREE_TO_IDX(20f));
-      Math.GlobalTranslate44(ref mtx, new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + (double) ScoreControl.GAMEOVER_SCREEN_X_IN + (double) this.m_scroreTexture.GetWidth() * 0.5 * (double) Game.GAME_MODE_SCALE_FIX), this.m_textPos.Y + ScoreControl.FONT_SIZE * 0.6f, 0.0f));
+      Math.GlobalTranslate44(ref mtx, new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + (double) ScoreControl.GAMEOVER_SCREEN_X_IN + (double) this.m_scroreTexture.GetWidth() * 0.5 * (double) Game2.GAME_MODE_SCALE_FIX), this.m_textPos.Y + ScoreControl.FONT_SIZE * 0.6f, 0.0f));
       MatrixManager.GetInstance().SetMatrix(mtx);
       MatrixManager.GetInstance().UploadCurrentMatrices();
       Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
@@ -376,7 +376,7 @@ namespace GameManager
 
     public override void Draw(float[] tintChannels)
     {
-      if ((double) Game.game_work.gameOverTransition <= -1.0)
+      if ((double) Game2.game_work.gameOverTransition <= -1.0)
         return;
       base.Draw(tintChannels);
     }
@@ -389,8 +389,8 @@ namespace GameManager
 
     public override void Skip()
     {
-      this.m_currentScore = Game.game_work.currentScore;
-      if (!Game.game_work.saveData.go_showHighScore)
+      this.m_currentScore = Game2.game_work.currentScore;
+      if (!Game2.game_work.saveData.go_showHighScore)
         return;
       this.m_highscoreTime = 1f;
     }

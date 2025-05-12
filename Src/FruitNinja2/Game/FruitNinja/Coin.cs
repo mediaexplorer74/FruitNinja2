@@ -42,9 +42,9 @@ namespace GameManager
       get => Coin.COIN_INIT_VEL_MIN + Mortar.Math.g_random.RandF(Coin.COIN_INIT_VEL_RANGE);
     }
 
-    public static float COIN_CORNER_POS_X => (float) ((double) Game.SCREEN_WIDTH / 2.0 - 20.0);
+    public static float COIN_CORNER_POS_X => (float) ((double) Game2.SCREEN_WIDTH / 2.0 - 20.0);
 
-    public static float COIN_CORNER_POS_Y => (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 20.0);
+    public static float COIN_CORNER_POS_Y => (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 20.0);
 
     public static Vector3 COIN_CORNER_POS
     {
@@ -174,12 +174,12 @@ namespace GameManager
 
     public override void Update(float dt)
     {
-      float dt1 = Game.game_work.dt;
-      Game.game_work.dt = 0.0166666675f;
+      float dt1 = Game2.game_work.dt;
+      Game2.game_work.dt = 0.0166666675f;
       this._Update(0.0166666675f);
       if (!this.m_dormant)
         this._Update(0.0166666675f);
-      Game.game_work.dt = dt1;
+      Game2.game_work.dt = dt1;
     }
 
     public void _Update(float dt)
@@ -193,7 +193,7 @@ namespace GameManager
       switch (this.m_state)
       {
         case 0:
-          this.m_stateTime -= Game.game_work.dt;
+          this.m_stateTime -= Game2.game_work.dt;
           if ((double) this.m_stateTime <= 0.0)
           {
             this.m_state = 2;
@@ -231,7 +231,7 @@ namespace GameManager
           break;
         case 3:
           float stateTime = this.m_stateTime;
-          this.m_stateTime += Game.game_work.dt;
+          this.m_stateTime += Game2.game_work.dt;
           if ((double) stateTime <= 0.0099999997764825821 && (double) this.m_stateTime > 0.0099999997764825821 && (ActorManager.GetInstance().GetNumEntities(2) < 20U ? 1 : (Mortar.Math.g_random.Rand32(3) == 0 ? 1 : 0)) != 0 && PSPParticleManager.GetInstance().EmitterExists(this.m_burstHash))
           {
             this.m_burstEmitter = PSPParticleManager.GetInstance().AddEmitter(this.m_burstHash, (Action<PSPParticleEmitter>) null);
@@ -247,7 +247,7 @@ namespace GameManager
           }
           break;
         case 4:
-          this.m_stateTime += Game.game_work.dt;
+          this.m_stateTime += Game2.game_work.dt;
           float y = this.m_destination.X - this.m_pos.X;
           float x = this.m_destination.Y - this.m_pos.Y;
           float num1 = Mortar.Math.Sqrt((float) ((double) y * (double) y + (double) x * (double) x));
@@ -272,7 +272,7 @@ namespace GameManager
           break;
       }
       Coin coin2 = this;
-      coin2.m_pos = Vector3.Add(coin2.m_pos, Vector3.Multiply(this.m_vel, Game.game_work.dt));
+      coin2.m_pos = Vector3.Add(coin2.m_pos, Vector3.Multiply(this.m_vel, Game2.game_work.dt));
       if (this.m_trailEmitter == null)
         return;
       this.m_trailEmitter.pos = this.m_pos;
@@ -280,7 +280,7 @@ namespace GameManager
       this.m_trailEmitter.cosz = Mortar.Math.CosIdx(this.m_dir_angle);
     }
 
-    public static void CoinArrived(Coin theCoin) => Game.AddCoins(theCoin.GetWorth());
+    public static void CoinArrived(Coin theCoin) => Game2.AddCoins(theCoin.GetWorth());
 
     public override void Draw()
     {
@@ -427,7 +427,7 @@ namespace GameManager
         ushort num4 = (ushort) ((uint) direction + (uint) num3);
         float num5 = pos.X + Mortar.Math.SinIdx(num4) * 100f;
         float num6 = pos.Y + Mortar.Math.CosIdx(num4) * 100f;
-        for (int index2 = 1; ((double) num5 < -(double) Game.SCREEN_WIDTH / 2.0 || (double) num5 > (double) Game.SCREEN_WIDTH / 2.0 || (double) num6 < -(double) Game.SCREEN_HEIGHT / 2.0 || (double) num6 > (double) Game.SCREEN_HEIGHT / 2.0) && index2 < 10; num6 = pos.Y + Mortar.Math.CosIdx(num4) * 100f)
+        for (int index2 = 1; ((double) num5 < -(double) Game2.SCREEN_WIDTH / 2.0 || (double) num5 > (double) Game2.SCREEN_WIDTH / 2.0 || (double) num6 < -(double) Game2.SCREEN_HEIGHT / 2.0 || (double) num6 > (double) Game2.SCREEN_HEIGHT / 2.0) && index2 < 10; num6 = pos.Y + Mortar.Math.CosIdx(num4) * 100f)
         {
           ++index2;
           int num7 = Mortar.Math.g_random.Rand32((int) range) - ((int) range >> 1);

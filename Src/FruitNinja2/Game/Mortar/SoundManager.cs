@@ -130,7 +130,7 @@ namespace Mortar
         snd.inst = instance;
       else
         this.sysManagedSfx.AddLast(instance);
-      if (!Game.game_work.soundEnabled)
+      if (!Game2.game_work.soundEnabled)
         return;
       instance.Volume = SoundManager.sfx_volume;
       instance.Play();
@@ -250,8 +250,8 @@ namespace Mortar
       {
         try
         {
-          if (MediaPlayer.IsMuted != !Game.game_work.musicEnabled)
-            MediaPlayer.IsMuted = !Game.game_work.musicEnabled;
+          if (MediaPlayer.IsMuted != !Game2.game_work.musicEnabled)
+            MediaPlayer.IsMuted = !Game2.game_work.musicEnabled;
         }
         catch
         {

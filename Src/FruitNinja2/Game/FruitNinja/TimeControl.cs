@@ -36,7 +36,7 @@ namespace GameManager
       this.m_texture = (Texture) null;
       this.m_countingDownFrom = -1f;
       this.m_scale = new Vector3(0.0f, 18f, 0.0f);
-      this.m_pos = new Vector3((float) (((double) Game.SCREEN_WIDTH - (double) this.m_scale.X) / 2.0 - 5.0), (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y) / 2.0 - 5.0), 0.0f);
+      this.m_pos = new Vector3((float) (((double) Game2.SCREEN_WIDTH - (double) this.m_scale.X) / 2.0 - 5.0), (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y) / 2.0 - 5.0), 0.0f);
       this.m_selfCleanUp = false;
       this.m_stopTimeText = "";
       this.Reset();
@@ -46,13 +46,13 @@ namespace GameManager
     {
       this.m_time = Math.MAX(0.0f, this.m_countingDownFrom);
       this.m_stopTimeText = "";
-      if (Game.IsMultiplayer())
-        this.m_time = this.zen_times[(Game.game_work.saveData.GetTotal(StringFunctions.StringHash("vs_option_zen")) - 1) % this.zen_times.Length] + 0.9f;
-      else if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if (Game2.IsMultiplayer())
+        this.m_time = this.zen_times[(Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("vs_option_zen")) - 1) % this.zen_times.Length] + 0.9f;
+      else if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
       {
         this.m_time = 60.9f;
-        if ((double) Game.game_work.saveData.timer == 0.0 && (double) Game.game_work.gameOverTransition <= 0.0)
-          Game.game_work.saveData.timer = this.m_time;
+        if ((double) Game2.game_work.saveData.timer == 0.0 && (double) Game2.game_work.gameOverTransition <= 0.0)
+          Game2.game_work.saveData.timer = this.m_time;
       }
       this.m_timeImageFrame = 0.0f;
       this.m_color = Color.White;
@@ -60,7 +60,7 @@ namespace GameManager
 
     public float GetCountDown()
     {
-      return Game.game_work.gameMode != Game.GAME_MODE.GM_ARCADE ? this.m_countingDownFrom : 60.9f;
+      return Game2.game_work.gameMode != Game2.GAME_MODE.GM_ARCADE ? this.m_countingDownFrom : 60.9f;
     }
 
     public void AddTime(float time) => this.m_time += time;
@@ -80,17 +80,17 @@ namespace GameManager
         TimeControl.beenInUpdateBefore = true;
         TimeControl.normalX = this.m_pos.X;
       }
-      if (Game.game_work.gameMode == Game.GAME_MODE.GM_ZEN || Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ZEN || Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
       {
         this.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_NORMAL;
         this.m_pos.X = TimeControl.normalX;
-        if (!Game.game_work.pause && !Game.game_work.gameOver)
+        if (!Game2.game_work.pause && !Game2.game_work.gameOver)
         {
           if ((double) this.m_countingDownFrom > 0.0)
           {
             int b = (int) m_color.B;
             float num = 0.0f;
-            if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+            if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
               num = PowerUpManager.GetInstance().GetStopClockAmount();
             if ((double) num > 0.0)
             {
@@ -100,13 +100,13 @@ namespace GameManager
             else
             {
               this.m_stopTimeText = "";
-              if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+              if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
                 this.m_time -= dt * PowerUpManager.GetInstance().SlowClock();
               else
                 this.m_time -= dt;
               if ((double) this.m_time < 0.5)
               {
-                Game.GameOver();
+                Game2.GameOver();
                 Fruit.s_consecutiveCount = 0;
                 Fruit.s_consecutiveType = -1;
                 this.m_time = 0.0f;
@@ -146,11 +146,11 @@ namespace GameManager
             this.m_timeImageFrame = (float) ((int) this.m_time % 6) + 0.5f;
           }
         }
-        Game.game_work.saveData.timer = this.m_time;
+        Game2.game_work.saveData.timer = this.m_time;
         int num1 = (int) this.m_time % 60;
         this.m_text = string.Format("{0}:{2}{1}", (object) (int) ((double) this.m_time / 60.0), (object) num1, num1 < 10 ? (object) "0" : (object) "");
-        this.m_pos.Y = (float) (((double) Game.SCREEN_HEIGHT + 2.0 * (double) this.m_scale.Y) / 2.0 - 2.0 * (double) this.m_scale.Y * (1.0 - (double) Math.Abs(Game.game_work.gameOverTransition)));
-        if (!Game.IsMultiplayer())
+        this.m_pos.Y = (float) (((double) Game2.SCREEN_HEIGHT + 2.0 * (double) this.m_scale.Y) / 2.0 - 2.0 * (double) this.m_scale.Y * (1.0 - (double) Math.Abs(Game2.game_work.gameOverTransition)));
+        if (!Game2.IsMultiplayer())
           return;
         this.m_pos.Y *= -1f;
         this.m_pos.Y += 5f;
@@ -158,7 +158,7 @@ namespace GameManager
       else
       {
         this.m_drawOrder = ~HUD.HUD_ORDER.HUD_ORDER_NORMAL;
-        Game.game_work.saveData.timer = -1f;
+        Game2.game_work.saveData.timer = -1f;
       }
     }
 
@@ -168,11 +168,11 @@ namespace GameManager
 
     public override void Draw(float[] tintChannels)
     {
-      if (((double) Math.Abs(Game.game_work.gameOverTransition) >= 1.0 || Game.game_work.gameMode != Game.GAME_MODE.GM_ZEN) && Game.game_work.gameMode != Game.GAME_MODE.GM_ARCADE)
+      if (((double) Math.Abs(Game2.game_work.gameOverTransition) >= 1.0 || Game2.game_work.gameMode != Game2.GAME_MODE.GM_ZEN) && Game2.game_work.gameMode != Game2.GAME_MODE.GM_ARCADE)
         return;
-      Game.game_work.pNumberFont.DrawString(this.m_text, this.m_pos.X - this.m_scale.X * 0.6f, this.m_pos.Y, 0.0f, HUDControl.TintColor(this.m_color, tintChannels), 32f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_RIGHT);
+      Game2.game_work.pNumberFont.DrawString(this.m_text, this.m_pos.X - this.m_scale.X * 0.6f, this.m_pos.Y, 0.0f, HUDControl.TintColor(this.m_color, tintChannels), 32f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_RIGHT);
       if (this.m_stopTimeText.Length > 0)
-        Game.game_work.pNumberFont.DrawString(this.m_stopTimeText, this.m_pos.X - this.m_scale.X * 0.6f, this.m_pos.Y - 32f, 0.0f, HUDControl.TintColor(Color.Green, tintChannels), 24f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_RIGHT);
+        Game2.game_work.pNumberFont.DrawString(this.m_stopTimeText, this.m_pos.X - this.m_scale.X * 0.6f, this.m_pos.Y - 32f, 0.0f, HUDControl.TintColor(Color.Green, tintChannels), 24f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_RIGHT);
       if (this.m_texture == null)
         return;
       float u0 = (float) ((int) this.m_timeImageFrame % 4) / 4f;
@@ -190,7 +190,7 @@ namespace GameManager
 
     public override void Skip()
     {
-      this.m_time = Game.game_work.saveData.timer;
+      this.m_time = Game2.game_work.saveData.timer;
       this.m_timeImageFrame = 0.0f;
     }
 

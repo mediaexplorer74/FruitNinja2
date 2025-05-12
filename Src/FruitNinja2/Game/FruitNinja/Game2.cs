@@ -4,9 +4,8 @@
 // MVID: 6D83AD8C-624F-452F-AF0A-F1A481FF708B
 
 
-//using Microsoft.Phone.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Mortar;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ using System.Threading;
 #nullable disable
 namespace GameManager
 {
-  public class Game
+  public class Game2
   {
     public const int HEAP_SIZE_MESH = 158720;
     public const int HEAP_SIZE_ANIMATION = 512000;
@@ -36,40 +35,40 @@ namespace GameManager
     public static float HUD_SCALE = 1f;
     public static float GAME_MODE_SCALE_FIX = 1f;
     public static float GRAVITY = 0.2f;
-    private static Game.GameInitFunction[] task_init = new Game.GameInitFunction[3]
+    private static Game2.GameInitFunction[] task_init = new Game2.GameInitFunction[3]
     {
-      new Game.GameInitFunction(Game.SplashInit),
-      new Game.GameInitFunction(Game.FrontendInit),
-      new Game.GameInitFunction(GameTask.GameInit)
+      new Game2.GameInitFunction(Game2.SplashInit),
+      new Game2.GameInitFunction(Game2.FrontendInit),
+      new Game2.GameInitFunction(GameTask.GameInit)
     };
-    private static Game.GameFunction[] task_main = new Game.GameFunction[3]
+    private static Game2.GameFunction[] task_main = new Game2.GameFunction[3]
     {
-      new Game.GameFunction(Game.SplashUpdate),
-      new Game.GameFunction(Game.FrontendUpdate),
-      new Game.GameFunction(GameTask.GameUpdate)
+      new Game2.GameFunction(Game2.SplashUpdate),
+      new Game2.GameFunction(Game2.FrontendUpdate),
+      new Game2.GameFunction(GameTask.GameUpdate)
     };
-    private static Game.GameFunctionDraw[] task_draw = new Game.GameFunctionDraw[3]
+    private static Game2.GameFunctionDraw[] task_draw = new Game2.GameFunctionDraw[3]
     {
-      new Game.GameFunctionDraw(Game.SplashDraw),
-      new Game.GameFunctionDraw(Game.FrontendDraw),
-      new Game.GameFunctionDraw(GameTask.GameDraw)
+      new Game2.GameFunctionDraw(Game2.SplashDraw),
+      new Game2.GameFunctionDraw(Game2.FrontendDraw),
+      new Game2.GameFunctionDraw(GameTask.GameDraw)
     };
-    private static Game.GameExitFunction[] task_exit = new Game.GameExitFunction[3]
+    private static Game2.GameExitFunction[] task_exit = new Game2.GameExitFunction[3]
     {
-      new Game.GameExitFunction(Game.SplashExit),
-      new Game.GameExitFunction(Game.FrontendExit),
-      new Game.GameExitFunction(GameTask.GameExit)
+      new Game2.GameExitFunction(Game2.SplashExit),
+      new Game2.GameExitFunction(Game2.FrontendExit),
+      new Game2.GameExitFunction(GameTask.GameExit)
     };
-    private static Game.Task old_routine = Game.Task.TASK_SPLASHSCREEN;
+    private static Game2.Task old_routine = Game2.Task.TASK_SPLASHSCREEN;
     private static bool task_initialised = false;
     private static bool updated = false;
     private static float drawDt = 0.0f;
     public static bool trialModeEnded = false;
     private static bool FIRST = true;
-    private static Game.ScoreDelegate s_scoreDelagate = new Game.ScoreDelegate(Game.DefaultScoreDelegate);
+    private static Game2.ScoreDelegate s_scoreDelagate = new Game2.ScoreDelegate(Game2.DefaultScoreDelegate);
     private static float GetFruitZPositionz = -500f;
     private static float GetBombZPositionz = -10f;
-    public static Game.GameWork game_work = new Game.GameWork();
+    public static Game2.GameWork game_work = new Game2.GameWork();
     private static Color DefaultBackgroundColor = Color.Black;
 
     public static Color TintColour(Color col, float[] tints)
@@ -89,15 +88,15 @@ namespace GameManager
     {
       try
       {
-        Game.trialModeState = false;//Guide.IsTrialMode;
+        Game2.trialModeState = false;//Guide.IsTrialMode;
       }
       catch
       {
-        Game.trialModeState = true;
+        Game2.trialModeState = true;
       }
     }
 
-    public static bool isWP7TrialMode() => Game.trialModeState;
+    public static bool isWP7TrialMode() => Game2.trialModeState;
 
     public static void ShowBuyMessageBox()
     {
@@ -124,11 +123,11 @@ namespace GameManager
       int? nullable = default;//Guide.EndShowMessageBox(result);
       if (!nullable.HasValue || !nullable.HasValue || nullable.Value != 1)
         return;
-      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[PlayerIndex.One];
+      //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[PlayerIndex.One];
            
       //Guide.EndShowMessageBox(result);
-      if (signedInGamer == null)
-        return;
+      //if (signedInGamer == null)
+      //  return;
       //while (Guide.IsVisible)
       //  Thread.Sleep(32);
       //if (Guide.IsVisible || !signedInGamer.Privileges.AllowPurchaseContent)
@@ -150,9 +149,9 @@ namespace GameManager
 
     public static float PSP_SCREEN_HEIGHT => 272f;
 
-    public static float PC_SCREEN_WIDTH => Game.SCREEN_WIDTH;
+    public static float PC_SCREEN_WIDTH => Game2.SCREEN_WIDTH;
 
-    public static float PC_SCREEN_HEIGHT => Game.SCREEN_HEIGHT;
+    public static float PC_SCREEN_HEIGHT => Game2.SCREEN_HEIGHT;
 
     public static bool USE_ARCADE_GO_SCREEN => false;
 
@@ -160,25 +159,25 @@ namespace GameManager
     {
       get
       {
-        return Game.game_work.gameMode == Game.GAME_MODE.GM_ZEN || Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE;
+        return Game2.game_work.gameMode == Game2.GAME_MODE.GM_ZEN || Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE;
       }
     }
 
-    public static float SCREEN_SCALE_X => Game.SCREEN_WIDTH / Game.SCREEN_SIZE_X;
+    public static float SCREEN_SCALE_X => Game2.SCREEN_WIDTH / Game2.SCREEN_SIZE_X;
 
-    public static float SCREEN_SCALE_Y => Game.SCREEN_HEIGHT / Game.SCREEN_SIZE_Y;
+    public static float SCREEN_SCALE_Y => Game2.SCREEN_HEIGHT / Game2.SCREEN_SIZE_Y;
 
-    public static float PIXEL_SCREEN_X(float x) => Game.SCREEN_SCALE_X * x;
+    public static float PIXEL_SCREEN_X(float x) => Game2.SCREEN_SCALE_X * x;
 
-    public static float PIXEL_SCREEN_Y(float y) => Game.SCREEN_SCALE_Y * y;
+    public static float PIXEL_SCREEN_Y(float y) => Game2.SCREEN_SCALE_Y * y;
 
-    public static float SPLIT_SCREEN_SCALE => Game.SCREEN_WIDTH * 0.5f / Game.SCREEN_HEIGHT;
+    public static float SPLIT_SCREEN_SCALE => Game2.SCREEN_WIDTH * 0.5f / Game2.SCREEN_HEIGHT;
 
-    public static float SPLIT_SCREEN_SCALE_INV => Game.SCREEN_HEIGHT / (Game.SCREEN_WIDTH * 0.5f);
+    public static float SPLIT_SCREEN_SCALE_INV => Game2.SCREEN_HEIGHT / (Game2.SCREEN_WIDTH * 0.5f);
 
-    public static float SPLIT_SCREEN_WIDTH => Game.SCREEN_HEIGHT / Game.SPLIT_SCREEN_SCALE;
+    public static float SPLIT_SCREEN_WIDTH => Game2.SCREEN_HEIGHT / Game2.SPLIT_SCREEN_SCALE;
 
-    public static float SPLIT_SCREEN_HIEGHT => Game.SCREEN_HEIGHT;
+    public static float SPLIT_SCREEN_HIEGHT => Game2.SCREEN_HEIGHT;
 
     public static float SCREEN_TO_PLATFORMX(float x)
     {
@@ -190,69 +189,69 @@ namespace GameManager
       return y * (float) DisplayManager.GetInstance().GetWindowSize().bottom;
     }
 
-    public static float PSP_PIXEL_SCREENX(float x) => x / Game.PSP_SCREEN_WIDTH;
+    public static float PSP_PIXEL_SCREENX(float x) => x / Game2.PSP_SCREEN_WIDTH;
 
-    public static float PSP_PIXEL_SCREENY(float x) => x / Game.PSP_SCREEN_HEIGHT;
+    public static float PSP_PIXEL_SCREENY(float x) => x / Game2.PSP_SCREEN_HEIGHT;
 
-    public static float PC_PIXEL_SCREENX(float x) => x / Game.PC_SCREEN_WIDTH;
+    public static float PC_PIXEL_SCREENX(float x) => x / Game2.PC_SCREEN_WIDTH;
 
-    public static float PC_PIXEL_SCREENY(float x) => x / Game.PC_SCREEN_HEIGHT;
+    public static float PC_PIXEL_SCREENY(float x) => x / Game2.PC_SCREEN_HEIGHT;
 
-    public static float PIXEL_SCREENX(float x) => x / Game.SCREEN_WIDTH;
+    public static float PIXEL_SCREENX(float x) => x / Game2.SCREEN_WIDTH;
 
-    public static float PIXEL_SCREENY(float y) => y / Game.SCREEN_HEIGHT;
+    public static float PIXEL_SCREENY(float y) => y / Game2.SCREEN_HEIGHT;
 
-    public static float PIXEL_PLATFORMX(float x) => Game.SCREEN_TO_PLATFORMX(Game.PIXEL_SCREENX(x));
+    public static float PIXEL_PLATFORMX(float x) => Game2.SCREEN_TO_PLATFORMX(Game2.PIXEL_SCREENX(x));
 
-    public static float PIXEL_PLATFORMY(float y) => Game.SCREEN_TO_PLATFORMY(Game.PIXEL_SCREENX(y));
+    public static float PIXEL_PLATFORMY(float y) => Game2.SCREEN_TO_PLATFORMY(Game2.PIXEL_SCREENX(y));
 
     public static float PSP_PIXEL_PLATFORMX(float x)
     {
-      return Game.SCREEN_TO_PLATFORMX(Game.PSP_PIXEL_SCREENX(x));
+      return Game2.SCREEN_TO_PLATFORMX(Game2.PSP_PIXEL_SCREENX(x));
     }
 
     public static float PSP_PIXEL_PLATFORMY(float y)
     {
-      return Game.SCREEN_TO_PLATFORMY(Game.PSP_PIXEL_SCREENY(y));
+      return Game2.SCREEN_TO_PLATFORMY(Game2.PSP_PIXEL_SCREENY(y));
     }
 
     public static float PC_PIXEL_PLATFORMX(float x)
     {
-      return Game.SCREEN_TO_PLATFORMX(Game.PC_PIXEL_SCREENX(x));
+      return Game2.SCREEN_TO_PLATFORMX(Game2.PC_PIXEL_SCREENX(x));
     }
 
     public static float PC_PIXEL_PLATFORMY(float y)
     {
-      return Game.SCREEN_TO_PLATFORMY(Game.PC_PIXEL_SCREENY(y));
+      return Game2.SCREEN_TO_PLATFORMY(Game2.PC_PIXEL_SCREENY(y));
     }
 
-    public static float SCREEN_LEFT => Game.SCREEN_TO_PLATFORMX(-0.5f);
+    public static float SCREEN_LEFT => Game2.SCREEN_TO_PLATFORMX(-0.5f);
 
-    public static float SCREEN_RIGHT => Game.SCREEN_TO_PLATFORMX(0.5f);
+    public static float SCREEN_RIGHT => Game2.SCREEN_TO_PLATFORMX(0.5f);
 
-    public static float SCREEN_TOP => Game.SCREEN_TO_PLATFORMY(0.5f);
+    public static float SCREEN_TOP => Game2.SCREEN_TO_PLATFORMY(0.5f);
 
-    public static float SCREEN_BOTTOM => Game.SCREEN_TO_PLATFORMY(-0.5f);
+    public static float SCREEN_BOTTOM => Game2.SCREEN_TO_PLATFORMY(-0.5f);
 
-    public static float SCREEN_TOP_LEFTX => Game.SCREEN_TO_PLATFORMX(-0.5f);
+    public static float SCREEN_TOP_LEFTX => Game2.SCREEN_TO_PLATFORMX(-0.5f);
 
-    public static float SCREEN_TOP_LEFTY => Game.SCREEN_TO_PLATFORMY(0.5f);
+    public static float SCREEN_TOP_LEFTY => Game2.SCREEN_TO_PLATFORMY(0.5f);
 
-    public static float SCREEN_TOP_RIGHTX => Game.SCREEN_TO_PLATFORMX(0.5f);
+    public static float SCREEN_TOP_RIGHTX => Game2.SCREEN_TO_PLATFORMX(0.5f);
 
-    public static float SCREEN_TOP_RIGHTY => Game.SCREEN_TO_PLATFORMY(0.5f);
+    public static float SCREEN_TOP_RIGHTY => Game2.SCREEN_TO_PLATFORMY(0.5f);
 
-    public static float SCREEN_BOTTOM_LEFTX => Game.SCREEN_TO_PLATFORMX(0.0f);
+    public static float SCREEN_BOTTOM_LEFTX => Game2.SCREEN_TO_PLATFORMX(0.0f);
 
-    public static float SCREEN_BOTTOM_LEFTY => Game.SCREEN_TO_PLATFORMY(-0.5f);
+    public static float SCREEN_BOTTOM_LEFTY => Game2.SCREEN_TO_PLATFORMY(-0.5f);
 
-    public static float SCREEN_BOTTOM_RIGHTX => Game.SCREEN_TO_PLATFORMX(0.5f);
+    public static float SCREEN_BOTTOM_RIGHTX => Game2.SCREEN_TO_PLATFORMX(0.5f);
 
-    public static float SCREEN_BOTTOM_RIGHTY => Game.SCREEN_TO_PLATFORMY(-0.5f);
+    public static float SCREEN_BOTTOM_RIGHTY => Game2.SCREEN_TO_PLATFORMY(-0.5f);
 
-    public static float SCREEN_CENTREX => Game.SCREEN_TO_PLATFORMX(0.0f);
+    public static float SCREEN_CENTREX => Game2.SCREEN_TO_PLATFORMX(0.0f);
 
-    public static float SCREEN_CENTREY => Game.SCREEN_TO_PLATFORMY(0.0f);
+    public static float SCREEN_CENTREY => Game2.SCREEN_TO_PLATFORMY(0.0f);
 
     public static float GAME_FONT_SIZE => 16f;
 
@@ -268,10 +267,10 @@ namespace GameManager
 
     public static void OnActivate()
     {
-      if ((double) Game.game_work.gameOverTransition != 0.0)
+      if ((double) Game2.game_work.gameOverTransition != 0.0)
         return;
-      if (Game.game_work.hud != null)
-        Game.game_work.hud.OnPause();
+      if (Game2.game_work.hud != null)
+        Game2.game_work.hud.OnPause();
       GameTask.SkipToPause(false);
     }
 
@@ -333,31 +332,31 @@ namespace GameManager
 
     public static int GetCurrentModeHighscore()
     {
-      return Game.game_work.gameMode >= Game.GAME_MODE.GM_CLASSIC && Game.game_work.gameMode < Game.GAME_MODE.GM_MAX && Game.game_work.saveData != null ? Game.game_work.saveData.highScores[(int) Game.game_work.gameMode] : 0;
+      return Game2.game_work.gameMode >= Game2.GAME_MODE.GM_CLASSIC && Game2.game_work.gameMode < Game2.GAME_MODE.GM_MAX && Game2.game_work.saveData != null ? Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode] : 0;
     }
 
     public static int GetCurrentModeHighscore(int mode)
     {
-      return mode >= 0 && mode < 4 && Game.game_work.saveData != null ? Game.game_work.saveData.highScores[mode] : 0;
+      return mode >= 0 && mode < 4 && Game2.game_work.saveData != null ? Game2.game_work.saveData.highScores[mode] : 0;
     }
 
     public static bool SetCurrentModeHighscore(int score)
     {
-      if (Game.game_work.gameMode < Game.GAME_MODE.GM_CLASSIC || Game.game_work.gameMode >= Game.GAME_MODE.GM_MAX || Game.game_work.saveData == null || score <= Game.game_work.saveData.highScores[(int) Game.game_work.gameMode])
+      if (Game2.game_work.gameMode < Game2.GAME_MODE.GM_CLASSIC || Game2.game_work.gameMode >= Game2.GAME_MODE.GM_MAX || Game2.game_work.saveData == null || score <= Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode])
         return false;
-      Game.game_work.saveData.highScores[(int) Game.game_work.gameMode] = score;
+      Game2.game_work.saveData.highScores[(int) Game2.game_work.gameMode] = score;
       int mode = -1;
-      switch (Game.game_work.gameMode)
+      switch (Game2.game_work.gameMode)
       {
-        case Game.GAME_MODE.GM_CLASSIC:
+        case Game2.GAME_MODE.GM_CLASSIC:
           mode = 0;
           LeaderboardsScreen.SetStartLeaderboard(0);
           break;
-        case Game.GAME_MODE.GM_ARCADE:
+        case Game2.GAME_MODE.GM_ARCADE:
           LeaderboardsScreen.SetStartLeaderboard(2);
           mode = 2;
           break;
-        case Game.GAME_MODE.GM_ZEN:
+        case Game2.GAME_MODE.GM_ZEN:
           LeaderboardsScreen.SetStartLeaderboard(1);
           mode = 1;
           break;
@@ -369,30 +368,30 @@ namespace GameManager
 
     public static bool CombosEnabled() => false;
 
-    public static void AddToCurrentScore(int score) => Game.AddToCurrentScore(score, 0);
+    public static void AddToCurrentScore(int score) => Game2.AddToCurrentScore(score, 0);
 
     public static void AddToCurrentScore(int score, int player)
     {
-      int currentScore = Game.game_work.currentScore;
-      if (Game.isWP7TrialMode() && currentScore + score >= 150)
+      int currentScore = Game2.game_work.currentScore;
+      if (Game2.isWP7TrialMode() && currentScore + score >= 150)
       {
-        Game.trialModeEnded = true;
-        Game.GameOver();
+        Game2.trialModeEnded = true;
+        Game2.GameOver();
         score = 150 - currentScore;
                 Mortar.Game1.TriggerShowBuyMessageBox = true;
       }
-      int num = Game.game_work.currentScore += Game.s_scoreDelagate(score * Game.GetScoreMultiplyer());
+      int num = Game2.game_work.currentScore += Game2.s_scoreDelagate(score * Game2.GetScoreMultiplyer());
       if (num < 0)
-        Game.game_work.currentScore = num = 0;
-      if (currentScore / Fruit.NEW_LIFE_AT < num / Fruit.NEW_LIFE_AT && Game.game_work.currentMissCount > (byte) 0)
+        Game2.game_work.currentScore = num = 0;
+      if (currentScore / Fruit.NEW_LIFE_AT < num / Fruit.NEW_LIFE_AT && Game2.game_work.currentMissCount > (byte) 0)
       {
-        --Game.game_work.currentMissCount;
+        --Game2.game_work.currentMissCount;
         SoundManager.GetInstance().SFXPlay(SoundDef.SND_EXTRA_LIFE);
       }
       uint hash = StringFunctions.StringHash("all");
       if (score <= 0)
         return;
-      Game.game_work.totalScore = (uint) Game.game_work.saveData.AddToTotal("all", hash, score, true, false);
+      Game2.game_work.totalScore = (uint) Game2.game_work.saveData.AddToTotal("all", hash, score, true, false);
     }
 
     public static void AddCoins(int coins)
@@ -407,29 +406,29 @@ namespace GameManager
 
     public static bool BombFlashFull()
     {
-      return (double) Game.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_FULL && (double) Game.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_START_FADE;
+      return (double) Game2.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_FULL && (double) Game2.game_work.hitBombTime < (double) GameTask.BOMB_FLASH_START_FADE;
     }
 
-    public static void GameOver() => Game.GameOver(-1, -1f, -1);
+    public static void GameOver() => Game2.GameOver(-1, -1f, -1);
 
     public static void GameOver(int state, float time, int player)
     {
-      if (Game.game_work.gameOver)
+      if (Game2.game_work.gameOver)
         return;
-      Game.game_work.gameOver = true;
+      Game2.game_work.gameOver = true;
       WaveManager.GetInstance().ClearUnspawned();
-      Game.game_work.gameOverScreen = new GameOverScreen((string) null, state, time, Game.game_work.saveData.go_head, Game.game_work.saveData.go_body, Game.game_work.saveData.go_fruit, Game.game_work.saveData.go_fact);
-      Game.game_work.saveData.go_head = Game.game_work.saveData.go_body = Game.game_work.saveData.go_fruit = Game.game_work.saveData.go_fact = -1;
-      Game.game_work.gameOverScreen.Init();
-      Game.game_work.hud.AddControl((HUDControl) Game.game_work.gameOverScreen);
+      Game2.game_work.gameOverScreen = new GameOverScreen((string) null, state, time, Game2.game_work.saveData.go_head, Game2.game_work.saveData.go_body, Game2.game_work.saveData.go_fruit, Game2.game_work.saveData.go_fact);
+      Game2.game_work.saveData.go_head = Game2.game_work.saveData.go_body = Game2.game_work.saveData.go_fruit = Game2.game_work.saveData.go_fact = -1;
+      Game2.game_work.gameOverScreen.Init();
+      Game2.game_work.hud.AddControl((HUDControl) Game2.game_work.gameOverScreen);
     }
 
     public static void QuitToMenu()
     {
-      Game.game_work.gameOver = true;
+      Game2.game_work.gameOver = true;
       GameTask.s_mainScreen.m_state = MainScreen.MS.MS_IN;
       GameTask.s_mainScreen.m_transitionWait = 0.5f;
-      Game.game_work.currentScore = 0;
+      Game2.game_work.currentScore = 0;
     }
 
     public static void ClearMenuItems()
@@ -459,11 +458,11 @@ namespace GameManager
       }
     }
 
-    public static void SetScoreDelegate(Game.ScoreDelegate del) => Game.s_scoreDelagate = del;
+    public static void SetScoreDelegate(Game2.ScoreDelegate del) => Game2.s_scoreDelagate = del;
 
     public static int DefaultScoreDelegate(int score)
     {
-      if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
       {
         if (score > 0)
           score *= PowerUpManager.GetInstance().GetScoreGainMultiplier();
@@ -475,45 +474,45 @@ namespace GameManager
 
     public static void GameTaskUpdate(float dt)
     {
-      Game.drawDt += dt;
-      Game.game_work.dt = dt;
-      Game.game_work.gameSeedValue += (uint) ((double) dt * 1000.0);
-      if (Game.task_initialised)
+      Game2.drawDt += dt;
+      Game2.game_work.dt = dt;
+      Game2.game_work.gameSeedValue += (uint) ((double) dt * 1000.0);
+      if (Game2.task_initialised)
       {
-        if (Game.game_work.routine_0 != Game.old_routine)
+        if (Game2.game_work.routine_0 != Game2.old_routine)
         {
-          Game.Task routine0 = Game.game_work.routine_0;
-          Game.game_work.routine_0 = routine0;
-          Game.old_routine = Game.game_work.routine_0;
+          Game2.Task routine0 = Game2.game_work.routine_0;
+          Game2.game_work.routine_0 = routine0;
+          Game2.old_routine = Game2.game_work.routine_0;
         }
         else
         {
-          bool update = !Game.game_work.pause;
-          Game.updated = true;
-          Game.old_routine = Game.game_work.routine_0;
-          if ((double) Game.game_work.hitBombTime <= 0.0)
-            Game.game_work.saveData.Update(dt, Game.game_work.hud);
-          Game.task_main[(int) Game.game_work.routine_0](dt, update);
+          bool update = !Game2.game_work.pause;
+          Game2.updated = true;
+          Game2.old_routine = Game2.game_work.routine_0;
+          if ((double) Game2.game_work.hitBombTime <= 0.0)
+            Game2.game_work.saveData.Update(dt, Game2.game_work.hud);
+          Game2.task_main[(int) Game2.game_work.routine_0](dt, update);
         }
       }
       else
       {
-        Game.old_routine = Game.game_work.routine_0;
-        Game.task_init[(int) Game.game_work.routine_0](0U);
-        Game.task_initialised = true;
-        if (!Game.FIRST)
+        Game2.old_routine = Game2.game_work.routine_0;
+        Game2.task_init[(int) Game2.game_work.routine_0](0U);
+        Game2.task_initialised = true;
+        if (!Game2.FIRST)
           return;
-        Game.FIRST = false;
-        Game.GameTaskUpdate(dt);
+        Game2.FIRST = false;
+        Game2.GameTaskUpdate(dt);
       }
     }
 
     public static void GameTaskDraw(float dt)
     {
-      Game.game_work.dt = Game.drawDt;
-      if (Game.game_work.routine_0 == Game.old_routine && Game.updated)
-        Game.task_draw[(int) Game.game_work.routine_0](Game.drawDt, true);
-      Game.drawDt = 0.0f;
+      Game2.game_work.dt = Game2.drawDt;
+      if (Game2.game_work.routine_0 == Game2.old_routine && Game2.updated)
+        Game2.task_draw[(int) Game2.game_work.routine_0](Game2.drawDt, true);
+      Game2.drawDt = 0.0f;
     }
 
     public static void GameTaskExit()
@@ -528,16 +527,16 @@ namespace GameManager
 
     public static int TouchInRegion(float xMin, float xMax, float yMin, float yMax)
     {
-      return Game.TouchInRegion(xMin, xMax, yMin, yMax, -1);
+      return Game2.TouchInRegion(xMin, xMax, yMin, yMax, -1);
     }
 
     public static int TouchInRegion(float xMin, float xMax, float yMin, float yMax, int touch)
     {
-      if (touch >= 0 && touch < GameTask.MAX_SLASHES && (double) Game.game_work.touchPositions[touch].Z > 0.0 && (double) Game.game_work.touchPositions[touch].X >= (double) xMin && (double) Game.game_work.touchPositions[touch].X <= (double) xMax && (double) Game.game_work.touchPositions[touch].Y >= (double) yMin && (double) Game.game_work.touchPositions[touch].Y <= (double) yMax)
+      if (touch >= 0 && touch < GameTask.MAX_SLASHES && (double) Game2.game_work.touchPositions[touch].Z > 0.0 && (double) Game2.game_work.touchPositions[touch].X >= (double) xMin && (double) Game2.game_work.touchPositions[touch].X <= (double) xMax && (double) Game2.game_work.touchPositions[touch].Y >= (double) yMin && (double) Game2.game_work.touchPositions[touch].Y <= (double) yMax)
         return touch;
       for (int index = 0; index < GameTask.MAX_SLASHES; ++index)
       {
-        if ((double) Game.game_work.touchPositions[index].Z > 0.0 && (double) Game.game_work.touchPositions[index].X >= (double) xMin && (double) Game.game_work.touchPositions[index].X <= (double) xMax && (double) Game.game_work.touchPositions[index].Y >= (double) yMin && (double) Game.game_work.touchPositions[index].Y <= (double) yMax)
+        if ((double) Game2.game_work.touchPositions[index].Z > 0.0 && (double) Game2.game_work.touchPositions[index].X >= (double) xMin && (double) Game2.game_work.touchPositions[index].X <= (double) xMax && (double) Game2.game_work.touchPositions[index].Y >= (double) yMin && (double) Game2.game_work.touchPositions[index].Y <= (double) yMax)
           return index;
       }
       return -1;
@@ -547,9 +546,9 @@ namespace GameManager
     {
       if (touch >= 0 && touch < GameTask.MAX_SLASHES)
       {
-        if ((double) Game.game_work.touchPositions[touch].Z == 1.0)
+        if ((double) Game2.game_work.touchPositions[touch].Z == 1.0)
           return 1;
-        if ((double) Game.game_work.touchPositions[touch].Z == 2.0)
+        if ((double) Game2.game_work.touchPositions[touch].Z == 2.0)
           return 2;
       }
       return 0;
@@ -559,19 +558,19 @@ namespace GameManager
 
     public static string GetVersionString()
     {
-      return Game.version_major.ToString() + "." + (object) Game.version_minor + "." + (object) Game.version_patch;
+      return Game2.version_major.ToString() + "." + (object) Game2.version_minor + "." + (object) Game2.version_patch;
     }
 
     public static int GetVersionTotal()
     {
-      return Game.version_major * 10000 + Game.version_minor * 100 + Game.version_patch;
+      return Game2.version_major * 10000 + Game2.version_minor * 100 + Game2.version_patch;
     }
 
-    public static int GetVersionMajor() => Game.version_major;
+    public static int GetVersionMajor() => Game2.version_major;
 
-    public static int GetVersionMinor() => Game.version_minor;
+    public static int GetVersionMinor() => Game2.version_minor;
 
-    public static int GetVersionPatch() => Game.version_patch;
+    public static int GetVersionPatch() => Game2.version_patch;
 
     public static bool IsFastHardware() => true;
 
@@ -584,18 +583,18 @@ namespace GameManager
 
     public static float GetFruitZPosition()
     {
-      Game.GetFruitZPositionz -= 100f;
-      if ((double) Game.GetFruitZPositionz < -2499.0)
-        Game.GetFruitZPositionz = -500f;
-      return Game.GetFruitZPositionz;
+      Game2.GetFruitZPositionz -= 100f;
+      if ((double) Game2.GetFruitZPositionz < -2499.0)
+        Game2.GetFruitZPositionz = -500f;
+      return Game2.GetFruitZPositionz;
     }
 
     public static float GetBombZPosition()
     {
-      Game.GetBombZPositionz -= 50f;
-      if ((double) Game.GetBombZPositionz < -400.0)
-        Game.GetBombZPositionz = -10f;
-      return Game.GetBombZPositionz;
+      Game2.GetBombZPositionz -= 50f;
+      if ((double) Game2.GetBombZPositionz < -400.0)
+        Game2.GetBombZPositionz = -10f;
+      return Game2.GetBombZPositionz;
     }
 
     public static bool InViewer() => false;
@@ -606,33 +605,33 @@ namespace GameManager
 
     private static void InitialiseData()
     {
-      Game.SetLanguage();
+      Game2.SetLanguage();
       StringTableUtils.StringTableUtilInit();
       StringTableUtils.StringTableUtilLoadStrings();
-      Game.game_work.loadedSaveState = false;
-      Game.game_work.gameMode = Game.GAME_MODE.GM_CLASSIC;
-      Game.game_work.saveData = new FruitSaveData();
-      Save.LoadGame(Game.game_work.saveData);
-      Game.game_work.gameMode = (Game.GAME_MODE) Game.game_work.saveData.mode;
-      Game.game_work.saveData.AddToTotal("sessions", StringFunctions.StringHash("sessions"), 1, true, true);
-      Game.game_work.routine_0 = Game.Task.TASK_GAME_UPDATE;
-      Game.game_work.bombSize = 50f;
-      Game.game_work.hitBombTime = 0.0f;
-      Game.game_work.critHitTime = 0.0f;
-      Game.game_work.criticalChance = Game.game_work.saveData.criticalProgression;
-      Game.game_work.hasDroppedFruit = false;
-      Game.game_work.inRetrySequence = false;
-      Game.game_work.gameOverScreen = (GameOverScreen) null;
-      Game.game_work.soundEnabled = Game.game_work.saveData.GetTotal(StringFunctions.StringHash("soundOff")) == 0;
-      SoundManager.GetInstance().SetSFXVolume(Game.game_work.soundEnabled ? SoundDef.DEFAULT_SFX_VOL : 0.0f);
-      Game.game_work.musicEnabled = Game.game_work.saveData.GetTotal(StringFunctions.StringHash("musicOff")) == 0;
-      Game.game_work.saveData.AddToTotal("soundOff", StringFunctions.StringHash("soundOff"), -Game.game_work.saveData.GetTotal(StringFunctions.StringHash("soundOff")), false, true);
-      Game.game_work.saveData.AddToTotal("musicOff", StringFunctions.StringHash("musicOff"), -Game.game_work.saveData.GetTotal(StringFunctions.StringHash("musicOff")), false, true);
+      Game2.game_work.loadedSaveState = false;
+      Game2.game_work.gameMode = Game2.GAME_MODE.GM_CLASSIC;
+      Game2.game_work.saveData = new FruitSaveData();
+      Save.LoadGame(Game2.game_work.saveData);
+      Game2.game_work.gameMode = (Game2.GAME_MODE) Game2.game_work.saveData.mode;
+      Game2.game_work.saveData.AddToTotal("sessions", StringFunctions.StringHash("sessions"), 1, true, true);
+      Game2.game_work.routine_0 = Game2.Task.TASK_GAME_UPDATE;
+      Game2.game_work.bombSize = 50f;
+      Game2.game_work.hitBombTime = 0.0f;
+      Game2.game_work.critHitTime = 0.0f;
+      Game2.game_work.criticalChance = Game2.game_work.saveData.criticalProgression;
+      Game2.game_work.hasDroppedFruit = false;
+      Game2.game_work.inRetrySequence = false;
+      Game2.game_work.gameOverScreen = (GameOverScreen) null;
+      Game2.game_work.soundEnabled = Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("soundOff")) == 0;
+      SoundManager.GetInstance().SetSFXVolume(Game2.game_work.soundEnabled ? SoundDef.DEFAULT_SFX_VOL : 0.0f);
+      Game2.game_work.musicEnabled = Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("musicOff")) == 0;
+      Game2.game_work.saveData.AddToTotal("soundOff", StringFunctions.StringHash("soundOff"), -Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("soundOff")), false, true);
+      Game2.game_work.saveData.AddToTotal("musicOff", StringFunctions.StringHash("musicOff"), -Game2.game_work.saveData.GetTotal(StringFunctions.StringHash("musicOff")), false, true);
       SlashEntity.InitModColors();
       AchievementManager.GetInstance().LoadAchievementInfo();
-      Game.game_work.coins = 0;
-      Game.game_work.coinsTotal = 0;
-      Game.game_work.levelStartCoins = 0;
+      Game2.game_work.coins = 0;
+      Game2.game_work.coinsTotal = 0;
+      Game2.game_work.levelStartCoins = 0;
       ItemManager.GetInstance().LoadItemData();
       BonusManager.GetInstance().Init();
     }
@@ -641,9 +640,9 @@ namespace GameManager
     {
       SystemManager.GetInstance().Init();
       MatrixManager.GetInstance().Init();
-      DisplayManager.GetInstance().SetWindowSize(0, (int) Game.SCREEN_SIZE_Y, 0, (int) Game.SCREEN_SIZE_X);
+      DisplayManager.GetInstance().SetWindowSize(0, (int) Game2.SCREEN_SIZE_Y, 0, (int) Game2.SCREEN_SIZE_X);
       DisplayManager.GetInstance().Init("Rocket Racing");
-      DisplayManager.GetInstance().SetClearColor(Game.DefaultBackgroundColor);
+      DisplayManager.GetInstance().SetClearColor(Game2.DefaultBackgroundColor);
       DisplayManager.GetInstance().SetLightDirection(new Vector3(0.0f, -10f, -5f));
       TextureManager.GetInstance().Initialise();
       TextureManager.GetInstance().Initialise(51200);
@@ -652,40 +651,40 @@ namespace GameManager
       InputManager.GetInstance().Init();
       PSPParticleManager.GetInstance().LoadFile("particles", "particles/particles_fast.xml");
       PowerUpManager.GetInstance().Load();
-      Game.InitialiseData();
-      Game.game_work.camera = new FruitCamera();
-      Game.game_work.pointerReleased = false;
-      Game.game_work.pointerPressed = false;
-      Game.game_work.pointerDown = false;
-      Game.game_work.mainPointer = Vector3.Zero;
-      Game.game_work.timeControl = (TimeControl) null;
-      Game.game_work.camera.Init(1f, 10000f, 16.95f, 11.3f);
-      if (Game.game_work.pGameFont == null)
+      Game2.InitialiseData();
+      Game2.game_work.camera = new FruitCamera();
+      Game2.game_work.pointerReleased = false;
+      Game2.game_work.pointerPressed = false;
+      Game2.game_work.pointerDown = false;
+      Game2.game_work.mainPointer = Vector3.Zero;
+      Game2.game_work.timeControl = (TimeControl) null;
+      Game2.game_work.camera.Init(1f, 10000f, 16.95f, 11.3f);
+      if (Game2.game_work.pGameFont == null)
       {
-        Game.game_work.pGameFont = new Font();
-        Game.game_work.pGameFont.Load("fonts/font_fruit_ninja.fnt");
+        Game2.game_work.pGameFont = new Font();
+        Game2.game_work.pGameFont.Load("fonts/font_fruit_ninja.fnt");
       }
-      if (Game.game_work.pNumberFont == null)
+      if (Game2.game_work.pNumberFont == null)
       {
-        Game.game_work.pNumberFont = new Font();
-        Game.game_work.pNumberFont.Load("fonts/fruit_ninja_numbers.fnt");
+        Game2.game_work.pNumberFont = new Font();
+        Game2.game_work.pNumberFont.Load("fonts/fruit_ninja_numbers.fnt");
       }
-      if (Game.game_work.pNumberFontLeaderboard == null)
+      if (Game2.game_work.pNumberFontLeaderboard == null)
       {
-        Game.game_work.pNumberFontLeaderboard = new Font();
-        Game.game_work.pNumberFontLeaderboard.Load("fonts/arcade_results_numbers.fnt");
+        Game2.game_work.pNumberFontLeaderboard = new Font();
+        Game2.game_work.pNumberFontLeaderboard.Load("fonts/arcade_results_numbers.fnt");
       }
-      if (Game.game_work.pNumberFontBlue2 == null)
+      if (Game2.game_work.pNumberFontBlue2 == null)
       {
-        Game.game_work.pNumberFontBlue2 = new Font();
-        Game.game_work.pNumberFontBlue2.Load("fonts/fruit_ninja_numbers_blue2.fnt");
+        Game2.game_work.pNumberFontBlue2 = new Font();
+        Game2.game_work.pNumberFontBlue2.Load("fonts/fruit_ninja_numbers_blue2.fnt");
       }
-      if (Game.game_work.pNumberFontGreen == null)
+      if (Game2.game_work.pNumberFontGreen == null)
       {
-        Game.game_work.pNumberFontGreen = new Font();
-        Game.game_work.pNumberFontGreen.Load("fonts/fruit_ninja_numbers_green.fnt");
+        Game2.game_work.pNumberFontGreen = new Font();
+        Game2.game_work.pNumberFontGreen.Load("fonts/fruit_ninja_numbers_green.fnt");
       }
-      Game.game_work.backTexture = TextureManager.GetInstance().Load("back_icon.tex", true);
+      Game2.game_work.backTexture = TextureManager.GetInstance().Load("back_icon.tex", true);
       MenuButton.LoadContent();
       Fruit.LoadInfo();
       SplatEntity.LoadContent();
@@ -704,19 +703,19 @@ namespace GameManager
 
     public static void SetScoreDelegate()
     {
-      Game.SetScoreDelegate(new Game.ScoreDelegate(Game.DefaultScoreDelegate));
+      Game2.SetScoreDelegate(new Game2.ScoreDelegate(Game2.DefaultScoreDelegate));
     }
 
     public static bool FailureEnabled()
     {
-      return Game.game_work.gameMode != Game.GAME_MODE.GM_ZEN && Game.game_work.gameMode != Game.GAME_MODE.GM_ARCADE;
+      return Game2.game_work.gameMode != Game2.GAME_MODE.GM_ZEN && Game2.game_work.gameMode != Game2.GAME_MODE.GM_ARCADE;
     }
 
     public static bool CoinsEnabled() => false;
 
-    public static bool PowersEnabled() => Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE;
+    public static bool PowersEnabled() => Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE;
 
-    public static int GetScoreMultiplyer() => Game.GetScoreMultiplyer(0);
+    public static int GetScoreMultiplyer() => Game2.GetScoreMultiplyer(0);
 
     public static int GetScoreMultiplyer(int player) => 1;
 
@@ -758,11 +757,11 @@ namespace GameManager
     public class GameWork
     {
       public bool inBonusScreen;
-      public Game.Task routine_0;
-      public Game.Task routine_1;
+      public Game2.Task routine_0;
+      public Game2.Task routine_1;
       public bool pause;
       public StringTableUtils.Language language;
-      public Game.GAME_MODE gameMode;
+      public Game2.GAME_MODE gameMode;
       public bool gameOver;
       public bool inRetrySequence;
       public float retryTimer;

@@ -6,7 +6,6 @@
 
 using Microsoft.Xna.Framework;
 using Mortar;
-//using WPR.WindowsCompability;
 
 #nullable disable
 namespace GameManager
@@ -34,7 +33,7 @@ namespace GameManager
     {
       get
       {
-        return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + 125.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 30.0), 0.0f);
+        return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + 125.0), (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 30.0), 0.0f);
       }
     }
 
@@ -42,7 +41,7 @@ namespace GameManager
     {
       get
       {
-        return new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - 58.0), (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 23.0), 0.0f);
+        return new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - 58.0), (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 23.0), 0.0f);
       }
     }
 
@@ -50,7 +49,7 @@ namespace GameManager
     {
       get
       {
-        return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + 60.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 113.0), 0.0f);
+        return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + 60.0), (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 113.0), 0.0f);
       }
     }
 
@@ -72,17 +71,17 @@ namespace GameManager
       this.m_state = 5;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public void ShopCallback()
     {
-      if (Game.isWP7TrialMode())
+      if (Game2.isWP7TrialMode())
         return;
       this.m_state = 2;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public void AboutCallback()
@@ -90,7 +89,7 @@ namespace GameManager
       this.m_state = 3;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public static void LoadContent()
@@ -129,11 +128,14 @@ namespace GameManager
           {
             if (this.m_quitButton == null)
             {
-              this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+              this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), 
+                  (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitCallback), 
+                  Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+
               this.m_quitButton.m_triggerOnBackPress = true;
               this.m_quitButton.Init();
-              Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
-              Game.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
+              Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+              Game2.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
               MenuButton quitButton = this.m_quitButton;
               quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
               Entity entity = this.m_quitButton.m_entity;
@@ -141,9 +143,13 @@ namespace GameManager
             }
             if (this.m_shopButton == null)
             {
-              this.m_shopButton = new MenuButton("senseis_swag.tex", new Vector3((float) (222.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 175.0), 0.0f), new MenuButton.MenuCallback(this.ShopCallback), Fruit.FruitType("pineapple"), Vector3.Zero, true);
+              this.m_shopButton = new MenuButton("senseis_swag.tex", new Vector3((float) (222.0 - (double) Game2.SCREEN_WIDTH / 2.0),
+                  (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 175.0), 0.0f), new MenuButton.MenuCallback(this.ShopCallback),
+                  Fruit.FruitType("pineapple"), Vector3.Zero, true);
+
               this.m_shopButton.m_isTrialLockable = true;
-              this.m_shopButton.m_originalScale = Vector3.Multiply(new Vector3((float) (this.m_shopButton.m_texture.GetWidth() + 1U), (float) (this.m_shopButton.m_texture.GetHeight() + 1U), 1f), Game.GAME_MODE_SCALE_FIX);
+              this.m_shopButton.m_originalScale = Vector3.Multiply(new Vector3((float) (this.m_shopButton.m_texture.GetWidth() + 1U), 
+                  (float) (this.m_shopButton.m_texture.GetHeight() + 1U), 1f), Game2.GAME_MODE_SCALE_FIX);
               this.m_shopButton.m_overallScratchScale = 0.5f;
               MenuButton shopButton = this.m_shopButton;
               shopButton.m_newSymbolOffset = Vector3.Multiply(shopButton.m_newSymbolOffset, 0.575f);
@@ -154,19 +160,22 @@ namespace GameManager
                 this.m_shopButton = (MenuButton) null;
               });
               this.m_shopButton.Init();
-              Game.game_work.hud.AddControl((HUDControl) this.m_shopButton);
-              Game.game_work.tutorialControl.ResetTutePos(this.m_shopButton);
-              if (!Game.isWP7TrialMode())
+              Game2.game_work.hud.AddControl((HUDControl) this.m_shopButton);
+              Game2.game_work.tutorialControl.ResetTutePos(this.m_shopButton);
+              if (!Game2.isWP7TrialMode())
                 this.m_shopButton.SetNewSymbol(ItemManager.GetInstance().AreNewItems());
               else
                 this.m_shopButton.m_clearOthers = false;
-              this.omode = !Game.isWP7TrialMode() ? 2 : 1;
+              this.omode = !Game2.isWP7TrialMode() ? 2 : 1;
             }
             if (this.m_aboutButton == null)
             {
-              this.m_aboutButton = new MenuButton("credits.tex", new Vector3((float) (385.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 118.0), 0.0f), new MenuButton.MenuCallback(this.AboutCallback), Fruit.FruitType("plum"), Vector3.Zero, true);
+              this.m_aboutButton = new MenuButton("credits.tex", new Vector3((float) (385.0 - (double) Game2.SCREEN_WIDTH / 2.0), 
+                  (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 118.0), 0.0f), new MenuButton.MenuCallback(this.AboutCallback),
+                  Fruit.FruitType("plum"), Vector3.Zero, true);
+
               this.m_aboutButton.Init();
-              Game.game_work.hud.AddControl((HUDControl) this.m_aboutButton);
+              Game2.game_work.hud.AddControl((HUDControl) this.m_aboutButton);
             }
           }
           if ((double) this.m_time <= 0.99900001287460327)
@@ -186,9 +195,13 @@ namespace GameManager
             if (!Mortar.Game1.instance.UpsellComplete())
               break;
             this.skip = 0;
-            this.m_shopButton = new MenuButton("senseis_swag.tex", new Vector3((float) (222.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 175.0), 0.0f), new MenuButton.MenuCallback(this.ShopCallback), Fruit.FruitType("pineapple"), Vector3.Zero, true);
+            this.m_shopButton = new MenuButton("senseis_swag.tex", new Vector3((float) (222.0 - (double) Game2.SCREEN_WIDTH / 2.0),
+                (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 175.0), 0.0f), new MenuButton.MenuCallback(this.ShopCallback), 
+                Fruit.FruitType("pineapple"), Vector3.Zero, true);
+
             this.m_shopButton.m_isTrialLockable = true;
-            this.m_shopButton.m_originalScale = Vector3.Multiply(new Vector3((float) (this.m_shopButton.m_texture.GetWidth() + 1U), (float) (this.m_shopButton.m_texture.GetHeight() + 1U), 1f), Game.GAME_MODE_SCALE_FIX);
+            this.m_shopButton.m_originalScale = Vector3.Multiply(new Vector3((float) (this.m_shopButton.m_texture.GetWidth() + 1U),
+                (float) (this.m_shopButton.m_texture.GetHeight() + 1U), 1f), Game2.GAME_MODE_SCALE_FIX);
             this.m_shopButton.m_overallScratchScale = 0.5f;
             MenuButton shopButton = this.m_shopButton;
             shopButton.m_newSymbolOffset = Vector3.Multiply(shopButton.m_newSymbolOffset, 0.575f);
@@ -199,9 +212,9 @@ namespace GameManager
               this.m_shopButton = (MenuButton) null;
             });
             this.m_shopButton.Init();
-            Game.game_work.hud.AddControl((HUDControl) this.m_shopButton);
-            Game.game_work.tutorialControl.ResetTutePos(this.m_shopButton);
-            if (!Game.isWP7TrialMode())
+            Game2.game_work.hud.AddControl((HUDControl) this.m_shopButton);
+            Game2.game_work.tutorialControl.ResetTutePos(this.m_shopButton);
+            if (!Game2.isWP7TrialMode())
             {
               this.m_shopButton.SetNewSymbol(ItemManager.GetInstance().AreNewItems());
               break;
@@ -210,17 +223,17 @@ namespace GameManager
             break;
           }
 
-          if (!Game.isWP7TrialMode() && this.omode == 1)
+          if (!Game2.isWP7TrialMode() && this.omode == 1)
           {
             this.omode = 2;
             this.m_shopButton.RemoveNoShow();
-            Game.game_work.hud.RemoveControl((HUDControl) this.m_shopButton);
+            Game2.game_work.hud.RemoveControl((HUDControl) this.m_shopButton);
             this.m_shopButton = (MenuButton) null;
 
             //RnD
             //GC2.Collect();
             this.m_shopButton = new MenuButton("senseis_swag.tex", 
-                new Vector3((float) (222.0 - (double) Game.SCREEN_WIDTH / 2.0), 
+                new Vector3((float) (222.0 - (double) Game2.SCREEN_WIDTH / 2.0), 
                 (float) ((double) DojoScreen.DOJO_SCREEN_HEIGHT / 2.0 - 175.0), 0.0f), 
                 new MenuButton.MenuCallback(this.ShopCallback), 
                 Fruit.FruitType("pineapple"),
@@ -229,7 +242,7 @@ namespace GameManager
             this.m_shopButton.m_originalScale = Vector3.Multiply(
                 new Vector3((float) (this.m_shopButton.m_texture.GetWidth() + 1U), 
                 (float) (this.m_shopButton.m_texture.GetHeight() + 1U), 1f), 
-                Game.GAME_MODE_SCALE_FIX);
+                Game2.GAME_MODE_SCALE_FIX);
             this.m_shopButton.m_overallScratchScale = 0.5f;
             MenuButton shopButton = this.m_shopButton;
             shopButton.m_newSymbolOffset = Vector3.Multiply(
@@ -243,9 +256,9 @@ namespace GameManager
               this.m_shopButton = (MenuButton) null;
             });
             this.m_shopButton.Init();
-            Game.game_work.hud.AddControl((HUDControl) this.m_shopButton);
-            Game.game_work.tutorialControl.ResetTutePos(this.m_shopButton);
-            if (!Game.isWP7TrialMode())
+            Game2.game_work.hud.AddControl((HUDControl) this.m_shopButton);
+            Game2.game_work.tutorialControl.ResetTutePos(this.m_shopButton);
+            if (!Game2.isWP7TrialMode())
             {
               this.m_shopButton.SetNewSymbol(ItemManager.GetInstance().AreNewItems());
               break;
@@ -270,13 +283,13 @@ namespace GameManager
           {
             CreditsScreen control = new CreditsScreen(this);
             control.Init();
-            Game.game_work.hud.AddControl((HUDControl) control);
+            Game2.game_work.hud.AddControl((HUDControl) control);
           }
           else if (this.m_state == 2)
           {
             ShopScreen control = new ShopScreen(this);
             control.Init();
-            Game.game_work.hud.AddControl((HUDControl) control);
+            Game2.game_work.hud.AddControl((HUDControl) control);
           }
           this.m_time = 0.0f;
           break;
@@ -284,7 +297,7 @@ namespace GameManager
           this.m_time *= 0.75f;
           if ((double) this.m_time >= 1.0 / 1000.0)
             break;
-          Game.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
+          Game2.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
           this.m_terminate = true;
           break;
       }
@@ -330,24 +343,31 @@ namespace GameManager
       DojoScreen.s_senseiTexture.Set();
       Mesh.DrawQuad(Color.White);
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Translate(new Vector3(Game.SCREEN_WIDTH / 2f, 
-          (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 48.0 * (double) this.m_time), 0.0f));
+      MatrixManager.GetInstance().Translate(new Vector3(Game2.SCREEN_WIDTH / 2f, 
+          (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 48.0 * (double) this.m_time), 0.0f));
       MatrixManager.GetInstance().UploadCurrentMatrices();
       Mesh.DrawTriList(DojoScreen.top_tri, 3, true);
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 60.0 * (double) this.m_time), 0.0f));
+      MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0), 
+          (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 60.0 * (double) this.m_time), 0.0f));
       MatrixManager.GetInstance().UploadCurrentMatrices();
       Mesh.DrawTriList(DojoScreen.btm_tri, 3, true);
       DojoScreen.s_senseiTexture.UnSet();
       DojoScreen.dojoTex.Set();
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Scale(new Vector3((float) ((double) DojoScreen.dojoTex.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) DojoScreen.dojoTex.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 0.0f));
-      MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + 56.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 24.0 - (1.0 - (double) this.m_time) * 60.0), 0.0f));
+      MatrixManager.GetInstance().Scale(new Vector3((float) ((double) DojoScreen.dojoTex.GetWidth()
+          * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) DojoScreen.dojoTex.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 0.0f));
+
+      MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + 56.0),
+          (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 24.0 - (1.0 - (double) this.m_time) * 60.0), 0.0f));
+
       MatrixManager.GetInstance().UploadCurrentMatrices();
       Mesh.DrawQuad(Color.White);
       DojoScreen.dojoTex.UnSet();
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Scale(new Vector3((float) (DojoScreen.titleTexture.GetWidth() + 1U), (float) (DojoScreen.titleTexture.GetHeight() + 1U), 0.0f));
+      MatrixManager.GetInstance().Scale(new Vector3((float) (DojoScreen.titleTexture.GetWidth() + 1U),
+          (float) (DojoScreen.titleTexture.GetHeight() + 1U), 0.0f));
+
       MatrixManager.GetInstance().Translate(Vector3.Add(DojoScreen.TITLE_POS, 
           Vector3.Multiply(Vector3.Multiply(Vector3.UnitY, 48f), 1f - this.m_time)));
       MatrixManager.GetInstance().UploadCurrentMatrices();

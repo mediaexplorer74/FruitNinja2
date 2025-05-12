@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Mortar;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Text;
@@ -151,7 +152,7 @@ namespace GameManager
               saveData.highScores[0] = saveData.highScore;
               for (int mode = 0; mode < 4; ++mode)
               {
-                string AttributeName = string.Format("{0}highscore", (object) Initialise.GetModeName((Game.GAME_MODE) mode));
+                string AttributeName = string.Format("{0}highscore", (object) Initialise.GetModeName((Game2.GAME_MODE) mode));
                 element.QueryIntAttribute(AttributeName, ref saveData.highScores[mode]);
               }
               saveData.saveVersion = num1 * 10000 + num2 * 100 + num3;
@@ -199,7 +200,7 @@ namespace GameManager
             }
             if (string.Compare(reader.Name, "ent") == 0)
             {
-              if (saveData.mode < 4 && saveData.saveVersion == Game.GetVersionTotal())
+              if (saveData.mode < 4 && saveData.saveVersion == Game2.GetVersionTotal())
               {
                 EntityState entityState = new EntityState();
                 string attribute4 = reader.GetAttribute("pos");
@@ -232,7 +233,7 @@ namespace GameManager
               string attribute10 = reader.GetAttribute("mode");
               if (attribute10 != null)
                 saveData.mode = (int) Initialise.ParseGameMode(StringFunctions.StringHash(attribute10));
-              if (saveData.mode < 4 && saveData.saveVersion == Game.GetVersionTotal())
+              if (saveData.mode < 4 && saveData.saveVersion == Game2.GetVersionTotal())
               {
                 Save.QueryIntAttribute(reader, "score", ref saveData.score);
                 Save.QueryIntAttribute(reader, "misses", ref saveData.misses);
@@ -273,7 +274,7 @@ namespace GameManager
             }
             if (string.Compare(reader.Name, "wave_info") == 0)
             {
-              if (saveData.mode < 4 && saveData.saveVersion == Game.GetVersionTotal())
+              if (saveData.mode < 4 && saveData.saveVersion == Game2.GetVersionTotal())
               {
                 Save.QueryIntAttribute(reader, "waveCount", ref saveData.currentWave);
                 Save.QueryFloatAttribute(reader, "waveDelay", ref saveData.currentWaveDelay);
@@ -289,7 +290,7 @@ namespace GameManager
             bool flag = false;
             for (int mode = 0; mode < 4; ++mode)
             {
-              string name = "wave_counts_" + Initialise.GetModeName((Game.GAME_MODE) mode);
+              string name = "wave_counts_" + Initialise.GetModeName((Game2.GAME_MODE) mode);
               if (name == reader.Name)
               {
                 flag = true;
@@ -328,7 +329,7 @@ namespace GameManager
             Save.ParseSaveFile(XDocument.Parse(Encoding.UTF8.GetString(numArray, 0, numArray.Length)), saveData);
             if (saveData.mode >= 4)
               saveData.mode = 0;
-            if (saveData.saveVersion != Game.GetVersionTotal())
+            if (saveData.saveVersion != Game2.GetVersionTotal())
             {
               saveData.ClearTotal(StringFunctions.StringHash("unrated_games"));
               for (int index = 0; index < 4; ++index)
@@ -336,30 +337,35 @@ namespace GameManager
               saveData.game_rated = false;
             }
           }
-         
-          storageFileStream.Close();
+
+          storageFileStream.Flush();
+          storageFileStream.Dispose();
         }
         else
         {
-          if (storeForApplication.AvailableFreeSpace < 8192L)
-            throw new Exception("Not enough space to create save");
+          //if (storeForApplication.AvailableFreeSpace < 8192L)
+          //  throw new Exception("Not enough space to create save");
           if (!storeForApplication.DirectoryExists(Save.SAVE_DIRECTORY))
             storeForApplication.CreateDirectory(Save.SAVE_DIRECTORY);
           storageFileStream = storeForApplication.OpenFile(Save.SAVE_FILENAME, FileMode.CreateNew);
-        
-         storageFileStream.Close();
+
+          storageFileStream.Flush();
+          storageFileStream.Dispose();
         }
       }
       catch (Exception ex)
       {
+                Debug.WriteLine("[ex] Save - LoadGame ex: " + ex.Message);
       }
       //finally
       //{
         //storageFileStream?.Close();
       //}
       return false;
-    }
+    }//LoadGame
 
+
+    // SaveGame
     public static bool SaveGame(FruitSaveData saveData)
     {
       bool flag = false;
@@ -376,15 +382,15 @@ namespace GameManager
         xdocument.Add((object) content1);
         for (int mode = 0; mode < 4; ++mode)
         {
-          string name = string.Format("{0}highscore", (object) Initialise.GetModeName((Game.GAME_MODE) mode));
+          string name = string.Format("{0}highscore", (object) Initialise.GetModeName((Game2.GAME_MODE) mode));
           content1.Add((object) new XAttribute((XName) name, (object) saveData.highScores[mode]));
         }
         content1.Add((object) new XAttribute((XName) "highscore", (object) saveData.highScore));
         content1.Add((object) new XAttribute((XName) "critical_chance", (object) saveData.criticalProgression));
         content1.Add((object) new XAttribute((XName) "rated", saveData.game_rated ? (object) "true" : (object) "false"));
-        content1.Add((object) new XAttribute((XName) "major", (object) Game.GetVersionMajor()));
-        content1.Add((object) new XAttribute((XName) "minor", (object) Game.GetVersionMinor()));
-        content1.Add((object) new XAttribute((XName) "batch", (object) Game.GetVersionPatch()));
+        content1.Add((object) new XAttribute((XName) "major", (object) Game2.GetVersionMajor()));
+        content1.Add((object) new XAttribute((XName) "minor", (object) Game2.GetVersionMinor()));
+        content1.Add((object) new XAttribute((XName) "batch", (object) Game2.GetVersionPatch()));
         foreach (KeyValuePair<uint, SliceTotal> total in saveData.totals)
         {
           XElement content2 = new XElement((XName) "total");
@@ -429,7 +435,7 @@ namespace GameManager
           content8.Add((object) new XAttribute((XName) "hasDropped", saveData.hasDropped ? (object) "true" : (object) "false"));
           content8.Add((object) new XAttribute((XName) "score", (object) saveData.score));
           content8.Add((object) new XAttribute((XName) "misses", (object) saveData.misses));
-          content8.Add((object) new XAttribute((XName) "mode", (object) Initialise.GetModeName((Game.GAME_MODE) saveData.mode)));
+          content8.Add((object) new XAttribute((XName) "mode", (object) Initialise.GetModeName((Game2.GAME_MODE) saveData.mode)));
           content8.Add((object) new XAttribute((XName) "consecutiveCount", (object) saveData.consecutiveCount));
           content8.Add((object) new XAttribute((XName) "consecutiveType", (object) saveData.consecutiveType));
           content8.Add((object) new XAttribute((XName) "timer", (object) saveData.timer));
@@ -536,7 +542,7 @@ namespace GameManager
         }
         for (int mode = 0; mode < 4; ++mode)
         {
-          string name = string.Format("wave_counts_{0}", (object) Initialise.GetModeName((Game.GAME_MODE) mode));
+          string name = string.Format("wave_counts_{0}", (object) Initialise.GetModeName((Game2.GAME_MODE) mode));
           if (saveData.waveGameCount[mode].Count > 0)
           {
             XElement content15 = new XElement((XName) name);
@@ -559,18 +565,22 @@ namespace GameManager
         Encoding.UTF8.GetString(array, 0, array.Length);
         storageFileStream = storeForApplication.OpenFile(Save.SAVE_FILENAME, FileMode.Create);
         storageFileStream.Write(array, 3, array.Length - 3);
-        storageFileStream?.Close();
+
+        storageFileStream?.Flush();
+        storageFileStream?.Dispose();
         flag = true;
       }
       catch (Exception ex)
       {
+                Debug.WriteLine("[ex] Save - SaveGame ex.: " + ex.Message);
       }
-      //finally
-      //{
-      //  storageFileStream?.Close();
-      //}
+    //finally
+    //{
+    //  storageFileStream?.Flush();
+    //storageFileStream?.Dispose();
+     //}
       return flag;
-    }
+   }//SaveGame
 
     public static Vector3 ParseVector(string text)
     {

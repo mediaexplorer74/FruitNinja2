@@ -5,7 +5,7 @@
 
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Mortar;
 using System;
 using System.Collections.Generic;
@@ -53,7 +53,7 @@ namespace GameManager
     private static string zenModeTitle;
     private static GameVertex[] symbo_tris = new GameVertex[48];
 
-    public static bool USE_ZEN_FACT_SCREEN => Game.game_work.gameMode == Game.GAME_MODE.GM_ZEN;
+    public static bool USE_ZEN_FACT_SCREEN => Game2.game_work.gameMode == Game2.GAME_MODE.GM_ZEN;
 
     public static int NUM_ARCADE_MODE_MODES => 2;
 
@@ -145,8 +145,8 @@ namespace GameManager
       this.m_buttons[1] = (MenuButton) null;
       this.m_leaderboardButton = (MenuButton) null;
 
-      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-      this.m_leaderboardState = signedInGamer == null || !signedInGamer.IsSignedInToLive || !Mortar.Game1.logInSucceeded ? FruitFactControl.FFL.FFL_OFFLINE : FruitFactControl.FFL.FFL_DOWNLOADING;
+      //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+      //this.m_leaderboardState = signedInGamer == null || !signedInGamer.IsSignedInToLive || !Mortar.Game1.logInSucceeded ? FruitFactControl.FFL.FFL_OFFLINE : FruitFactControl.FFL.FFL_DOWNLOADING;
       this.start_download = false;
       this.download_complete = false;
       this.download_result = FruitFactControl.DownloadResult.Pending;
@@ -159,21 +159,21 @@ namespace GameManager
     {
       this.m_fruitComboTime = -0.5f;
       this.m_stickerTexture = (Texture) null;
-      this.m_texture = Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE ? FruitFactControl.s_bigLeaderBoardDialogTexture : (FruitFactControl.USE_ZEN_FACT_SCREEN ? FruitFactControl.s_bigBoardTexture : FruitFactControl.s_boardTexture);
-      this.displayMode = Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE ? 1 : (FruitFactControl.USE_ZEN_FACT_SCREEN ? 2 : 3);
+      this.m_texture = Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE ? FruitFactControl.s_bigLeaderBoardDialogTexture : (FruitFactControl.USE_ZEN_FACT_SCREEN ? FruitFactControl.s_bigBoardTexture : FruitFactControl.s_boardTexture);
+      this.displayMode = Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE ? 1 : (FruitFactControl.USE_ZEN_FACT_SCREEN ? 2 : 3);
       if (FruitFactControl.USE_ZEN_FACT_SCREEN)
-        this.m_scale = Vector3.Multiply(new Vector3((float) (this.m_texture.GetWidth() + 1U), (float) (this.m_texture.GetHeight() + 1U), 0.0f), Game.GAME_MODE_SCALE_FIX);
+        this.m_scale = Vector3.Multiply(new Vector3((float) (this.m_texture.GetWidth() + 1U), (float) (this.m_texture.GetHeight() + 1U), 0.0f), Game2.GAME_MODE_SCALE_FIX);
       else
-        this.m_scale = Vector3.Multiply(new Vector3((float) (this.m_texture.GetWidth() + 1U), (float) (this.m_texture.GetHeight() + 1U), 0.0f), Game.GAME_MODE_SCALE_FIX);
+        this.m_scale = Vector3.Multiply(new Vector3((float) (this.m_texture.GetWidth() + 1U), (float) (this.m_texture.GetHeight() + 1U), 0.0f), Game2.GAME_MODE_SCALE_FIX);
       this.m_comboStickerType = COMBO_TYPE.CT_NONE;
-      this.m_showCombo = FruitFactControl.USE_ZEN_FACT_SCREEN && Game.game_work.saveData.numFruitTypesInSliceCombo > 2;
+      this.m_showCombo = FruitFactControl.USE_ZEN_FACT_SCREEN && Game2.game_work.saveData.numFruitTypesInSliceCombo > 2;
       this.m_fruitOffset = new Vector3(-69f, 53f, 0.0f);
       if (this.m_showCombo)
       {
-                FruitFactControl.zenModeTitle = string.Format(Mortar.Game1.instance.stringTable.GetString(136).Replace("%i", "{0}"), (object)Game.game_work.saveData.numFruitTypesInSliceCombo);
-        this.m_numComboFruits = Game.game_work.saveData.numFruitTypesInSliceCombo;
+                FruitFactControl.zenModeTitle = string.Format(Mortar.Game1.instance.stringTable.GetString(136).Replace("%i", "{0}"), (object)Game2.game_work.saveData.numFruitTypesInSliceCombo);
+        this.m_numComboFruits = Game2.game_work.saveData.numFruitTypesInSliceCombo;
         for (int index = 0; index < this.m_numComboFruits; ++index)
-          this.m_comboFruits[index] = Game.game_work.saveData.sliceComboFruitTypes[index];
+          this.m_comboFruits[index] = Game2.game_work.saveData.sliceComboFruitTypes[index];
         int mostOf = 0;
         this.m_comboStickerType = ComboChecker.CheckCombo(this.m_comboFruits, this.m_numComboFruits, out mostOf);
         this.m_stickerTexture = ComboChecker.GetComboStarTexture(this.m_comboStickerType);
@@ -243,18 +243,18 @@ namespace GameManager
       this.m_stickerTexture = (Texture) null;
       if (FruitFactControl.m_leaderboardList != null)
       {
-        Game.game_work.hud.RemoveControl((HUDControl) FruitFactControl.m_leaderboardList);
+        Game2.game_work.hud.RemoveControl((HUDControl) FruitFactControl.m_leaderboardList);
         Delete.SAFE_DELETE<LeaderboardList>(ref FruitFactControl.m_leaderboardList);
       }
       for (int index = 0; index < 2; ++index)
       {
         if (this.m_buttons[index] != null)
-          Game.game_work.hud.RemoveControl((HUDControl) this.m_buttons[index]);
+          Game2.game_work.hud.RemoveControl((HUDControl) this.m_buttons[index]);
         Delete.SAFE_DELETE<MenuButton>(ref this.m_buttons[index]);
       }
       if (this.m_leaderboardButton == null)
         return;
-      Game.game_work.hud.RemoveControl((HUDControl) this.m_leaderboardButton);
+      Game2.game_work.hud.RemoveControl((HUDControl) this.m_leaderboardButton);
       Delete.SAFE_DELETE<MenuButton>(ref this.m_leaderboardButton);
     }
 
@@ -269,7 +269,7 @@ namespace GameManager
       {
         FruitFactControl.s_senseiHead.Set();
         MatrixManager.GetInstance().Reset();
-        MatrixManager.GetInstance().Scale(new Vector3((float) FruitFactControl.s_senseiHead.GetWidth() * Game.GAME_MODE_SCALE_FIX, (float) FruitFactControl.s_senseiHead.GetHeight() * Game.GAME_MODE_SCALE_FIX, 0.0f));
+        MatrixManager.GetInstance().Scale(new Vector3((float) FruitFactControl.s_senseiHead.GetWidth() * Game2.GAME_MODE_SCALE_FIX, (float) FruitFactControl.s_senseiHead.GetHeight() * Game2.GAME_MODE_SCALE_FIX, 0.0f));
         if (Mortar.Game1.settings.language == 3 || Mortar.Game1.settings.language == 4)
                     MatrixManager.GetInstance().Translate(Vector3.Add(this.m_pos, new Vector3(156f, 68f, 0.0f)));
         else
@@ -294,14 +294,14 @@ namespace GameManager
             this.m_texture.UnSet();
           }
           flag = true;
-                    Game.game_work.pGameFont.DrawString(
+                    Game2.game_work.pGameFont.DrawString(
               Mortar.Game1.instance.stringTable.GetString(139), this.m_pos.X - 8f, this.m_pos.Y,
               0.0f, this.m_fruitColor, 16f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_HCENTER);
-          Game.game_work.pGameFont.DrawString(
+          Game2.game_work.pGameFont.DrawString(
               this.m_text, (float) ((double) this.m_pos.X - (double) sbyte.MaxValue - 8.0),
               this.m_pos.Y - 40f, 0.0f, new Color(116, 93, 59), 16f, (float) byte.MaxValue,
               0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
-          Game.game_work.pGameFont.DrawString(
+          Game2.game_work.pGameFont.DrawString(
               FruitFactControl.zenModeTitle, this.m_pos.X - 8f, this.m_pos.Y + 89f, 0.0f,
               this.m_fruitColor, 20f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_HCENTER);
           if (this.m_showCombo)
@@ -339,8 +339,8 @@ namespace GameManager
               float num4 = Mortar.Math.SinIdx(Mortar.Math.DEGREE_TO_IDX(135f * Mortar.Math.CLAMP((float) (((double) this.m_fruitComboTime - (double) this.m_numComboFruits - 0.5) * 2.0), 0.0f, 1f))) / 0.707106769f;
               this.m_stickerTexture.Set();
               MatrixManager.GetInstance().Reset();
-              MatrixManager.GetInstance().Scale(Vector3.Multiply(Vector3.Multiply(new Vector3((float) (this.m_stickerTexture.GetWidth() + 1U), (float) (this.m_stickerTexture.GetHeight() + 1U), 0.0f), num4), Game.GAME_MODE_SCALE_FIX));
-              MatrixManager.GetInstance().Translate(Vector3.Add(this.m_pos, new Vector3((float) ((double) num2 / 2.0 - 8.0), (float) (37.0 + (double) this.m_stickerTexture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX / 2.0), 0.0f)));
+              MatrixManager.GetInstance().Scale(Vector3.Multiply(Vector3.Multiply(new Vector3((float) (this.m_stickerTexture.GetWidth() + 1U), (float) (this.m_stickerTexture.GetHeight() + 1U), 0.0f), num4), Game2.GAME_MODE_SCALE_FIX));
+              MatrixManager.GetInstance().Translate(Vector3.Add(this.m_pos, new Vector3((float) ((double) num2 / 2.0 - 8.0), (float) (37.0 + (double) this.m_stickerTexture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX / 2.0), 0.0f)));
               MatrixManager.GetInstance().UploadCurrentMatrices();
               Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
               this.m_stickerTexture.UnSet();
@@ -351,19 +351,19 @@ namespace GameManager
             float num = Mortar.Math.SinIdx(Mortar.Math.DEGREE_TO_IDX(135f * Mortar.Math.CLAMP((float) (((double) this.m_fruitComboTime - (double) this.m_numComboFruits - 0.5) * 2.0), 0.0f, 1f))) / 0.707106769f;
             FruitFactControl.s_noComboTexture.Set();
             MatrixManager.GetInstance().Reset();
-            MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float) ((double) FruitFactControl.s_noComboTexture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) FruitFactControl.s_noComboTexture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX + 1.0), 0.0f), num));
+            MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float) ((double) FruitFactControl.s_noComboTexture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), (float) ((double) FruitFactControl.s_noComboTexture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX + 1.0), 0.0f), num));
             MatrixManager.GetInstance().Translate(Vector3.Add(this.m_pos, new Vector3(-8f, 37f, 0.0f)));
             MatrixManager.GetInstance().UploadCurrentMatrices();
             Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
             FruitFactControl.s_noComboTexture.UnSet();
           }
         }
-        else if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && this.m_mode == 1)
+        else if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && this.m_mode == 1)
         {
           flag = true;
           this.DrawLeaderboard();
         }
-        else if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && this.m_mode == 0)
+        else if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && this.m_mode == 0)
         {
           flag = true;
           if (FruitFactControl.s_bigBonusBoardTexture != null)
@@ -391,11 +391,11 @@ namespace GameManager
           int index = 0;
           while (bonus != null)
           {
-            Game.game_work.pGameFont.DrawString(bonus.GetText(), pos, colorArray[index], 16f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
+            Game2.game_work.pGameFont.DrawString(bonus.GetText(), pos, colorArray[index], 16f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_VCENTER | ALIGNMENT_TYPE.ALIGN_LEFT);
             string stringToDraw = string.Format("{0}", (object) bonus.GetPoints());
-            Game.game_work.pGameFont.DrawString(stringToDraw, Vector3.Add(pos, Vector3.Multiply(Vector3.UnitX, 209f)), colorArray[index], 16f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER);
+            Game2.game_work.pGameFont.DrawString(stringToDraw, Vector3.Add(pos, Vector3.Multiply(Vector3.UnitX, 209f)), colorArray[index], 16f, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER);
             Matrix mtx;
-            Mortar.Math.Scale44((float) bonus.texture.GetWidth() * 0.5f * Game.GAME_MODE_SCALE_FIX, (float) bonus.texture.GetHeight() * 0.5f * Game.GAME_MODE_SCALE_FIX, 0.0f, out mtx);
+            Mortar.Math.Scale44((float) bonus.texture.GetWidth() * 0.5f * Game2.GAME_MODE_SCALE_FIX, (float) bonus.texture.GetHeight() * 0.5f * Game2.GAME_MODE_SCALE_FIX, 0.0f, out mtx);
             Mortar.Math.GlobalTranslate44(ref mtx, Vector3.Subtract(pos, Vector3.Multiply(Vector3.UnitX, 20f)));
             MatrixManager.GetInstance().SetMatrix(mtx);
             MatrixManager.GetInstance().UploadCurrentMatrices();
@@ -406,8 +406,8 @@ namespace GameManager
             pos.Y -= num;
             index = Mortar.Math.MIN(index + 1, colorArray.Length);
           }
-                    Game.game_work.pGameFont.DrawString(Mortar.Game1.instance.stringTable.GetString(139), this.m_pos.X - 8f, this.m_pos.Y - (Game.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH || Game.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH_UK ? 0.0f : 4f), 0.0f, this.m_fruitColor, 16f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_HCENTER);
-          Game.game_work.pGameFont.DrawString(this.m_text, (float) ((double) this.m_pos.X - (double) sbyte.MaxValue - 8.0), (float) ((double) this.m_pos.Y - 40.0 - (Game.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH || Game.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH_UK ? 0.0 : 4.0)), 0.0f, new Color(116, 93, 59), 16f, (float) byte.MaxValue, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
+                    Game2.game_work.pGameFont.DrawString(Mortar.Game1.instance.stringTable.GetString(139), this.m_pos.X - 8f, this.m_pos.Y - (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH_UK ? 0.0f : 4f), 0.0f, this.m_fruitColor, 16f, 0.0f, 0.0f, ALIGNMENT_TYPE.ALIGN_HCENTER);
+          Game2.game_work.pGameFont.DrawString(this.m_text, (float) ((double) this.m_pos.X - (double) sbyte.MaxValue - 8.0), (float) ((double) this.m_pos.Y - 40.0 - (Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH || Game2.game_work.language == StringTableUtils.Language.LANGUAGE_ENGLISH_UK ? 0.0 : 4.0)), 0.0f, new Color(116, 93, 59), 16f, (float) byte.MaxValue, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
         }
         else
         {
@@ -421,12 +421,12 @@ namespace GameManager
             Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
             this.m_texture.UnSet();
           }
-          Game.game_work.pGameFont.DrawString(this.m_text, (float) ((double) this.m_pos.X - 64.0 - 5.0), this.m_pos.Y - 14f, 0.0f, new Color(116, 93, 59), 16f, 128f, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
+          Game2.game_work.pGameFont.DrawString(this.m_text, (float) ((double) this.m_pos.X - 64.0 - 5.0), this.m_pos.Y - 14f, 0.0f, new Color(116, 93, 59), 16f, 128f, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
           if (this.m_fruitTexture != null)
           {
             this.m_fruitTexture.Set();
             MatrixManager.GetInstance().Reset();
-            MatrixManager.GetInstance().Scale(new Vector3((float) ((double) this.m_fruitTexture.GetWidth() * (double) Game.GAME_MODE_SCALE_FIX * (double) Game.SCREEN_SCALE_X * 1.5), (float) ((double) this.m_fruitTexture.GetHeight() * (double) Game.GAME_MODE_SCALE_FIX * (double) Game.SCREEN_SCALE_X * 1.5), 0.0f));
+            MatrixManager.GetInstance().Scale(new Vector3((float) ((double) this.m_fruitTexture.GetWidth() * (double) Game2.GAME_MODE_SCALE_FIX * (double) Game2.SCREEN_SCALE_X * 1.5), (float) ((double) this.m_fruitTexture.GetHeight() * (double) Game2.GAME_MODE_SCALE_FIX * (double) Game2.SCREEN_SCALE_X * 1.5), 0.0f));
             MatrixManager.GetInstance().Translate(Vector3.Add(Vector3.Add(this.m_pos, this.m_fruitOffset), new Vector3(-12f, 24f, 0.0f)));
             MatrixManager.GetInstance().UploadCurrentMatrices();
             Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
@@ -442,8 +442,8 @@ namespace GameManager
     private Vector3 ConvertPos(Vector3 pos)
     {
       Vector3 zero = Vector3.Zero;
-      pos.X -= Game.game_work.camera.m_cameraShake.X;
-      pos.Y -= Game.game_work.camera.m_cameraShake.Y;
+      pos.X -= Game2.game_work.camera.m_cameraShake.X;
+      pos.Y -= Game2.game_work.camera.m_cameraShake.Y;
       Vector3 vector3 = pos;
       vector3.X += 240f;
       vector3.Y += 160f;
@@ -473,7 +473,7 @@ namespace GameManager
       if ((double) this.m_loadingSymbolTime >= 8.0)
         this.m_loadingSymbolTime = 0.0f;
       this.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_AFTER_SPLAT;
-      if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
       {
         if (this.m_buttons[0] == null)
         {
@@ -482,14 +482,14 @@ namespace GameManager
           this.m_buttons[0].Init();
           this.m_buttons[0].m_uvs[0].X = 1f;
           this.m_buttons[0].m_uvs[1].X = 0.0f;
-          Game.game_work.hud.AddControl((HUDControl) this.m_buttons[0]);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_buttons[0]);
         }
         if (this.m_buttons[1] == null)
         {
           this.m_buttons[1] = new MenuButton(FruitFactControl.s_buttonTexture, this.m_pos, new MenuButton.MenuCallback(this.RightButton));
           this.m_buttons[1].Init();
           this.m_buttons[1].m_selfCleanUp = true;
-          Game.game_work.hud.AddControl((HUDControl) this.m_buttons[1]);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_buttons[1]);
         }
         this.m_buttons[0].m_pos = Vector3.Add(this.m_pos, new Vector3(-158f, 8f, 0.0f));
         this.m_buttons[1].m_pos = Vector3.Add(this.m_pos, new Vector3(142f, 8f, 0.0f));
@@ -498,12 +498,12 @@ namespace GameManager
           FruitFactControl.m_leaderboardList = new LeaderboardList();
           FruitFactControl.m_leaderboardList.Init();
           FruitFactControl.m_leaderboardList.SetItemHeight(FruitFactControl.LEADERBOARD_Y_DIFF);
-          FruitFactControl.m_leaderboardList.SetWidth(Game.SCREEN_WIDTH / 2f);
+          FruitFactControl.m_leaderboardList.SetWidth(Game2.SCREEN_WIDTH / 2f);
           FruitFactControl.m_leaderboardList.SetHeight(FruitFactControl.LEADERBOARD_Y_DIFF * 3f);
           FruitFactControl.m_leaderboardList.m_pos = new Vector3(75f, 45f, 0.0f);
           FruitFactControl.m_leaderboardList.m_initialTouchRegion.top = FruitFactControl.LEADERBOARD_Y_DIFF * 1f;
           FruitFactControl.m_leaderboardList.m_initialTouchRegion.bottom = (float) (-(double) FruitFactControl.LEADERBOARD_Y_DIFF * 2.0);
-          Game.game_work.hud.AddControl((HUDControl) FruitFactControl.m_leaderboardList);
+          Game2.game_work.hud.AddControl((HUDControl) FruitFactControl.m_leaderboardList);
         }
         if (FruitFactControl.m_leaderboardList != null)
           FruitFactControl.m_leaderboardList.m_update = false;
@@ -512,7 +512,7 @@ namespace GameManager
       }
       if (FruitFactControl.USE_ZEN_FACT_SCREEN)
       {
-        if ((double) Game.game_work.gameOverTransition > 0.75 && (double) this.m_fruitComboTime < (double) this.m_numComboFruits)
+        if ((double) Game2.game_work.gameOverTransition > 0.75 && (double) this.m_fruitComboTime < (double) this.m_numComboFruits)
         {
           float num = this.m_fruitComboTime - (float) (int) this.m_fruitComboTime;
           this.m_fruitComboTime += dt * 4f;
@@ -535,13 +535,13 @@ namespace GameManager
           SoundManager.GetInstance().SFXPlay("achievement");
         }
       }
-      else if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && this.m_mode == 1)
+      else if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && this.m_mode == 1)
       {
         this.UpdateLeaderboard();
       }
       else
       {
-        if (Game.game_work.gameMode != Game.GAME_MODE.GM_ARCADE || this.m_mode != 0)
+        if (Game2.game_work.gameMode != Game2.GAME_MODE.GM_ARCADE || this.m_mode != 0)
           return;
         LinkedListNode<Bonus> it = (LinkedListNode<Bonus>) null;
         if (BonusManager.GetInstance().GetFirstBestBonus(ref it) != null)
@@ -559,12 +559,12 @@ namespace GameManager
         this.m_leaderboardButton.m_update = true;
         this.m_leaderboardButton.m_pos = Vector3.Subtract(this.m_pos, new Vector3(8f, 44f, 0.0f));
       }
-            SignedInGamer signedInGamer1 = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-      if (signedInGamer1 == null || signedInGamer1 != null && !signedInGamer1.IsSignedInToLive || !Mortar.Game1.logInSucceeded)
-      {
-        this.m_leaderboardState = FruitFactControl.FFL.FFL_OFFLINE;
-        this.m_texture = FruitFactControl.s_bigLeaderBoardDialogTexture;
-      }
+            //SignedInGamer signedInGamer1 = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+      //if (signedInGamer1 == null || signedInGamer1 != null && !signedInGamer1.IsSignedInToLive || !Mortar.Game1.logInSucceeded)
+      //{
+      //  this.m_leaderboardState = FruitFactControl.FFL.FFL_OFFLINE;
+      //  this.m_texture = FruitFactControl.s_bigLeaderBoardDialogTexture;
+      //}
       switch (this.m_leaderboardState)
       {
         case FruitFactControl.FFL.FFL_NO_FRIENDS:
@@ -572,12 +572,12 @@ namespace GameManager
             break;
           break;
         case FruitFactControl.FFL.FFL_DOWNLOADING:
-          SignedInGamer signedInGamer2 = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-          if (signedInGamer2 == null || signedInGamer2 != null && !signedInGamer2.IsSignedInToLive)
-          {
-            this.m_leaderboardState = FruitFactControl.FFL.FFL_OFFLINE;
-            break;
-          }
+          //SignedInGamer signedInGamer2 = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+          //if (signedInGamer2 == null || signedInGamer2 != null && !signedInGamer2.IsSignedInToLive)
+          //{
+          //  this.m_leaderboardState = FruitFactControl.FFL.FFL_OFFLINE;
+          //  break;
+          //}
           if (FruitFactControl.m_leaderboardList != null)
           {
             this.m_texture = FruitFactControl.s_bigLeaderBoardDialogTexture;
@@ -620,7 +620,7 @@ namespace GameManager
     {
       List<LeaderboardsScreen.LeaderboardData> leaderboardDataList = new List<LeaderboardsScreen.LeaderboardData>();
       this.download_complete = true;
-      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+      //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
       LeaderboardReader reader = Leaderboards.GetReader();
       if (reader != null)
       {
@@ -628,7 +628,7 @@ namespace GameManager
         for (int index1 = 0; index1 < reader.Entries.Count; ++index1)
         {
           LeaderboardEntry entry = reader.Entries[index1];
-          int valueInt32 = entry.Columns.GetValueInt32("BestScore");
+                    int valueInt32 = 0;//entry.Columns.GetValueInt32("BestScore");
           int num1 = valueInt32 >> 24;
           int num2 = valueInt32 >> 16 & (int) byte.MaxValue;
           int num3 = valueInt32 & (int) ushort.MaxValue;
@@ -640,13 +640,14 @@ namespace GameManager
               scoreAsInt = Mortar.Game1.settings.bestThisWeek,
               score = Mortar.Game1.settings.bestThisWeek.ToString(),
               isPlayer = true,
-              gamerTag = signedInGamer.Gamertag
+              gamerTag = "tag"//signedInGamer.Gamertag
             });
-          if (string.Compare(entry.Gamer.Gamertag, signedInGamer.Gamertag) != 0)
+
+          /*if (string.Compare(entry.Gamer.Gamertag, signedInGamer.Gamertag) != 0)
           {
             LeaderboardsScreen.LeaderboardData leaderboardData1 = new LeaderboardsScreen.LeaderboardData();
             leaderboardData1.gotWeekly = num4 == num2 && num5 == num1;
-            leaderboardData1.gamerTag = entry.Gamer.Gamertag;
+            leaderboardData1.gamerTag = "gamertag";//entry.Gamer.Gamertag;
             leaderboardData1.isPlayer = false;
             if (leaderboardData1.gotWeekly)
             {
@@ -672,7 +673,7 @@ namespace GameManager
             }
             if (!flag)
               leaderboardDataList.Add(leaderboardData1);
-          }
+          }*/
         }
         int num6 = 0;
         int num7 = 0;
@@ -751,7 +752,7 @@ namespace GameManager
           {
             this.DrawDownloadIcon();
             string stringToDraw = Mortar.Game1.instance.stringTable.GetString(99);
-            Game.game_work.pGameFont.DrawString(stringToDraw, Vector3.Add(this.m_pos, new Vector3(-125f, 27f, 0.0f)), new Color(72, 44, 21), 18f, new Vector2(234f, 0.0f), ALIGNMENT_TYPE.ALIGN_CENTER);
+            Game2.game_work.pGameFont.DrawString(stringToDraw, Vector3.Add(this.m_pos, new Vector3(-125f, 27f, 0.0f)), new Color(72, 44, 21), 18f, new Vector2(234f, 0.0f), ALIGNMENT_TYPE.ALIGN_CENTER);
             break;
           }
           break;
@@ -1044,7 +1045,7 @@ namespace GameManager
         if (this.m_rank < 0 || !this.m_isOnScreen)
           return;
         float num1 = 23f;
-        float num2 = Game.game_work.pGameFont.MeasureString(this.m_text);
+        float num2 = Game2.game_work.pGameFont.MeasureString(this.m_text);
         if ((double) num2 > 145.0)
           num1 *= 145f / num2;
         MortarRectangleDec? rect = new MortarRectangleDec?();
@@ -1057,16 +1058,16 @@ namespace GameManager
         {
           rectangle.top = 105f;
           rectangle.bottom = -30f;
-          rectangle.left = -Game.SCREEN_WIDTH;
-          rectangle.right = Game.SCREEN_WIDTH;
+          rectangle.left = -Game2.SCREEN_WIDTH;
+          rectangle.right = Game2.SCREEN_WIDTH;
           rect = new MortarRectangleDec?(rectangle);
         }
         Color white = new Color(64, 34, 23);
-        Font font = Game.game_work.pGameFont;
+        Font font = Game2.game_work.pGameFont;
         if (this.isPlayer)
         {
           num1 *= 1.2f;
-          font = Game.game_work.pNumberFontLeaderboard;
+          font = Game2.game_work.pNumberFontLeaderboard;
           white = Color.White;
           GameVertex[] gameVertexArray = new GameVertex[4];
           if (FruitFactControl.SetupQuad(gameVertexArray, pos, (float) FruitFactControl.s_youTexture.GetWidth(), (float) FruitFactControl.s_youTexture.GetHeight(), rectangle, Color.White))
@@ -1081,14 +1082,14 @@ namespace GameManager
         else
         {
           float num3 = this.AdjustScale();
-          Game.game_work.pGameFont.DrawString(this.m_text, Vector3.Add(pos, this.o), white, new Vector2(num1, num3), Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER, 1f, rect);
+          Game2.game_work.pGameFont.DrawString(this.m_text, Vector3.Add(pos, this.o), white, new Vector2(num1, num3), Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER, 1f, rect);
         }
         if (this.m_score > 0)
         {
           float num4 = this.AdjustScale();
           font.DrawString(this.m_score.ToString(), Vector3.Add(Vector3.Add(pos, Vector3.Multiply(Vector3.UnitX, 115f)), this.o), white, new Vector2(num1, num4), Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER, 1f, rect);
           float[] tints = new float[3]{ 5f, 5f, 5f };
-          Game.game_work.pNumberFontLeaderboard.DrawString(this.m_rank.ToString(), Vector3.Add(Vector3.Add(pos, Vector3.Multiply(Vector3.UnitX, 175f)), this.o), this.TintColour(white, tints), new Vector2(num1, num4), Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER, 1f, rect);
+          Game2.game_work.pNumberFontLeaderboard.DrawString(this.m_rank.ToString(), Vector3.Add(Vector3.Add(pos, Vector3.Multiply(Vector3.UnitX, 175f)), this.o), this.TintColour(white, tints), new Vector2(num1, num4), Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER, 1f, rect);
         }
         else
         {
@@ -1107,4 +1108,20 @@ namespace GameManager
       }
     }
   }
+
+    internal class LeaderboardEntry
+    {
+        internal object Columns;
+        internal object Gamer;
+    }
+
+    internal class LeaderboardReader
+    {
+        internal List<LeaderboardEntry> Entries;
+
+        //internal static void BeginRead(LeaderboardIdentity id, Gamer signedInGamer1, int v, AsyncCallback asyncCallback, object signedInGamer2)
+        //{
+        //    throw new NotImplementedException();
+        //}
+    }
 }

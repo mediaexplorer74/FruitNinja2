@@ -103,7 +103,7 @@ namespace GameManager
       this.m_startColor = colour;
       BombFlash bombFlash = this;
       bombFlash.m_pos = Vector3.Add(bombFlash.m_pos, Vector3.Multiply(vel, 7.5f));
-      this.m_pos.X = (float) ((double) Game.SCREEN_WIDTH * (double) Mortar.Math.MATH_SIGN(
+      this.m_pos.X = (float) ((double) Game2.SCREEN_WIDTH * (double) Mortar.Math.MATH_SIGN(
           this.m_pos.X) / 2.0);
 
       this.m_cur_scale = new Vector3(128f, 128f, 128f);

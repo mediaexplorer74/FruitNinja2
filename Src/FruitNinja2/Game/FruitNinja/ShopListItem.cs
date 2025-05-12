@@ -83,7 +83,7 @@ namespace GameManager
       {
         if (this.m_info.unlockTotal != null)
         {
-          int num = Game.game_work.saveData.GetTotal(StringFunctions.StringHash(this.m_info.unlockTotal));
+          int num = Game2.game_work.saveData.GetTotal(StringFunctions.StringHash(this.m_info.unlockTotal));
           if (this.m_info.unlockCountDownFrom > 0)
             num = Math.MAX(0, this.m_info.unlockCountDownFrom - num);
           this.m_description = Mortar.Game1.instance.stringTable.GetString(this.m_info.unlockDescription);
@@ -110,7 +110,7 @@ namespace GameManager
       if (this.isFirst)
       {
         ShopListItem.newItemBob = Math.ABS(Math.SinIdx(ShopListItem.newItemBobTime) * ShopListItem.BOB_AMT);
-        ShopListItem.newItemBobTime += (ushort) ((double) Game.game_work.dt * ((double) Math.DEGREE_TO_IDX(180f) / (double) ShopListItem.BOB_TIME) / 2.0);
+        ShopListItem.newItemBobTime += (ushort) ((double) Game2.game_work.dt * ((double) Math.DEGREE_TO_IDX(180f) / (double) ShopListItem.BOB_TIME) / 2.0);
       }
       this.m_pos = toPos;
       if (this.m_texture != null)
@@ -119,14 +119,14 @@ namespace GameManager
         this.m_texturePos.X += this.m_textOffset.X + 35.2f;
         if ((double) this.m_shakeTime > 0.0)
         {
-          this.m_shakeTime -= Game.game_work.dt;
+          this.m_shakeTime -= Game2.game_work.dt;
           ShopListItem shopListItem = this;
           shopListItem.m_texturePos = Vector3.Add(shopListItem.m_texturePos, new Vector3(Math.g_random.RandF(ShopScreen.SHAKE_RANGE) - ShopScreen.SHAKE_RANGE / 2f, Math.g_random.RandF(ShopScreen.SHAKE_RANGE) - ShopScreen.SHAKE_RANGE / 2f, 0.0f));
         }
       }
-      this.m_fadeTime = this.m_shop == null || this.m_shop.GetSelected() != this ? Math.MAX(0.0f, this.m_fadeTime - Game.game_work.dt * 5f) : Math.MIN(1f, this.m_fadeTime + Game.game_work.dt * 5f);
-      this.m_newFade = Math.CLAMP(this.m_newFade + Game.game_work.dt * (this.m_info.hasBeenSeen ? -5f : 5f), 0.0f, 1f);
-      this.m_selectedFade = Math.CLAMP(this.m_selectedFade + Game.game_work.dt * (ItemManager.GetInstance().IsEquipped(this.m_info) ? 5f : -5f), 0.0f, 1f);
+      this.m_fadeTime = this.m_shop == null || this.m_shop.GetSelected() != this ? Math.MAX(0.0f, this.m_fadeTime - Game2.game_work.dt * 5f) : Math.MIN(1f, this.m_fadeTime + Game2.game_work.dt * 5f);
+      this.m_newFade = Math.CLAMP(this.m_newFade + Game2.game_work.dt * (this.m_info.hasBeenSeen ? -5f : 5f), 0.0f, 1f);
+      this.m_selectedFade = Math.CLAMP(this.m_selectedFade + Game2.game_work.dt * (ItemManager.GetInstance().IsEquipped(this.m_info) ? 5f : -5f), 0.0f, 1f);
     }
 
     public void ButtonClicked()
@@ -147,7 +147,7 @@ namespace GameManager
           Mortar.Game1.instance.stringTable.GetString(167),
           Mortar.Game1.instance.stringTable.GetString(166)
         };
-        Font pGameFont = Game.game_work.pGameFont;
+        Font pGameFont = Game2.game_work.pGameFont;
         Color white = Color.White;
         if (this.m_info.IsLocked())
         {
@@ -256,16 +256,16 @@ namespace GameManager
         Math.MIN(v1, 0.0f);
       int num1 = Math.CLAMP((int) ((double) byte.MaxValue * (double) this.m_fadeTime), 0, (int) byte.MaxValue);
       if (this.m_shop != null && this.m_info != null && num1 > 0)
-        Game.game_work.pGameFont.DrawString(this.m_description, this.m_shop.GetDescriptionTextXPos(), 0.0f, 0.0f, this.m_info.IsLocked() ? new Color((int) byte.MaxValue, (int) byte.MaxValue, (int) byte.MaxValue, num1) : new Color(116, 93, 59, num1), 18f * ShopScreen.SHOP_TEXT_SCALE, ShopScreen.DESCRIPTION_BOX_WIDTH, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
+        Game2.game_work.pGameFont.DrawString(this.m_description, this.m_shop.GetDescriptionTextXPos(), 0.0f, 0.0f, this.m_info.IsLocked() ? new Color((int) byte.MaxValue, (int) byte.MaxValue, (int) byte.MaxValue, num1) : new Color(116, 93, 59, num1), 18f * ShopScreen.SHOP_TEXT_SCALE, ShopScreen.DESCRIPTION_BOX_WIDTH, 0.0f, ALIGNMENT_TYPE.ALIGN_CENTER);
       if (!this.isLast)
         return;
       ShopListItem.blankTex.Set();
-      Matrix mtx3 = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE, ShopScreen.DARKNESS_HEIGHT, 0.0f)), Matrix.CreateTranslation(new Vector3(this.m_parentList.m_pos.X - 2f, (float) ((double) Game.SCREEN_HEIGHT / 2.0 - (double) ShopScreen.DARKNESS_HEIGHT / 2.0 + 5.0), 0.0f)));
+      Matrix mtx3 = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE, ShopScreen.DARKNESS_HEIGHT, 0.0f)), Matrix.CreateTranslation(new Vector3(this.m_parentList.m_pos.X - 2f, (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - (double) ShopScreen.DARKNESS_HEIGHT / 2.0 + 5.0), 0.0f)));
       MatrixManager.GetInstance().Reset();
       MatrixManager.GetInstance().SetMatrix(mtx3);
       MatrixManager.GetInstance().UploadCurrentMatrices();
       Mesh.DrawQuad(new Color(0, 0, 0, 128));
-      Matrix mtx4 = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE, ShopScreen.DARKNESS_HEIGHT, 0.0f)), Matrix.CreateTranslation(new Vector3(this.m_parentList.m_pos.X - 2f, (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + (double) ShopScreen.DARKNESS_HEIGHT / 2.0 - 5.0), 0.0f)));
+      Matrix mtx4 = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE, ShopScreen.DARKNESS_HEIGHT, 0.0f)), Matrix.CreateTranslation(new Vector3(this.m_parentList.m_pos.X - 2f, (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + (double) ShopScreen.DARKNESS_HEIGHT / 2.0 - 5.0), 0.0f)));
       MatrixManager.GetInstance().Reset();
       MatrixManager.GetInstance().SetMatrix(mtx4);
       MatrixManager.GetInstance().UploadCurrentMatrices();

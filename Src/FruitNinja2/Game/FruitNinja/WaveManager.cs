@@ -35,12 +35,12 @@ namespace GameManager
     private static WaveManager instance = new WaveManager();
     private static SPAWNER_INFO[] spinfos = ArrayInit.CreateFilledArray<SPAWNER_INFO>(3);
     private static bool made_spawners = false;
-    private SpeedControl[] m_speedControl = new SpeedControl[Game.MAX_PLAYERS];
-    private float[] m_speedLossTime = new float[Game.MAX_PLAYERS];
-    private float[] m_speed = new float[Game.MAX_PLAYERS];
-    private float[] m_desiredSpeed = new float[Game.MAX_PLAYERS];
-    private int[] m_comboBonus = new int[Game.MAX_PLAYERS];
-    private float[] m_nextComboBonus = new float[Game.MAX_PLAYERS];
+    private SpeedControl[] m_speedControl = new SpeedControl[Game2.MAX_PLAYERS];
+    private float[] m_speedLossTime = new float[Game2.MAX_PLAYERS];
+    private float[] m_speed = new float[Game2.MAX_PLAYERS];
+    private float[] m_desiredSpeed = new float[Game2.MAX_PLAYERS];
+    private int[] m_comboBonus = new int[Game2.MAX_PLAYERS];
+    private float[] m_nextComboBonus = new float[Game2.MAX_PLAYERS];
     private float m_bombScale;
     private float m_bombMultiplyer;
     private float m_fruitMultiplyer;
@@ -50,21 +50,21 @@ namespace GameManager
     private float[] m_globalDtInc = new float[4];
     private float[] m_globalDtStart = new float[4];
     private float[] m_globalDtMax = new float[4];
-    private List<WAVE_INFO>[,] m_lists = ArrayInit.CreateFilledArray<List<WAVE_INFO>>(Game.MAX_PLAYERS, 4);
+    private List<WAVE_INFO>[,] m_lists = ArrayInit.CreateFilledArray<List<WAVE_INFO>>(Game2.MAX_PLAYERS, 4);
     private DEFAULT_WAVE_INFO[] m_defaultInfo = ArrayInit.CreateFilledArray<DEFAULT_WAVE_INFO>(4);
     private COIN_CHANCEINATOR[] m_coinChanceLists = ArrayInit.CreateFilledArray<COIN_CHANCEINATOR>(4);
-    private List<PROBABILITY_OVERIDE>[,] m_probabilityOverides = ArrayInit.CreateFilledArray<List<PROBABILITY_OVERIDE>>(Game.MAX_PLAYERS, 4);
-    private WAVE_INFO[] m_currentWave = ArrayInit.CreateFilledArray<WAVE_INFO>(Game.MAX_PLAYERS);
-    private int[] m_waveCount = new int[Game.MAX_PLAYERS];
-    private float[] m_waveDelay = new float[Game.MAX_PLAYERS];
-    private float[] m_waveWait = new float[Game.MAX_PLAYERS];
-    private bool[] processingWave = new bool[Game.MAX_PLAYERS];
+    private List<PROBABILITY_OVERIDE>[,] m_probabilityOverides = ArrayInit.CreateFilledArray<List<PROBABILITY_OVERIDE>>(Game2.MAX_PLAYERS, 4);
+    private WAVE_INFO[] m_currentWave = ArrayInit.CreateFilledArray<WAVE_INFO>(Game2.MAX_PLAYERS);
+    private int[] m_waveCount = new int[Game2.MAX_PLAYERS];
+    private float[] m_waveDelay = new float[Game2.MAX_PLAYERS];
+    private float[] m_waveWait = new float[Game2.MAX_PLAYERS];
+    private bool[] processingWave = new bool[Game2.MAX_PLAYERS];
     private byte m_blitzSpawnedThisGame;
     private byte m_blitzForceSpawnedCounter;
     private float m_blitzSpawnTime;
-    private int[,] m_fruitTypesToPickFrom = new int[Game.MAX_PLAYERS, 32];
-    private int[] m_fruitTypesToPickFromWave = new int[Game.MAX_PLAYERS];
-    private int[] m_numFruitTypesToPickFrom = new int[Game.MAX_PLAYERS];
+    private int[,] m_fruitTypesToPickFrom = new int[Game2.MAX_PLAYERS, 32];
+    private int[] m_fruitTypesToPickFromWave = new int[Game2.MAX_PLAYERS];
+    private int[] m_numFruitTypesToPickFrom = new int[Game2.MAX_PLAYERS];
 
     public static float MAX_SPEEDIE_GONZALES => 14f;
 
@@ -81,7 +81,7 @@ namespace GameManager
 
     public static float FRUIT_ANGLE_RANGE => 20f;
 
-    public static float FRUIT_SPAWN_Y => (float) (-(double) Game.SCREEN_HEIGHT / 2.0);
+    public static float FRUIT_SPAWN_Y => (float) (-(double) Game2.SCREEN_HEIGHT / 2.0);
 
     public static float FRUIT_MAX_VEL_X => 15f;
 
@@ -256,7 +256,7 @@ namespace GameManager
                 if (element7 != null)
                   StringFunctions.SplitWords(element7.AttributeStr("types"), ref waveInfo1.typesToPickFrom);
                 this.m_lists[this.m_defaultInfo[index1].players[0], index1].Add(waveInfo1);
-                for (int index4 = 1; index4 < Game.MAX_PLAYERS && this.m_defaultInfo[index1].players[index4] >= 0; index4 = index4 + 1 + 1)
+                for (int index4 = 1; index4 < Game2.MAX_PLAYERS && this.m_defaultInfo[index1].players[index4] >= 0; index4 = index4 + 1 + 1)
                 {
                   WAVE_INFO waveInfo2 = waveInfo1.Clone();
                   this.m_lists[this.m_defaultInfo[index1].players[index4], index1].Add(waveInfo2);
@@ -296,12 +296,12 @@ namespace GameManager
                 PROBABILITY_OVERIDE probabilityOveride = new PROBABILITY_OVERIDE();
                 probabilityOveride.Parse(xelement);
                 this.m_probabilityOverides[this.m_defaultInfo[index1].players[0], index1].Add(probabilityOveride);
-                for (int index5 = 1; index5 < Game.MAX_PLAYERS && this.m_defaultInfo[index1].players[index5] >= 0; ++index5)
+                for (int index5 = 1; index5 < Game2.MAX_PLAYERS && this.m_defaultInfo[index1].players[index5] >= 0; ++index5)
                   this.m_probabilityOverides[this.m_defaultInfo[index1].players[index5], index1].Add(probabilityOveride);
                 break;
             }
           }
-          for (int index6 = 0; index6 < Game.MAX_PLAYERS; ++index6)
+          for (int index6 = 0; index6 < Game2.MAX_PLAYERS; ++index6)
           {
             foreach (WAVE_INFO waveInfo3 in this.m_lists[index6, index1])
             {
@@ -321,7 +321,7 @@ namespace GameManager
           }
         }
       }
-      for (int index = 0; index < Game.MAX_PLAYERS; ++index)
+      for (int index = 0; index < Game2.MAX_PLAYERS; ++index)
         this.m_speedControl[index] = (SpeedControl) null;
     }
 
@@ -329,15 +329,15 @@ namespace GameManager
 
     public void Reset(bool newGame)
     {
-      Game.game_work.gameOver = false;
+      Game2.game_work.gameOver = false;
       this.m_blitzSpawnedThisGame = (byte) 0;
       this.m_blitzForceSpawnedCounter = (byte) 0;
       this.m_blitzSpawnTime = 10f + Math.g_random.RandF(10f);
-      Game.game_work.currentMissCount = (byte) 0;
-      Game.game_work.currentScore = 0;
-      Game.game_work.hasDroppedFruit = false;
+      Game2.game_work.currentMissCount = (byte) 0;
+      Game2.game_work.currentScore = 0;
+      Game2.game_work.hasDroppedFruit = false;
       Fruit.s_consecutiveCount = 0;
-      for (int index = 0; index < Game.MAX_PLAYERS; ++index)
+      for (int index = 0; index < Game2.MAX_PLAYERS; ++index)
       {
         this.m_waveCount[index] = -1;
         this.m_waveWait[index] = 0.0f;
@@ -347,15 +347,15 @@ namespace GameManager
         this.m_nextComboBonus[index] = 0.0f;
         this.m_comboBonus[index] = 0;
       }
-      float foVy = Game.game_work.camera.GetFOVy();
+      float foVy = Game2.game_work.camera.GetFOVy();
       Vector3 zero = Vector3.Zero;
       float num1 = Math.TanIdx(Math.DEGREE_TO_IDX(foVy));
-      zero.Z = Game.SCREEN_HEIGHT / 2f / num1;
-      Game.game_work.camera.SetLookAt(Vector3.Zero);
-      Game.game_work.camera.SetPos(zero);
-      Game.game_work.camera.SetUp(new Vector3(0.0f, 1f, 0.0f));
-      if (Game.game_work.hud != null)
-        Game.game_work.hud.ResetControls();
+      zero.Z = Game2.SCREEN_HEIGHT / 2f / num1;
+      Game2.game_work.camera.SetLookAt(Vector3.Zero);
+      Game2.game_work.camera.SetPos(zero);
+      Game2.game_work.camera.SetUp(new Vector3(0.0f, 1f, 0.0f));
+      if (Game2.game_work.hud != null)
+        Game2.game_work.hud.ResetControls();
       uint num2 = 0;
       Fruit.ClearUnspawned();
       Bomb.ClearUnspawned();
@@ -371,23 +371,23 @@ namespace GameManager
       for (Entity entity = instance2.GetEntity(EntityTypes.ENTITY_BOMB, (uint) idx2); entity != null; entity = ActorManager.GetInstance().GetEntity(EntityTypes.ENTITY_BOMB, num5++))
         ((Bomb) entity).Disable();
       this.ResetWaveChances();
-      for (int player = 0; player < Game.MAX_PLAYERS; ++player)
+      for (int player = 0; player < Game2.MAX_PLAYERS; ++player)
       {
-        foreach (PROBABILITY_OVERIDE probabilityOveride in this.m_probabilityOverides[player, (int) Game.game_work.gameMode])
+        foreach (PROBABILITY_OVERIDE probabilityOveride in this.m_probabilityOverides[player, (int) Game2.game_work.gameMode])
           probabilityOveride.SelectType();
         this.m_fruitTypesToPickFromWave[player] = 0;
         this.m_numFruitTypesToPickFrom[player] = 1;
         for (int index = 0; index < 32; ++index)
           this.m_fruitTypesToPickFrom[player, index] = -1;
-        if (this.m_lists[player, (int) Game.game_work.gameMode].Count > 0)
+        if (this.m_lists[player, (int) Game2.game_work.gameMode].Count > 0)
         {
           this.GetNextWave(player);
-          if (Game.IsMultiplayer())
+          if (Game2.IsMultiplayer())
             ++this.m_waveDelay[player];
         }
       }
       this.m_currentGlobalDtMod = 1f;
-      this.m_currentGlobalDt = this.m_globalDtStart[(int) Game.game_work.gameMode];
+      this.m_currentGlobalDt = this.m_globalDtStart[(int) Game2.game_work.gameMode];
       if (!newGame)
         return;
       this.NewGame();
@@ -395,24 +395,24 @@ namespace GameManager
 
     public void Resume()
     {
-      Game.game_work.currentScore = (int) (ushort) Game.game_work.saveData.score;
-      Game.game_work.currentMissCount = (byte) Game.game_work.saveData.misses;
-      Fruit.s_consecutiveType = Game.game_work.saveData.consecutiveType;
-      Fruit.s_consecutiveCount = Game.game_work.saveData.consecutiveCount;
-      Game.game_work.hasDroppedFruit = Game.game_work.saveData.hasDropped;
+      Game2.game_work.currentScore = (int) (ushort) Game2.game_work.saveData.score;
+      Game2.game_work.currentMissCount = (byte) Game2.game_work.saveData.misses;
+      Fruit.s_consecutiveType = Game2.game_work.saveData.consecutiveType;
+      Fruit.s_consecutiveCount = Game2.game_work.saveData.consecutiveCount;
+      Game2.game_work.hasDroppedFruit = Game2.game_work.saveData.hasDropped;
       bool flag = false;
-      for (int index1 = 0; index1 < Game.MAX_PLAYERS; ++index1)
+      for (int index1 = 0; index1 < Game2.MAX_PLAYERS; ++index1)
       {
-        foreach (PROBABILITY_OVERIDE probabilityOveride in this.m_probabilityOverides[index1, (int) Game.game_work.gameMode])
+        foreach (PROBABILITY_OVERIDE probabilityOveride in this.m_probabilityOverides[index1, (int) Game2.game_work.gameMode])
           probabilityOveride.SelectType();
         this.m_fruitTypesToPickFromWave[index1] = 0;
         this.m_numFruitTypesToPickFrom[index1] = 1;
         for (int index2 = 0; index2 < 32; ++index2)
           this.m_fruitTypesToPickFrom[index1, index2] = -1;
       }
-      if (Game.game_work.saveData.entities.Count > 0)
+      if (Game2.game_work.saveData.entities.Count > 0)
       {
-        foreach (EntityState entity1 in Game.game_work.saveData.entities)
+        foreach (EntityState entity1 in Game2.game_work.saveData.entities)
         {
           EntityState entityState = entity1;
           Entity entity2 = ActorManager.GetInstance().Add(entityState.type < Fruit.MAX_FRUIT_TYPES ? (entityState.type >= 0 ? EntityTypes.ENTITY_BEGIN : EntityTypes.ENTITY_BOMB_BLAST) : EntityTypes.ENTITY_BOMB);
@@ -423,8 +423,8 @@ namespace GameManager
           if (entity2.m_type == (byte) 1)
           {
             ((Bomb) entity2).m_gravity = entityState.grav;
-            if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
-              ((Bomb) entity2).SetForPlayer(Game.MAX_PLAYERS * 2 - 1);
+            if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
+              ((Bomb) entity2).SetForPlayer(Game2.MAX_PLAYERS * 2 - 1);
           }
           else if (entity2.m_type == (byte) 0)
             ((Fruit) entity2).m_gravity = entityState.grav;
@@ -446,33 +446,33 @@ namespace GameManager
         flag = true;
       }
       ActorManager.GetInstance().Update(0.0f);
-      int misses = Game.game_work.saveData.misses;
-      if ((double) Game.game_work.saveData.go_bombHitTime > 0.0 && Game.game_work.gameMode != Game.GAME_MODE.GM_ARCADE || Game.game_work.saveData.go_state > -1)
+      int misses = Game2.game_work.saveData.misses;
+      if ((double) Game2.game_work.saveData.go_bombHitTime > 0.0 && Game2.game_work.gameMode != Game2.GAME_MODE.GM_ARCADE || Game2.game_work.saveData.go_state > -1)
       {
         int winner = -1;
-        GameTask.SkipToGameOver(Game.game_work.saveData.go_state, Game.game_work.saveData.go_time, Game.game_work.saveData.go_transition, Game.game_work.saveData.go_bombHitTime, winner);
+        GameTask.SkipToGameOver(Game2.game_work.saveData.go_state, Game2.game_work.saveData.go_time, Game2.game_work.saveData.go_transition, Game2.game_work.saveData.go_bombHitTime, winner);
       }
-      else if ((flag || Game.game_work.saveData.waves.Count > 0) && misses < 3)
+      else if ((flag || Game2.game_work.saveData.waves.Count > 0) && misses < 3)
       {
         GameTask.SkipToPause();
         int index3 = 0;
-        this.m_numFruitTypesToPickFrom[index3] = Game.game_work.saveData.numFruitTypesToPickFrom;
+        this.m_numFruitTypesToPickFrom[index3] = Game2.game_work.saveData.numFruitTypesToPickFrom;
         for (int index4 = 0; index4 < 32; ++index4)
-          this.m_fruitTypesToPickFrom[index3, index4] = Game.game_work.saveData.fruitTypesToPickFrom[index4];
+          this.m_fruitTypesToPickFrom[index3, index4] = Game2.game_work.saveData.fruitTypesToPickFrom[index4];
         this.processingWave[index3] = true;
-        this.m_waveCount[index3] = Game.game_work.saveData.currentWave;
-        this.m_waveDelay[index3] = Game.game_work.saveData.currentWaveDelay;
-        this.m_waveWait[index3] = Game.game_work.saveData.currentWaveWait;
-        this.m_currentGlobalDt = Game.game_work.saveData.globalWaveDt;
-        this.m_blitzSpawnedThisGame = (byte) Game.game_work.saveData.m_blitzSpawnedThisGame;
-        this.m_blitzForceSpawnedCounter = (byte) Game.game_work.saveData.m_blitzForceSpawnedCounter;
-        this.m_blitzSpawnTime = Game.game_work.saveData.m_blitzSpawnTime;
-        this.m_speedLossTime[index3] = Game.game_work.saveData.speedLossTime;
-        this.m_nextComboBonus[index3] = Game.game_work.saveData.nextComboBonus;
-        this.m_speed[index3] = this.m_desiredSpeed[index3] = Game.game_work.saveData.desiredSpeed;
-        foreach (WaveState wave in Game.game_work.saveData.waves)
+        this.m_waveCount[index3] = Game2.game_work.saveData.currentWave;
+        this.m_waveDelay[index3] = Game2.game_work.saveData.currentWaveDelay;
+        this.m_waveWait[index3] = Game2.game_work.saveData.currentWaveWait;
+        this.m_currentGlobalDt = Game2.game_work.saveData.globalWaveDt;
+        this.m_blitzSpawnedThisGame = (byte) Game2.game_work.saveData.m_blitzSpawnedThisGame;
+        this.m_blitzForceSpawnedCounter = (byte) Game2.game_work.saveData.m_blitzForceSpawnedCounter;
+        this.m_blitzSpawnTime = Game2.game_work.saveData.m_blitzSpawnTime;
+        this.m_speedLossTime[index3] = Game2.game_work.saveData.speedLossTime;
+        this.m_nextComboBonus[index3] = Game2.game_work.saveData.nextComboBonus;
+        this.m_speed[index3] = this.m_desiredSpeed[index3] = Game2.game_work.saveData.desiredSpeed;
+        foreach (WaveState wave in Game2.game_work.saveData.waves)
         {
-          WAVE_INFO waveInfo = this.m_lists[index3, (int) Game.game_work.gameMode][wave.index];
+          WAVE_INFO waveInfo = this.m_lists[index3, (int) Game2.game_work.gameMode][wave.index];
           waveInfo.m_inc = wave.inc;
           if (wave.spawners.Count<SpawnState>() > 0)
           {
@@ -491,14 +491,14 @@ namespace GameManager
         }
         this.ResetWaveChances();
       }
-      Game.game_work.camera.m_cameraShakeMaxTime = Game.game_work.saveData.shake_max_time;
-      Game.game_work.camera.m_cameraShakeTime = Game.game_work.saveData.shake_time;
-      Game.game_work.saveData.entities.Clear();
+      Game2.game_work.camera.m_cameraShakeMaxTime = Game2.game_work.saveData.shake_max_time;
+      Game2.game_work.camera.m_cameraShakeTime = Game2.game_work.saveData.shake_time;
+      Game2.game_work.saveData.entities.Clear();
     }
 
     private void DeleteSpeedControl(HUDControl control)
     {
-      for (int index = 0; index < Game.MAX_PLAYERS; ++index)
+      for (int index = 0; index < Game2.MAX_PLAYERS; ++index)
       {
         if (this.m_speedControl[index] == control)
           this.m_speedControl[index] = (SpeedControl) null;
@@ -514,7 +514,7 @@ namespace GameManager
       this.m_bombMultiplyer = 1f;
       this.m_fruitMultiplyer = 1f;
       this.m_criticalChanceMod = 1f;
-      if ((double) Game.game_work.gameOverTransition < 1.0 && Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if ((double) Game2.game_work.gameOverTransition < 1.0 && Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
       {
         PowerUpManager.GetInstance().Update(dt);
         double timedPowerProgress = (double) PowerUpManager.GetInstance().GetCurrentTimedPowerProgress();
@@ -525,18 +525,18 @@ namespace GameManager
         PowerUpManager.GetInstance().SetDefaults();
         this.m_currentGlobalDtMod = 1f;
       }
-      if (Game.game_work.gameOver && this.m_waveCount[0] > 0)
+      if (Game2.game_work.gameOver && this.m_waveCount[0] > 0)
       {
         this.UpdateComboSpeed(dt);
       }
       else
       {
-        this.m_currentGlobalDt = Math.CLAMP(this.m_currentGlobalDt + this.m_globalDtInc[(int) Game.game_work.gameMode] * dt, this.m_globalDtStart[(int) Game.game_work.gameMode], this.m_globalDtMax[(int) Game.game_work.gameMode]);
-        for (int player = 0; player < Game.MAX_PLAYERS; ++player)
+        this.m_currentGlobalDt = Math.CLAMP(this.m_currentGlobalDt + this.m_globalDtInc[(int) Game2.game_work.gameMode] * dt, this.m_globalDtStart[(int) Game2.game_work.gameMode], this.m_globalDtMax[(int) Game2.game_work.gameMode]);
+        for (int player = 0; player < Game2.MAX_PLAYERS; ++player)
         {
           this.UpdateComboSpeed(dt);
           bool flag1 = false;
-          if (this.m_lists[player, (int) Game.game_work.gameMode].Count<WAVE_INFO>() > 0)
+          if (this.m_lists[player, (int) Game2.game_work.gameMode].Count<WAVE_INFO>() > 0)
           {
             if (this.m_currentWave[player] != null)
             {
@@ -548,7 +548,7 @@ namespace GameManager
                   this.m_currentWave[player].spawners[index1].delayWait -= dt * ((double) this.m_currentGlobalDtMod > 1.0 ? this.m_currentGlobalDtMod : 1f);
                   int toSpawnThisWave = this.m_currentWave[player].spawners[index1].toSpawnThisWave;
                   int num1 = 0;
-                  List<PROBABILITY_OVERIDE> probabilityOveride = this.m_probabilityOverides[player, (int) Game.game_work.gameMode];
+                  List<PROBABILITY_OVERIDE> probabilityOveride = this.m_probabilityOverides[player, (int) Game2.game_work.gameMode];
                   while (this.m_currentWave[player].spawners[index1].toSpawnThisWave > 0)
                   {
                     SPAWNER_INFO spawner = this.m_currentWave[player].spawners[index1];
@@ -564,7 +564,7 @@ namespace GameManager
                       if (type1 == -1 || this.m_currentWave[player].spawners[index1].types[index2] == "1fruit")
                       {
                         bool flag2 = false;
-                        if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && (double) Game.game_work.timeControl.GetTime() <= (double) Game.game_work.timeControl.GetCountDown() - (double) this.m_blitzSpawnTime)
+                        if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && (double) Game2.game_work.timeControl.GetTime() <= (double) Game2.game_work.timeControl.GetCountDown() - (double) this.m_blitzSpawnTime)
                         {
                           if (this.m_blitzForceSpawnedCounter == (byte) 0)
                           {
@@ -626,7 +626,7 @@ namespace GameManager
                                   break;
                               }
                               ++probabilityOveride[index3].spawnedThisWave;
-                              if ((double) this.m_fruitMultiplyer > 0.0 && Fruit.s_numActivePowerUpFruits <= 0 && ((double) Game.game_work.saveData.timer >= 8.0 || (int) Fruit.FruitInfo(type2).powers.powerUps[0].powerHash == (int) StringFunctions.StringHash("freeze")) && !Fruit.FruitInfo(type2).powers.AnyActivePowers())
+                              if ((double) this.m_fruitMultiplyer > 0.0 && Fruit.s_numActivePowerUpFruits <= 0 && ((double) Game2.game_work.saveData.timer >= 8.0 || (int) Fruit.FruitInfo(type2).powers.powerUps[0].powerHash == (int) StringFunctions.StringHash("freeze")) && !Fruit.FruitInfo(type2).powers.AnyActivePowers())
                               {
                                 int num4 = flag2 ? 1 : 0;
                                 ++this.m_blitzSpawnedThisGame;
@@ -700,7 +700,7 @@ namespace GameManager
 
     public void Destroy()
     {
-      for (int index1 = 0; index1 < Game.MAX_PLAYERS; ++index1)
+      for (int index1 = 0; index1 < Game2.MAX_PLAYERS; ++index1)
       {
         for (int index2 = 0; index2 < 4; ++index2)
           this.m_lists[index1, index2].Clear();
@@ -720,7 +720,7 @@ namespace GameManager
       if ((double) num < (double) WaveManager.SPEED_START)
         num = 0.0f;
       this.m_speed[player] += (double) num > (double) this.m_speed[player] ? Math.MIN(num - this.m_speed[player], dt * 5f) : ((double) num < (double) this.m_speed[player] ? Math.MAX(num - this.m_speed[player], (float) (-(double) dt * 5.0)) : 0.0f);
-      if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+      if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
       {
         if (this.m_speedControl[player] != null)
         {
@@ -731,7 +731,7 @@ namespace GameManager
         {
           this.m_speedControl[player] = new SpeedControl();
           this.m_speedControl[player].m_deleteCall = new HUDControl.HUDControlDeletedCallback(this.DeleteSpeedControl);
-          Game.game_work.hud.AddControl((HUDControl) this.m_speedControl[player]);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_speedControl[player]);
           this.m_speedControl[player].m_pulseSpeed = this.m_speed[player];
           this.m_speedControl[player].m_lossTime = this.m_speedLossTime[player];
         }
@@ -757,7 +757,7 @@ namespace GameManager
             if (Fruit.GetNumActiveForPlayer(-1, false) > 0 || Bomb.GetNumActiveForPlayer(-1, false) > 0)
               return true;
           }
-          else if (ActorManager.GetInstance().GetNumEntities(0) > 0U || Game.IsMultiplayer() && Bomb.GetNumActiveForPlayer(-1) > 0 || !Game.IsMultiplayer() && ActorManager.GetInstance().GetNumEntities(1) > 0U)
+          else if (ActorManager.GetInstance().GetNumEntities(0) > 0U || Game2.IsMultiplayer() && Bomb.GetNumActiveForPlayer(-1) > 0 || !Game2.IsMultiplayer() && ActorManager.GetInstance().GetNumEntities(1) > 0U)
             return true;
         }
         else if (Fruit.GetNumActiveForPlayer(player) > 0 || Bomb.GetNumActiveForPlayer(player) > 0)
@@ -787,7 +787,7 @@ namespace GameManager
       saveData.m_blitzForceSpawnedCounter = (int) this.m_blitzForceSpawnedCounter;
       saveData.m_blitzSpawnTime = this.m_blitzSpawnTime;
       saveData.waves.Clear();
-      if (Game.game_work.gameOver && this.m_waveCount[index1] >= 0 || this.m_lists[index1, (int) Game.game_work.gameMode].Count <= 0)
+      if (Game2.game_work.gameOver && this.m_waveCount[index1] >= 0 || this.m_lists[index1, (int) Game2.game_work.gameMode].Count <= 0)
         return false;
       saveData.globalWaveDt = this.m_currentGlobalDt;
       WAVE_INFO[] filledArray = ArrayInit.CreateFilledArray<WAVE_INFO>(20);
@@ -795,7 +795,7 @@ namespace GameManager
       int num1 = 0;
       int index2 = 0;
       int num2 = 0;
-      foreach (WAVE_INFO waveInfo in this.m_lists[index1, (int) Game.game_work.gameMode])
+      foreach (WAVE_INFO waveInfo in this.m_lists[index1, (int) Game2.game_work.gameMode])
       {
         if (this.m_waveCount[index1] >= waveInfo.waveNo && (this.m_waveCount[index1] <= waveInfo.waveNoRange || waveInfo.waveNoRange == -2))
         {
@@ -853,7 +853,7 @@ namespace GameManager
       if (this.m_currentWave != null && this.m_currentWave[index].coinChanceinator != null)
         num = this.m_currentWave[index].coinChanceinator.GetCoins();
       if (num <= 0)
-        num = this.m_coinChanceLists[(int) Game.game_work.gameMode].GetCoins();
+        num = this.m_coinChanceLists[(int) Game2.game_work.gameMode].GetCoins();
       return num;
     }
 
@@ -909,8 +909,8 @@ namespace GameManager
             break;
           case SPAWN_PLACEMENTS.SPAWNER_LEFT:
             float num12 = (float) num3;
-            num3 = -num4 * (int) Game.SCREEN_WIDTH / (int) Game.SCREEN_HEIGHT;
-            num4 = (int) ((double) num12 * (double) Game.SCREEN_HEIGHT / (double) Game.SCREEN_WIDTH);
+            num3 = -num4 * (int) Game2.SCREEN_WIDTH / (int) Game2.SCREEN_HEIGHT;
+            num4 = (int) ((double) num12 * (double) Game2.SCREEN_HEIGHT / (double) Game2.SCREEN_WIDTH);
             float num13 = num9;
             num9 = -0.75f * num10;
             num10 = num13 - (float) ((double) num8 * (double) spawner.gravity.Y * 0.64999997615814209);
@@ -937,14 +937,14 @@ namespace GameManager
         float num16 = num9 * vector3_1.X;
         float num17 = num10 * vector3_1.Y;
         float v2 = spawner != null ? spawner.delayWait : 0.0f;
-        if (Game.IsMultiplayer())
+        if (Game2.IsMultiplayer())
         {
-          float num18 = 0.975f * Game.SPLIT_SCREEN_SCALE;
+          float num18 = 0.975f * Game2.SPLIT_SCREEN_SCALE;
           float x = vector3_2.X;
           vector3_2.X = vector3_2.Y * num18;
           vector3_2.Y = -x * num18;
           float num19 = (float) num14;
-          int num20 = num15 * (int) ((double) num18 - (double) Game.SCREEN_WIDTH / 4.0);
+          int num20 = num15 * (int) ((double) num18 - (double) Game2.SCREEN_WIDTH / 4.0);
           int num21 = (int) (-(double) num19 * (double) num18);
           float num22 = num16;
           float num23 = num17 * num18;
@@ -1054,8 +1054,8 @@ namespace GameManager
             break;
           case SPAWN_PLACEMENTS.SPAWNER_LEFT:
             float num11 = (float) num3;
-            num3 = -num4 * (int) ((double) Game.SCREEN_WIDTH / (double) Game.SCREEN_HEIGHT);
-            num4 = (int) ((double) num11 * (double) Game.SCREEN_HEIGHT / (double) Game.SCREEN_WIDTH);
+            num3 = -num4 * (int) ((double) Game2.SCREEN_WIDTH / (double) Game2.SCREEN_HEIGHT);
+            num4 = (int) ((double) num11 * (double) Game2.SCREEN_HEIGHT / (double) Game2.SCREEN_WIDTH);
             float num12 = num9;
             num9 = -0.75f * num10;
             num10 = num12 - (float) ((double) num8 * (double) spawner.gravity.Y * 0.64999997615814209);
@@ -1081,14 +1081,14 @@ namespace GameManager
         int num14 = num4 * (int) vector3_1.Y;
         float num15 = num9 * vector3_1.X;
         float num16 = num10 * vector3_1.Y;
-        if (Game.IsMultiplayer())
+        if (Game2.IsMultiplayer())
         {
-          float num17 = 0.975f * Game.SPLIT_SCREEN_SCALE;
+          float num17 = 0.975f * Game2.SPLIT_SCREEN_SCALE;
           float x = vector3_2.X;
           vector3_2.X = vector3_2.Y * num17;
           vector3_2.Y = -x * num17;
           float num18 = (float) num13;
-          int num19 = num14 * (int) ((double) num17 - (double) Game.SCREEN_WIDTH / 4.0);
+          int num19 = num14 * (int) ((double) num17 - (double) Game2.SCREEN_WIDTH / 4.0);
           int num20 = (int) (-(double) num18 * (double) num17);
           float num21 = num15;
           float num22 = num16 * num17;
@@ -1132,8 +1132,8 @@ namespace GameManager
           entity.Init((byte[]) null, 0, new Vector3?(vector3_4));
           entity.m_pos.Y -= entity.m_cur_scale.Y * 100f;
           ((Bomb) entity).Chuck(Math.MAX(0.0f, v2) + 0.21f);
-          if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
-            ((Bomb) entity).SetForPlayer(Game.MAX_PLAYERS * 2 - 1);
+          if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
+            ((Bomb) entity).SetForPlayer(Game2.MAX_PLAYERS * 2 - 1);
         }
       }
     }
@@ -1152,9 +1152,9 @@ namespace GameManager
 
     private void ResetGlobalDt(float to)
     {
-      for (int index1 = 0; index1 < Game.MAX_PLAYERS; ++index1)
+      for (int index1 = 0; index1 < Game2.MAX_PLAYERS; ++index1)
       {
-        List<PROBABILITY_OVERIDE> probabilityOveride = this.m_probabilityOverides[index1, (int) Game.game_work.gameMode];
+        List<PROBABILITY_OVERIDE> probabilityOveride = this.m_probabilityOverides[index1, (int) Game2.game_work.gameMode];
         int index2 = 0;
         while (index2 < probabilityOveride.Count)
         {
@@ -1176,7 +1176,7 @@ namespace GameManager
     {
       int index = 0;
       int key = 0;
-      foreach (WAVE_INFO waveInfo in this.m_lists[index, (int) Game.game_work.gameMode])
+      foreach (WAVE_INFO waveInfo in this.m_lists[index, (int) Game2.game_work.gameMode])
       {
         waveInfo.m_inc = 1f;
         waveInfo.currentChance = waveInfo.chance;
@@ -1184,11 +1184,11 @@ namespace GameManager
         if (waveInfo.gamesMin > 0)
         {
           int v1;
-          if (Game.game_work.saveData.waveGameCount[(int) Game.game_work.gameMode].TryGetValue(key, out v1))
+          if (Game2.game_work.saveData.waveGameCount[(int) Game2.game_work.gameMode].TryGetValue(key, out v1))
           {
             if (v1 > 0)
             {
-              Game.game_work.saveData.waveGameCount[(int) Game.game_work.gameMode][key] = Math.MIN(v1, waveInfo.gamesMax);
+              Game2.game_work.saveData.waveGameCount[(int) Game2.game_work.gameMode][key] = Math.MIN(v1, waveInfo.gamesMax);
               waveInfo.currentChance = 0;
               waveInfo.currentChanceRegrowth = 0.0f;
             }
@@ -1197,7 +1197,7 @@ namespace GameManager
           {
             int num1 = (waveInfo.gamesMax + waveInfo.gamesMin) / 2;
             int num2 = Math.g_random.Rand32(Math.MAX(1, Math.g_random.Rand32(num1 / 2))) + num1 / 4;
-            Game.game_work.saveData.waveGameCount[(int) Game.game_work.gameMode][key] = num2;
+            Game2.game_work.saveData.waveGameCount[(int) Game2.game_work.gameMode][key] = num2;
             waveInfo.currentChance = 0;
             waveInfo.currentChanceRegrowth = 0.0f;
           }
@@ -1211,17 +1211,17 @@ namespace GameManager
     protected void GetNextWave(int player)
     {
       AchievementManager instance = AchievementManager.GetInstance();
-      Game.game_work.saveData.UnlockTotals();
-      instance.UnlockScoreAchievement(Game.game_work.currentScore);
-      instance.UnlockTotalFruitAchievement((int) Game.game_work.totalScore);
+      Game2.game_work.saveData.UnlockTotals();
+      instance.UnlockScoreAchievement(Game2.game_work.currentScore);
+      instance.UnlockTotalFruitAchievement((int) Game2.game_work.totalScore);
       ++this.m_waveCount[player];
       if (this.m_waveCount[player] > 1 && this.m_currentWave != null)
         ++this.m_currentWave[player].m_inc;
-      this.m_currentWave[player] = this.m_lists[player, (int) Game.game_work.gameMode][0];
+      this.m_currentWave[player] = this.m_lists[player, (int) Game2.game_work.gameMode][0];
       WAVE_INFO[] filledArray = ArrayInit.CreateFilledArray<WAVE_INFO>(20);
       int index1 = 0;
       int num1 = 0;
-      foreach (WAVE_INFO waveInfo in this.m_lists[player, (int) Game.game_work.gameMode])
+      foreach (WAVE_INFO waveInfo in this.m_lists[player, (int) Game2.game_work.gameMode])
       {
         if ((double) waveInfo.currentChanceRegrowth > 0.0)
         {
@@ -1287,7 +1287,7 @@ namespace GameManager
       }
       if (this.m_currentWave[player].gamesMin > 0)
       {
-        Game.game_work.saveData.waveGameCount[(int) Game.game_work.gameMode][this.m_currentWave[player].idx] = this.m_currentWave[player].gamesMin == this.m_currentWave[player].gamesMax ? this.m_currentWave[player].gamesMin : Math.g_random.Rand32(this.m_currentWave[player].gamesMax - this.m_currentWave[player].gamesMin) + this.m_currentWave[player].gamesMin;
+        Game2.game_work.saveData.waveGameCount[(int) Game2.game_work.gameMode][this.m_currentWave[player].idx] = this.m_currentWave[player].gamesMin == this.m_currentWave[player].gamesMax ? this.m_currentWave[player].gamesMin : Math.g_random.Rand32(this.m_currentWave[player].gamesMax - this.m_currentWave[player].gamesMin) + this.m_currentWave[player].gamesMin;
         this.m_currentWave[player].currentChanceRegrowth = 0.0f;
       }
       this.m_currentWave[player].currentChance = 0;
@@ -1297,7 +1297,7 @@ namespace GameManager
         this.m_waveWait[player] = Math.MAX(this.m_waveWait[player] + this.m_speed[player] * this.m_currentWave[player].nextDelaySpInc, 0.05f);
       for (int index5 = 0; index5 < this.m_currentWave[player].spawnerCount; ++index5)
         this.m_currentWave[player].spawners[index5].Reset(this.m_currentWave[player].m_inc);
-      List<PROBABILITY_OVERIDE> probabilityOveride = this.m_probabilityOverides[player, (int) Game.game_work.gameMode];
+      List<PROBABILITY_OVERIDE> probabilityOveride = this.m_probabilityOverides[player, (int) Game2.game_work.gameMode];
       int index6 = 0;
       while (index6 < probabilityOveride.Count)
       {
@@ -1366,7 +1366,7 @@ namespace GameManager
 
     public List<PROBABILITY_OVERIDE> GetCurrentOverideList(int player)
     {
-      return this.m_probabilityOverides[player, (int) Game.game_work.gameMode];
+      return this.m_probabilityOverides[player, (int) Game2.game_work.gameMode];
     }
 
     public static float MAX_DELTA_TIME_SCALE => 100f;
@@ -1379,7 +1379,7 @@ namespace GameManager
       this.m_speed[player] = 0.0f;
       this.m_speedLossTime[player] = 0.0f;
       uint hash = StringFunctions.StringHash("blitz_bonus");
-      Game.game_work.saveData.ClearTotal(hash);
+      Game2.game_work.saveData.ClearTotal(hash);
       this.m_comboBonus[player] = 0;
       this.m_nextComboBonus[player] = 0.0f;
       if (this.m_speedControl[player] == null)
@@ -1400,10 +1400,10 @@ namespace GameManager
         this.m_nextComboBonus[player] -= val;
         if ((double) this.m_nextComboBonus[player] <= 0.0)
         {
-          this.m_comboBonus[player] = Game.game_work.saveData.AddToTotal("blitz_bonus", hash1, 1, false, false);
+          this.m_comboBonus[player] = Game2.game_work.saveData.AddToTotal("blitz_bonus", hash1, 1, false, false);
           string s = string.Format("blitz_{0}", (object) Math.MIN(this.m_comboBonus[player], 6));
           PowerUpManager.GetInstance().ActivateScreenEffect(StringFunctions.StringHash(s));
-          Game.AddToCurrentScore(5 * Math.MIN(this.m_comboBonus[player], 6), player);
+          Game2.AddToCurrentScore(5 * Math.MIN(this.m_comboBonus[player], 6), player);
           this.m_nextComboBonus[player] = 2.5f;
           if (this.m_comboBonus[player] > 3)
             this.m_nextComboBonus[player] = 2.5f;
@@ -1412,15 +1412,15 @@ namespace GameManager
       else if ((double) this.m_desiredSpeed[player] > (double) WaveManager.SPEED_START)
       {
         this.m_nextComboBonus[player] = 2.5f;
-        Game.game_work.saveData.ClearTotal(hash1);
-        this.m_comboBonus[player] = Game.game_work.saveData.AddToTotal("blitz_bonus", hash1, 1, false, false);
-        Game.AddToCurrentScore(5, player);
+        Game2.game_work.saveData.ClearTotal(hash1);
+        this.m_comboBonus[player] = Game2.game_work.saveData.AddToTotal("blitz_bonus", hash1, 1, false, false);
+        Game2.AddToCurrentScore(5, player);
         uint hash2 = StringFunctions.StringHash("blitz_1");
         PowerUpManager.GetInstance().ActivateScreenEffect(hash2);
       }
       uint hash3 = StringFunctions.StringHash("best_blitz");
-      int total = Game.game_work.saveData.GetTotal(hash3);
-      Game.game_work.saveData.AddToTotal("best_blitz", hash3, Math.MAX(0, this.m_comboBonus[player] - total), false, false);
+      int total = Game2.game_work.saveData.GetTotal(hash3);
+      Game2.game_work.saveData.AddToTotal("best_blitz", hash3, Math.MAX(0, this.m_comboBonus[player] - total), false, false);
     }
 
     public void AddToSpeedLossTime(float val, int player)

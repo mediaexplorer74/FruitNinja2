@@ -7,7 +7,6 @@
 using GameManager;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-//using WPR.WindowsCompability;
 
 #nullable disable
 namespace Mortar
@@ -43,7 +42,7 @@ namespace Mortar
     public Texture Load(string texture, bool localise)
     {
       string Filename;
-      switch (Game.game_work.language)
+      switch (Game2.game_work.language)
       {
         case StringTableUtils.Language.LANGUAGE_ENGLISH:
         case StringTableUtils.Language.LANGUAGE_ENGLISH_UK:

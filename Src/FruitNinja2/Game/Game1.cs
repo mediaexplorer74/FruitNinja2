@@ -8,7 +8,7 @@ using GameManager;
 //using Microsoft.Devices;
 //using Microsoft.Phone.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
@@ -22,11 +22,13 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Threading;
 using Game = Microsoft.Xna.Framework.Game;
+using System.Reflection.Metadata;
+using System.Diagnostics;
 
 #nullable disable
 namespace Mortar
 {
-  public class Game1 : Game//GameManager.Game
+  public class Game1 : Game
   {
     private const int MAGIC1 = 195800833;
     private const int MAGIC2 = 33479857;
@@ -118,7 +120,10 @@ namespace Mortar
           {
             byte[] buffer = new byte[length];
             storageFileStream.Read(buffer, 0, length);
-            storageFileStream.Close();
+
+            storageFileStream.Flush(); 
+            storageFileStream.Dispose();
+                        
             int int32_1 = BitConverter.ToInt32(buffer, 0);
             int int32_2 = BitConverter.ToInt32(buffer, 4);
             int int32_3 = BitConverter.ToInt32(buffer, 8);
@@ -147,21 +152,21 @@ namespace Mortar
           }
           else
           {
-            storageFileStream.Close();
+            storageFileStream.Flush();
+            storageFileStream.Dispose();
             Game1.SaveConfig();
           }
         }
         else
           Game1.SaveConfig();
 
-        storageFileStream?.Close();
+        //storageFileStream?.Flush();
+        storageFileStream?.Dispose();
       }
-      catch
+      catch (Exception ex)
       {
-      }
-      //finally
-      //{        
-      //}
+         Debug.WriteLine("[ex] Game1 - LoadConfig ex.: " + ex.Message);
+      }     
     }//LoadConfig
 
 
@@ -200,15 +205,14 @@ namespace Mortar
           byte[] bytes8 = BitConverter.GetBytes(Game1.settings.achievements[index]);
           storageFileStream.Write(bytes8, 0, 4);
         }
-        storageFileStream.Close();
+
+        storageFileStream.Flush();
+        storageFileStream.Dispose();
       }
-      catch
-      {
-      }
-      //finally
-      //{
-      // storageFileStream?.Close();
-      //}
+        catch (Exception ex)
+        {
+            Debug.WriteLine("[ex] Game1 - SaveConfig ex.: " + ex.Message);
+        }
     }//SaveConfig
 
     private string ERROR_BUTTON_1 => Game1.instance.stringTable.GetString(703);
@@ -244,8 +248,8 @@ namespace Mortar
       this.graphics.PreferredBackBufferWidth = 800;
       this.graphics.PreferredBackBufferHeight = 480;
       this.graphics.IsFullScreen = false;//true;
-      this.graphics.SupportedOrientations = (DisplayOrientation) 1;
-      this.graphics.ApplyChanges();
+      this.graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft;
+      //this.graphics.ApplyChanges();
 
       // touchscreen emulation (?)
             
@@ -329,8 +333,8 @@ namespace Mortar
           //Game.game_work.language = StringTableUtils.Language.LANGUAGE_ENGLISH;
           break;
       }
-      Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-      Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+      //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+      //Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
       try
       {
         if (!IsolatedStorageFile.GetUserStoreForApplication().FileExists(Game1.CFG_FILENAME))
@@ -403,9 +407,9 @@ namespace Mortar
         Game1.emulator = true;//Environment.DeviceType == 1;
         if (!Game1.emulator)
         {
-          SignedInGamer.SignedIn += new EventHandler<SignedInEventArgs>(this.GamerSignedInCallback);
-          this.gamerServicesInstance = new GamerServicesComponent((Game) this);
-          this.Components.Add((IGameComponent)this.gamerServicesInstance);
+          //SignedInGamer.SignedIn += new EventHandler<SignedInEventArgs>(this.GamerSignedInCallback);
+          //this.gamerServicesInstance = new GamerServicesComponent((Game) this);
+          //this.Components.Add((IGameComponent)this.gamerServicesInstance);
         }
         base.Initialize();
       }
@@ -651,7 +655,7 @@ namespace Mortar
                   {
                     this.skip = 1;
                     this.showUpsell = false;
-                    Thread.Sleep(32);
+                    //Thread.Sleep(32);
                     return;
                   }
                 }
@@ -701,9 +705,9 @@ namespace Mortar
                   {
                     try
                     {
-                      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-                      if (signedInGamer.IsSignedInToLive && signedInGamer.Privileges.AllowPurchaseContent)
-                      {
+                      //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+                      //if (signedInGamer.IsSignedInToLive && signedInGamer.Privileges.AllowPurchaseContent)
+                      //{
                         //while (Guide.IsVisible)
                         //  Thread.Sleep(32);
                         //if (!Guide.IsVisible)
@@ -716,8 +720,8 @@ namespace Mortar
                           //    ContentType = ((MarketplaceContentType) 1)
                           //  }.Show();
                         //}
-                      }
-                      else
+                      //}
+                      //else
                       {
                         string[] buttons4 = new string[1]
                         {
@@ -971,7 +975,9 @@ namespace Mortar
           if ((double) this.timeout > 0.0)
           {
             this.spriteBatch.Begin();
-            if ((double) this.timeout < 0.25)
+
+            // RnD / TEMP: this.bob != null
+            if ((double) this.timeout < 0.25 && this.bob != null)
               this.spriteBatch.Draw(this.bob.intex, new Vector2(0.0f, 0.0f), new Rectangle?(), 
                   Color.White, MathHelper.ToRadians(0.0f), new Vector2(0.0f, 0.0f), new Vector2(1.66666663f, 1.5f), (SpriteEffects) 0, 0.0f);
             else
@@ -1217,7 +1223,7 @@ label_6:
 
 
     // GamerSignedInCallback
-    protected void GamerSignedInCallback(object sender, SignedInEventArgs args)
+    /*protected void GamerSignedInCallback(object sender, SignedInEventArgs args)
     {
       uint num = 2147508225;
       try
@@ -1282,7 +1288,7 @@ label_6:
         //  Guide.BeginShowMessageBox(this.ERROR_TITLE_1, text, (IEnumerable<string>) buttons, 0, MessageBoxIcon.Alert, (AsyncCallback) null, (object) null);
         Game1.logInSucceeded = false;
       }
-    }// GamerSignedInCallback
+    }*/
 
     // NotSignedInMessage
     public static string NotSignedInMessage()

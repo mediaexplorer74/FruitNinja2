@@ -282,7 +282,7 @@ namespace GameManager
       pspParticleEmitter.scale = 1f;
       pspParticleEmitter.rateScale = 1f;
       pspParticleEmitter.lifeScale = 1f;
-      pspParticleEmitter.sizeScale = Game.IsMultiplayer() ? Game.SPLIT_SCREEN_SCALE : 1f;
+      pspParticleEmitter.sizeScale = Game2.IsMultiplayer() ? Game2.SPLIT_SCREEN_SCALE : 1f;
       this.particleEmitters.AddFirst(pspParticleEmitter);
       return pspParticleEmitter;
     }

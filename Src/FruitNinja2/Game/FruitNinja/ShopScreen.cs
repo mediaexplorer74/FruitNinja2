@@ -34,16 +34,16 @@ namespace GameManager
 
     public static float SHOP_BACK_LEFT_SIDE => 290f;
 
-    public static float SHOP_BACK_RIGHT_SIDE => Game.SCREEN_WIDTH - 290f;
+    public static float SHOP_BACK_RIGHT_SIDE => Game2.SCREEN_WIDTH - 290f;
 
     public static float SHOP_LIST_FROM_LEFT => ShopScreen.SHOP_BACK_LEFT_SIDE / 2f;
 
     public static float SHOP_LIST_POS_X
     {
-      get => (float) (-(double) Game.SCREEN_WIDTH / 2.0) + ShopScreen.SHOP_LIST_FROM_LEFT;
+      get => (float) (-(double) Game2.SCREEN_WIDTH / 2.0) + ShopScreen.SHOP_LIST_FROM_LEFT;
     }
 
-    public static float QUIT_Y => (float) (-((double) Game.SCREEN_HEIGHT / 2.0) + 55.0);
+    public static float QUIT_Y => (float) (-((double) Game2.SCREEN_HEIGHT / 2.0) + 55.0);
 
     public static float WATERMELON_SELECT_SCALE => 0.75f;
 
@@ -59,7 +59,7 @@ namespace GameManager
 
     public static float BUY_NOW_X => 50f;
 
-    public static float BUY_NOW_Y => (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 56.0);
+    public static float BUY_NOW_Y => (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 56.0);
 
     public static float DARKNESS_HEIGHT => 120f;
 
@@ -86,7 +86,7 @@ namespace GameManager
       this.m_time = 0.0f;
       this.m_buyButtonWait = 0.0f;
       this.m_selectedScaleInOut = 0;
-      this.coins = (float) Game.game_work.coins + 0.5f;
+      this.coins = (float) Game2.game_work.coins + 0.5f;
     }
 
     public void QuitShopCallback()
@@ -95,7 +95,7 @@ namespace GameManager
       this.m_state = 2;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public void BuyButtonCallback()
@@ -171,7 +171,7 @@ namespace GameManager
         return;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public void CancelCallback()
@@ -181,7 +181,7 @@ namespace GameManager
         return;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public static void LoadContent()
@@ -225,8 +225,8 @@ namespace GameManager
         int num = ShopScreen.hackedOpen ? 1 : 0;
         if (this.m_buyButton.m_entity != null)
         {
-          this.m_buyButton.m_entity.m_pos.Y = -Game.SCREEN_WIDTH;
-          ((Fruit) this.m_buyButton.m_entity).m_pos2.Y = -Game.SCREEN_WIDTH;
+          this.m_buyButton.m_entity.m_pos.Y = -Game2.SCREEN_WIDTH;
+          ((Fruit) this.m_buyButton.m_entity).m_pos2.Y = -Game2.SCREEN_WIDTH;
           ((Fruit) this.m_buyButton.m_entity).m_gravity = Vector3.Negate(Vector3.UnitY);
           this.m_buyButton.m_entity.m_vel.Y = -10f;
           ((Fruit) this.m_buyButton.m_entity).m_vel2.Y = -10f;
@@ -274,7 +274,7 @@ namespace GameManager
     {
       if (this.m_scrollingMenu != null)
       {
-        Game.game_work.hud.RemoveControl((HUDControl) this.m_scrollingMenu);
+        Game2.game_work.hud.RemoveControl((HUDControl) this.m_scrollingMenu);
         Delete.SAFE_DELETE<ScrollingMenu>(ref this.m_scrollingMenu);
       }
       this.m_texture = (Texture) null;
@@ -292,7 +292,7 @@ namespace GameManager
       this.m_scrollingMenu.SetWidth(290f);
       this.m_scrollingMenu.SetHeight(ShopScreen.SHOP_ITEM_HEIGHT);
       this.m_scrollingMenu.SetItemHeight(ShopScreen.SHOP_ITEM_HEIGHT);
-      Game.game_work.hud.AddControl((HUDControl) this.m_scrollingMenu);
+      Game2.game_work.hud.AddControl((HUDControl) this.m_scrollingMenu);
       int it = 0;
       ItemInfo info = ItemManager.GetInstance().GetFirst(ref it);
       bool flag1 = true;
@@ -352,12 +352,12 @@ namespace GameManager
             this.m_state = 1;
             if (this.m_quitButton == null)
             {
-              this.m_quitButton = new MenuButton(Game.game_work.backTexture, new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - 55.0), ShopScreen.QUIT_Y, 0.0f), new MenuButton.MenuCallback(this.QuitShopCallback), Fruit.MAX_FRUIT_TYPES);
+              this.m_quitButton = new MenuButton(Game2.game_work.backTexture, new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - 55.0), ShopScreen.QUIT_Y, 0.0f), new MenuButton.MenuCallback(this.QuitShopCallback), Fruit.MAX_FRUIT_TYPES);
               this.m_quitButton.Init();
               this.m_quitButton.m_triggerOnBackPress = true;
-              Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+              Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
               this.m_quitButton.m_deleteCall = new HUDControl.HUDControlDeletedCallback(this.DeletedMenuItem);
-              Game.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
+              Game2.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
               MenuButton quitButton = this.m_quitButton;
               quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
               Entity entity = this.m_quitButton.m_entity;
@@ -374,19 +374,19 @@ namespace GameManager
           else if (this.m_scrollingMenu.IsLockedIn())
           {
             if (this.m_selectedItem != null && this.m_selectedItem.m_info != null && (ItemManager.GetInstance().IsEquipped(this.m_selectedItem.m_info) || this.m_selectedItem.m_info.IsLocked()))
-              Game.game_work.tutorialControl.ResetTutePos();
+              Game2.game_work.tutorialControl.ResetTutePos();
             if (this.m_selectedItem != null && ItemManager.GetInstance().IsEquipped(this.m_selectedItem.m_info))
               num1 = dt;
             else if (this.m_buyButton == null)
             {
-              this.m_buyButton = new MenuButton(ShopListItem.buyNowTexture, new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0), ShopScreen.BUY_NOW_Y, 0.0f), new MenuButton.MenuCallback(this.EquipCallback), Fruit.FruitType("watermelon"));
+              this.m_buyButton = new MenuButton(ShopListItem.buyNowTexture, new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0), ShopScreen.BUY_NOW_Y, 0.0f), new MenuButton.MenuCallback(this.EquipCallback), Fruit.FruitType("watermelon"));
               this.SetSelected(this.m_selectedItem);
               this.m_buyButton.Init();
-              Game.game_work.hud.AddControl((HUDControl) this.m_buyButton);
+              Game2.game_work.hud.AddControl((HUDControl) this.m_buyButton);
               this.m_buyButton.m_clearOthers = false;
               ShopScreen.hackedOpen = false;
               this.m_buyButton.m_deleteCall = new HUDControl.HUDControlDeletedCallback(this.DeletedMenuItem);
-              Game.game_work.tutorialControl.ResetTutePos(this.m_buyButton);
+              Game2.game_work.tutorialControl.ResetTutePos(this.m_buyButton);
               MenuButton buyButton = this.m_buyButton;
               buyButton.m_originalScale = Vector3.Multiply(buyButton.m_originalScale, ShopScreen.WATERMELON_SELECT_SCALE);
               Entity entity = this.m_buyButton.m_entity;
@@ -423,11 +423,11 @@ namespace GameManager
           {
             this.m_state = 4;
             this.m_time = 0.0f;
-            this.m_quitButton = new MenuButton(Game.game_work.backTexture, new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - 55.0), ShopScreen.QUIT_Y, 0.0f), new MenuButton.MenuCallback(this.ConfirmCallback), Fruit.MAX_FRUIT_TYPES);
+            this.m_quitButton = new MenuButton(Game2.game_work.backTexture, new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - 55.0), ShopScreen.QUIT_Y, 0.0f), new MenuButton.MenuCallback(this.ConfirmCallback), Fruit.MAX_FRUIT_TYPES);
             this.m_quitButton.Init();
             this.m_quitButton.m_triggerOnBackPress = true;
             this.m_quitButton.m_deleteCall = new HUDControl.HUDControlDeletedCallback(this.DeletedMenuItem);
-            Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+            Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
             MenuButton quitButton = this.m_quitButton;
             quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
             Entity entity = this.m_quitButton.m_entity;
@@ -438,7 +438,7 @@ namespace GameManager
           {
             ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
             this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-            Game.game_work.tutorialControl.ResetTutePos();
+            Game2.game_work.tutorialControl.ResetTutePos();
             this.m_quitButton = (MenuButton) null;
             break;
           }
@@ -452,7 +452,7 @@ namespace GameManager
           {
             ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
             this.m_quitButton.m_entity.m_vel = new Vector3(Math.g_random.RandF(5f) + 5f, -Math.g_random.RandF(5f), 0.0f);
-            Game.game_work.tutorialControl.ResetTutePos();
+            Game2.game_work.tutorialControl.ResetTutePos();
             this.m_quitButton = (MenuButton) null;
           }
           if (ActorManager.GetInstance().GetNumEntities(1) == 0U && ActorManager.GetInstance().GetNumEntities(0) == 0U)
@@ -479,7 +479,7 @@ namespace GameManager
         SplatEntity splatEntity = SplatEntity.pool[index];
         if (splatEntity.m_update && splatEntity.m_onWall >= 0)
         {
-          if ((double) splatEntity.m_pos.X > (double) Game.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE)
+          if ((double) splatEntity.m_pos.X > (double) Game2.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE)
             splatEntity.m_pos.X += num3;
           else
             splatEntity.m_pos.X -= num4;
@@ -489,14 +489,14 @@ namespace GameManager
 
     public override void Draw(float[] tintChannels)
     {
-      float num1 = (float) ((double) Game.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0);
+      float num1 = (float) ((double) Game2.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0);
       if (this.m_drawOrder != (HUD.HUD_ORDER) this.m_backDrawOrder)
       {
         if (this.m_selectedScaleInOut <= 0)
           return;
         if ((double) this.m_time < 1.0)
           num1 += (float) ((1.0 - (double) this.m_time) * (double) ShopScreen.SHOP_BACK_RIGHT_SIDE * 1.5);
-        Vector3 vector3 = Vector3.Multiply(new Vector3((float) (ShopListItem.selectedTexture.GetWidth() + 1U), (float) (ShopListItem.selectedTexture.GetHeight() + 1U), 0.0f), Game.GAME_MODE_SCALE_FIX);
+        Vector3 vector3 = Vector3.Multiply(new Vector3((float) (ShopListItem.selectedTexture.GetWidth() + 1U), (float) (ShopListItem.selectedTexture.GetHeight() + 1U), 0.0f), Game2.GAME_MODE_SCALE_FIX);
         if ((double) this.m_selectedScaleInOut < (double) ShopScreen.POP_SINE)
           vector3 = Vector3.Multiply(vector3, Math.SinIdx((ushort) this.m_selectedScaleInOut) / Math.SinIdx((ushort) ShopScreen.POP_SINE));
         Matrix mtx = Matrix.Multiply(Matrix.CreateScale(vector3), Matrix.CreateTranslation(new Vector3(num1, ShopScreen.BUY_NOW_Y, 0.0f)));
@@ -514,33 +514,33 @@ namespace GameManager
         {
           num1 += (float) ((1.0 - (double) this.m_time) * (double) ShopScreen.SHOP_BACK_RIGHT_SIDE * 1.5);
           ShopListItem.backGround.Set();
-          Matrix mtx = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE + 1f, Game.SCREEN_HEIGHT + 1f, 0.0f)), Matrix.CreateTranslation(new Vector3(this.m_scrollingMenu.m_pos.X, 0.0f, 0.0f)));
+          Matrix mtx = Matrix.Multiply(Matrix.CreateScale(new Vector3(ShopScreen.SHOP_BACK_LEFT_SIDE + 1f, Game2.SCREEN_HEIGHT + 1f, 0.0f)), Matrix.CreateTranslation(new Vector3(this.m_scrollingMenu.m_pos.X, 0.0f, 0.0f)));
           MatrixManager.GetInstance().Reset();
           MatrixManager.GetInstance().SetMatrix(mtx);
           MatrixManager.GetInstance().UploadCurrentMatrices();
-          Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game.SCREEN_WIDTH) / 2.0) / 512.0), (float) ((512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0));
-          Math.Scale44(new Vector3(ShopScreen.SHOP_BACK_RIGHT_SIDE + 1f, Game.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
+          Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0) / 512.0), (float) ((512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0));
+          Math.Scale44(new Vector3(ShopScreen.SHOP_BACK_RIGHT_SIDE + 1f, Game2.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
           Vector3 scl = new Vector3(num1, 0.0f, 0.0f);
           Math.GlobalTranslate44(ref mtx, scl);
           MatrixManager.GetInstance().Reset();
           MatrixManager.GetInstance().SetMatrix(mtx);
           MatrixManager.GetInstance().UploadCurrentMatrices();
-          Mesh.DrawQuad(Color.White, (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game.SCREEN_WIDTH) / 2.0) / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0));
+          Mesh.DrawQuad(Color.White, (float) (((double) ShopScreen.SHOP_BACK_LEFT_SIDE + (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0) / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0));
           ShopListItem.backGround.UnSet();
         }
         else
         {
           Matrix mtx;
-          Math.Scale44(new Vector3(Game.SCREEN_WIDTH + 1f, Game.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
+          Math.Scale44(new Vector3(Game2.SCREEN_WIDTH + 1f, Game2.SCREEN_HEIGHT + 1f, 0.0f), out mtx);
           MatrixManager.GetInstance().Reset();
           MatrixManager.GetInstance().SetMatrix(mtx);
           MatrixManager.GetInstance().UploadCurrentMatrices();
           ShopListItem.backGround.Set();
-          Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game.SCREEN_HEIGHT) / 2.0 / 512.0));
+          Mesh.DrawQuad(Color.White, (float) ((512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_WIDTH) / 2.0 / 512.0), (float) ((512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0), (float) (1.0 - (512.0 - (double) Game2.SCREEN_HEIGHT) / 2.0 / 512.0));
           ShopListItem.backGround.UnSet();
         }
         Matrix mtx1;
-        Math.Scale44(Vector3.Multiply(new Vector3((float) (ShopListItem.descriptionBox.GetWidth() + 1U), (float) (ShopListItem.descriptionBox.GetHeight() + 1U), 0.0f), Game.GAME_MODE_SCALE_FIX), out mtx1);
+        Math.Scale44(Vector3.Multiply(new Vector3((float) (ShopListItem.descriptionBox.GetWidth() + 1U), (float) (ShopListItem.descriptionBox.GetHeight() + 1U), 0.0f), Game2.GAME_MODE_SCALE_FIX), out mtx1);
         Math.GlobalTranslate44(ref mtx1, num1 - 4f, -3f, 0.0f);
         MatrixManager.GetInstance().Reset();
         MatrixManager.GetInstance().SetMatrix(mtx1);
@@ -548,12 +548,12 @@ namespace GameManager
         byte num2;
         if (this.m_selectedItem.m_info.IsLocked())
         {
-          ShopScreen.m_fadeTime = Math.MIN(1f, ShopScreen.m_fadeTime + Game.game_work.dt * 5f);
+          ShopScreen.m_fadeTime = Math.MIN(1f, ShopScreen.m_fadeTime + Game2.game_work.dt * 5f);
           num2 = (byte) ((double) byte.MaxValue - (double) ShopScreen.m_fadeTime * 120.0);
         }
         else
         {
-          ShopScreen.m_fadeTime = Math.MAX(0.0f, ShopScreen.m_fadeTime - Game.game_work.dt * 5f);
+          ShopScreen.m_fadeTime = Math.MAX(0.0f, ShopScreen.m_fadeTime - Game2.game_work.dt * 5f);
           num2 = (byte) ((double) byte.MaxValue - (double) ShopScreen.m_fadeTime * 120.0);
         }
         Color col = new Color((int) num2, (int) num2, (int) num2, (int) byte.MaxValue);
@@ -565,7 +565,7 @@ namespace GameManager
 
     public float GetDescriptionTextXPos()
     {
-      float num = (float) ((double) Game.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0);
+      float num = (float) ((double) Game2.SCREEN_WIDTH / 2.0 - (double) ShopScreen.SHOP_BACK_RIGHT_SIDE / 2.0);
       if ((double) this.m_time < 1.0)
         num += (float) ((1.0 - (double) this.m_time) * (double) ShopScreen.SHOP_BACK_RIGHT_SIDE * 1.5);
       return num - ShopScreen.DESCRIPTION_BOX_WIDTH / 2f;
@@ -577,7 +577,7 @@ namespace GameManager
       {
         if (this.m_buyButton == null)
           return;
-        Game.game_work.tutorialControl.ButtonPressedAtPos(this.m_buyButton);
+        Game2.game_work.tutorialControl.ButtonPressedAtPos(this.m_buyButton);
       }
       else
       {

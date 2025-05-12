@@ -163,7 +163,7 @@ namespace GameManager
           case FruitCamera.PERSPECIVE_TYPE.ORIENTATION_NORMAL_NO_SHAKE:
             MatrixManager.instance.SetupLookAt(new Vector3(0.0f, 0.0f, 1f), new Vector3(0.0f, 1f, 0.0f), Vector3.Zero);
             this.m_view_mtx = MatrixManager.instance.GetMatrix(MatrixManager.MatrixStackTypes.MATRIXSTACK_VIEW);
-            MatrixManager.instance.SetupOrtho((float) ((int) Game.SCREEN_HEIGHT >> 1), (float) -((int) Game.SCREEN_HEIGHT >> 1), (float) -((int) Game.SCREEN_WIDTH >> 1), (float) ((int) Game.SCREEN_WIDTH >> 1), 2000f, -6000f);
+            MatrixManager.instance.SetupOrtho((float) ((int) Game2.SCREEN_HEIGHT >> 1), (float) -((int) Game2.SCREEN_HEIGHT >> 1), (float) -((int) Game2.SCREEN_WIDTH >> 1), (float) ((int) Game2.SCREEN_WIDTH >> 1), 2000f, -6000f);
             this.m_proj_mtx = MatrixManager.instance.GetMatrix(MatrixManager.MatrixStackTypes.MATRIXSTACK_PROJECTION);
             break;
         }

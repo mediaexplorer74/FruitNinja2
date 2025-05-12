@@ -46,17 +46,17 @@ namespace GameManager
       this.m_totalWidth = 0.0f;
       this.m_totalHeight = 0.0f;
       this.m_itemClosestToZero = 0;
-      this.m_width = Game.SCREEN_WIDTH / 2f;
-      this.m_height = Game.SCREEN_HEIGHT;
-      this.m_itemHeight = Game.SCREEN_HEIGHT;
+      this.m_width = Game2.SCREEN_WIDTH / 2f;
+      this.m_height = Game2.SCREEN_HEIGHT;
+      this.m_itemHeight = Game2.SCREEN_HEIGHT;
       this.m_velocityFix = 1f;
       this.m_hasMovedList = false;
       this.m_overideLockTo = -1;
       this.m_isLockedOn = false;
       this.m_touchInRegion = -1;
       this.m_disabled = false;
-      this.m_initialTouchRegion = new MortarRectangleDec((float) (-(double) this.m_width / 2.0), Game.SCREEN_HEIGHT, this.m_width / 2f, -Game.SCREEN_HEIGHT);
-      this.m_scrollTouchRegion = new MortarRectangleDec((float) (-(double) this.m_width / 2.0), Game.SCREEN_HEIGHT, this.m_width / 2f, -Game.SCREEN_HEIGHT);
+      this.m_initialTouchRegion = new MortarRectangleDec((float) (-(double) this.m_width / 2.0), Game2.SCREEN_HEIGHT, this.m_width / 2f, -Game2.SCREEN_HEIGHT);
+      this.m_scrollTouchRegion = new MortarRectangleDec((float) (-(double) this.m_width / 2.0), Game2.SCREEN_HEIGHT, this.m_width / 2f, -Game2.SCREEN_HEIGHT);
       this.m_deleteCall = (HUDControl.HUDControlDeletedCallback) (l => l.Release());
     }
 
@@ -84,8 +84,8 @@ namespace GameManager
       this.m_isLockedOn = false;
       if (this.m_touchInRegion == -1 && !this.m_disabled)
       {
-        this.m_touchInRegion = Game.TouchInRegion(this.m_pos.X + this.m_initialTouchRegion.left, this.m_pos.X + this.m_initialTouchRegion.right, this.m_pos.X + this.m_initialTouchRegion.bottom, this.m_pos.X + this.m_initialTouchRegion.top);
-        if (Game.IsTouchDown(this.m_touchInRegion) != 2)
+        this.m_touchInRegion = Game2.TouchInRegion(this.m_pos.X + this.m_initialTouchRegion.left, this.m_pos.X + this.m_initialTouchRegion.right, this.m_pos.X + this.m_initialTouchRegion.bottom, this.m_pos.X + this.m_initialTouchRegion.top);
+        if (Game2.IsTouchDown(this.m_touchInRegion) != 2)
         {
           this.m_touchInRegion = -1;
         }
@@ -93,12 +93,12 @@ namespace GameManager
         {
           SlashEntity.ModPowerMask |= 64U;
           this.m_overideLockTo = -1;
-          this.m_touchStartPos = Game.game_work.touchPositions[this.m_touchInRegion];
+          this.m_touchStartPos = Game2.game_work.touchPositions[this.m_touchInRegion];
           this.m_touchStartOffset = this.m_offset;
         }
       }
       int overideLockTo = this.m_overideLockTo;
-      if (this.m_touchInRegion != -1 && Game.TouchInRegion(this.m_pos.X + this.m_scrollTouchRegion.left, this.m_pos.X + this.m_scrollTouchRegion.right, this.m_pos.X + this.m_scrollTouchRegion.bottom, this.m_pos.X + this.m_scrollTouchRegion.top, this.m_touchInRegion) != this.m_touchInRegion)
+      if (this.m_touchInRegion != -1 && Game2.TouchInRegion(this.m_pos.X + this.m_scrollTouchRegion.left, this.m_pos.X + this.m_scrollTouchRegion.right, this.m_pos.X + this.m_scrollTouchRegion.bottom, this.m_pos.X + this.m_scrollTouchRegion.top, this.m_touchInRegion) != this.m_touchInRegion)
       {
         if (!this.m_hasMovedList)
         {
@@ -153,8 +153,8 @@ namespace GameManager
       if (this.m_touchInRegion != -1)
       {
         this.m_velocityFix = 1f;
-        this.m_vel.Y = (float) (-((double) this.m_offset.Y - ((double) this.m_touchStartOffset.Y - ((double) Game.game_work.touchPositions[this.m_touchInRegion].Y - (double) this.m_touchStartPos.Y))) * 0.5);
-        if ((double) Math.ABS(Game.game_work.touchPositions[this.m_touchInRegion].Y - this.m_touchStartPos.Y) > 1.0 / 1000.0)
+        this.m_vel.Y = (float) (-((double) this.m_offset.Y - ((double) this.m_touchStartOffset.Y - ((double) Game2.game_work.touchPositions[this.m_touchInRegion].Y - (double) this.m_touchStartPos.Y))) * 0.5);
+        if ((double) Math.ABS(Game2.game_work.touchPositions[this.m_touchInRegion].Y - this.m_touchStartPos.Y) > 1.0 / 1000.0)
           this.m_hasMovedList = true;
       }
       ScrollingMenu scrollingMenu1 = this;
@@ -167,8 +167,8 @@ namespace GameManager
       float num10 = 0.0f;
       this.m_itemClosestToZero = 0;
       ScrollingMenuItem scrollingMenuItem1 = (ScrollingMenuItem) null;
-      float num11 = Game.SCREEN_HEIGHT / 2f;
-      float num12 = (float) (-(double) Game.SCREEN_HEIGHT / 2.0);
+      float num11 = Game2.SCREEN_HEIGHT / 2f;
+      float num12 = (float) (-(double) Game2.SCREEN_HEIGHT / 2.0);
       if (this.m_cullItemsOutOfBounds)
       {
         num11 = this.m_pos.Y;

@@ -9,23 +9,23 @@ namespace GameManager
 {
   public class FruitGame
   {
-    public void Init(uint instance, string startUpCommandLine) => Game.GameInitialise(instance);
+    public void Init(uint instance, string startUpCommandLine) => Game2.GameInitialise(instance);
 
     public void End()
     {
-      Game.GameTaskExit();
-      Game.GameDestroy();
+      Game2.GameTaskExit();
+      Game2.GameDestroy();
     }
 
-    public void Update(float timeSinceLastUpdate) => Game.GameTaskUpdate(timeSinceLastUpdate);
+    public void Update(float timeSinceLastUpdate) => Game2.GameTaskUpdate(timeSinceLastUpdate);
 
-    public void Draw(float timeSinceLastUpdate) => Game.GameTaskDraw(timeSinceLastUpdate);
+    public void Draw(float timeSinceLastUpdate) => Game2.GameTaskDraw(timeSinceLastUpdate);
 
     public void Paused() => GameTask.SkipToPause(false);
 
     public void UnPaused()
     {
-      if ((double) Game.game_work.gameOverTransition == 0.0)
+      if ((double) Game2.game_work.gameOverTransition == 0.0)
         return;
       GameTask.UnpauseGame();
     }

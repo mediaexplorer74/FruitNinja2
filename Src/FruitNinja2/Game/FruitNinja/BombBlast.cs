@@ -36,9 +36,9 @@ namespace GameManager
 
     public override void Update(float dt)
     {
-      this.m_time += Game.game_work.dt;
-      this.m_xVec = Vector3.Multiply(this.m_origXVec, this.m_cur_scale.X += 100f * Game.game_work.dt);
-      this.m_yVec = Vector3.Multiply(this.m_origYVec, this.m_cur_scale.Y += 2500f * Game.game_work.dt);
+      this.m_time += Game2.game_work.dt;
+      this.m_xVec = Vector3.Multiply(this.m_origXVec, this.m_cur_scale.X += 100f * Game2.game_work.dt);
+      this.m_yVec = Vector3.Multiply(this.m_origYVec, this.m_cur_scale.Y += 2500f * Game2.game_work.dt);
       if ((double) this.m_time <= 3.0)
         return;
       this.m_destroy = true;
@@ -110,7 +110,7 @@ namespace GameManager
 
     public static void CleanupBomb()
     {
-      for (int index = 0; index < Game.MAX_PLAYERS * 2; ++index)
+      for (int index = 0; index < Game2.MAX_PLAYERS * 2; ++index)
         Bomb.m_bombModel[index] = (Model) null;
       BombFlash.CleanUp();
       Bomb.s_flashTexture[0] = (Texture) null;

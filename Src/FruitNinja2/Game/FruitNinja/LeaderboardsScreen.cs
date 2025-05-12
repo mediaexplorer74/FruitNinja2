@@ -5,7 +5,7 @@
 
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Mortar;
 using System;
@@ -129,7 +129,7 @@ namespace GameManager
             new MenuButton.MenuCallback(this.Classic_Callback), -1, scale, true);
         this.m_modeClass.partOfPopup = true;
         this.m_modeClass.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_modeClass);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_modeClass);
         this.m_modeClass.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_modeZen == null)
@@ -138,7 +138,7 @@ namespace GameManager
             new MenuButton.MenuCallback(this.Zen_Callback), -1, scale, true);
         this.m_modeZen.partOfPopup = true;
         this.m_modeZen.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_modeZen);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_modeZen);
         this.m_modeZen.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_modeArcade == null)
@@ -146,7 +146,7 @@ namespace GameManager
         this.m_modeArcade = new MenuButton("arcade_total.tex", new Vector3(0.0f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.Arcade_Callback), -1, scale, true);
         this.m_modeArcade.partOfPopup = true;
         this.m_modeArcade.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_modeArcade);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_modeArcade);
         this.m_modeArcade.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_modeWeekly == null)
@@ -154,7 +154,7 @@ namespace GameManager
         this.m_modeWeekly = new MenuButton("arcade_weekly.tex", new Vector3(0.0f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.Arcade_Weekly), -1, scale, true);
         this.m_modeWeekly.partOfPopup = true;
         this.m_modeWeekly.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_modeWeekly);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_modeWeekly);
         this.m_modeWeekly.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_modeTotalFruit == null)
@@ -162,7 +162,7 @@ namespace GameManager
         this.m_modeTotalFruit = new MenuButton("total_fruit.tex", new Vector3(0.0f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.Arcade_TotalFruit), -1, scale, true);
         this.m_modeTotalFruit.partOfPopup = true;
         this.m_modeTotalFruit.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_modeTotalFruit);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_modeTotalFruit);
         this.m_modeTotalFruit.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       this.slide_transition = 0.0f;
@@ -346,7 +346,7 @@ namespace GameManager
         this.initialY = this.ty = -1f;
         this.textOffset = 0.0f;
       }
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
       switch (this.m_state)
       {
         case 0:
@@ -354,12 +354,12 @@ namespace GameManager
           if ((double) this.m_time > 0.99900001287460327)
           {
             this.m_time = 1f;
-            this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game.SCREEN_WIDTH / 2.0), (float) ((double) LeaderboardsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+            this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) (425.0 - (double) Game2.SCREEN_WIDTH / 2.0), (float) ((double) LeaderboardsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - 266.0), 0.0f), new MenuButton.MenuCallback(this.QuitGameCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
             this.m_quitButton.partOfPopup = true;
             this.m_quitButton.Init();
             this.m_quitButton.m_triggerOnBackPress = true;
-            Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
-            Game.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
+            Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+            Game2.game_work.tutorialControl.ResetTutePos(this.m_quitButton);
             MenuButton quitButton = this.m_quitButton;
             quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.825f);
             Entity entity = this.m_quitButton.m_entity;
@@ -378,7 +378,7 @@ namespace GameManager
             if (PopOverControl.IsInPopup)
               PopOverControl.Instance.Out();
             else
-              Game.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
+              Game2.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
             this.m_terminate = true;
             break;
           }
@@ -426,7 +426,7 @@ namespace GameManager
           if (!this.slide_off)
           {
             this.renderSize = 0.0f;
-            SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+            //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
             LeaderboardReader reader = Leaderboards.GetReader();
             if (reader != null)
             {
@@ -435,7 +435,7 @@ namespace GameManager
                 LeaderboardEntry entry1 = reader.Entries[index1];
                 if (this.gameMode == -2)
                 {
-                  int valueInt32 = entry1.Columns.GetValueInt32("BestScore");
+                  int valueInt32 = 1000;//entry1.Columns.GetValueInt32("BestScore");
                   int num1 = valueInt32 >> 24;
                   int num2 = valueInt32 >> 16 & (int) byte.MaxValue;
                   int num3 = valueInt32 & (int) ushort.MaxValue;
@@ -447,9 +447,9 @@ namespace GameManager
                       scoreAsInt = Mortar.Game1.settings.bestThisWeek,
                       score = Mortar.Game1.settings.bestThisWeek.ToString(),
                       isPlayer = true,
-                      gamerTag = signedInGamer.Gamertag
+                      gamerTag = "tag"//signedInGamer.Gamertag
                     });
-                  if (string.Compare(entry1.Gamer.Gamertag, signedInGamer.Gamertag) != 0)
+                  /*if (string.Compare(entry1.Gamer.Gamertag, signedInGamer.Gamertag) != 0)
                   {
                     LeaderboardsScreen.LeaderboardData leaderboardData = new LeaderboardsScreen.LeaderboardData();
                     leaderboardData.gamerTag = entry1.Gamer.Gamertag;
@@ -479,14 +479,14 @@ namespace GameManager
                     }
                     if (!flag)
                       this.entries.Add(leaderboardData);
-                  }
+                  }*/
                 }
                 else
                   this.entries.Add(new LeaderboardsScreen.LeaderboardData()
                   {
-                    score = entry1.Columns.GetValueInt32("BestScore").ToString(),
-                    gamerTag = entry1.Gamer.Gamertag,
-                    isPlayer = string.Compare(entry1.Gamer.Gamertag, signedInGamer.Gamertag) == 0
+                    score = "1000",//entry1.Columns.GetValueInt32("BestScore").ToString(),
+                    gamerTag = "gamertag",//entry1.Gamer.Gamertag,
+                    isPlayer = false//string.Compare(entry1.Gamer.Gamertag, signedInGamer.Gamertag) == 0
                   });
               }
             }
@@ -532,11 +532,11 @@ namespace GameManager
       {
         this.m_texture.Set();
         MatrixManager.GetInstance().Reset();
-        MatrixManager.GetInstance().Scale(new Vector3(440f * Game.GAME_MODE_SCALE_FIX, 220f * Game.GAME_MODE_SCALE_FIX, 1f));
+        MatrixManager.GetInstance().Scale(new Vector3(440f * Game2.GAME_MODE_SCALE_FIX, 220f * Game2.GAME_MODE_SCALE_FIX, 1f));
         float num1 = (float) ((double) LeaderboardsScreen.ABOUT_SCREEN_HEIGHT / 2.0 + 110.0);
         float num2 = (float) ((double) LeaderboardsScreen.ABOUT_SCREEN_HEIGHT / 2.0 - (double) LeaderboardsScreen.ABOUT_CENTRE_Y - 20.0);
         float num3 = num1 - (num1 - num2) * this.m_time;
-        MatrixManager.GetInstance().Translate(new Vector3((float) LeaderboardsScreen.ABOUT_CENTRE_X - Game.SCREEN_WIDTH / 2f, num3, 0.0f));
+        MatrixManager.GetInstance().Translate(new Vector3((float) LeaderboardsScreen.ABOUT_CENTRE_X - Game2.SCREEN_WIDTH / 2f, num3, 0.0f));
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
         this.m_texture.UnSet();
@@ -643,27 +643,27 @@ namespace GameManager
                 Mortar.Game1.instance.spriteBatch.Draw(LeaderboardsScreen.m_boxTexture.intex, new Rectangle(-196, (int) num4 + 408, 1024, 48), new Rectangle?(new Rectangle(0, 408, 1024, 48)), Color.White);
                 Mortar.Game1.instance.spriteBatch.End();
                 Mortar.Game1.instance.spriteBatch.Begin((SpriteSortMode) 1, BlendState.NonPremultiplied);
-        SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-        if (signedInGamer != null)
+        //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+        if (1 == 0)//(signedInGamer != null)
         {
           if (this.gameMode < 0)
           {
-                        Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, signedInGamer.Gamertag, new Vector2((float)LeaderboardsScreen.TAB1, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
-            string str = this.gameMode != -1 ? Mortar.Game1.settings.bestThisWeek.ToString() : Mortar.Game1.settings.tf.ToString();
-            Vector2 vector2 = Mortar.Game1.instance.font1.MeasureString(str);
-                        Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, str, new Vector2((float)LeaderboardsScreen.TAB3 - vector2.X / 2f, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
+            //Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, signedInGamer.Gamertag, new Vector2((float)LeaderboardsScreen.TAB1, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
+            //string str = this.gameMode != -1 ? Mortar.Game1.settings.bestThisWeek.ToString() : Mortar.Game1.settings.tf.ToString();
+            //Vector2 vector2 = Mortar.Game1.instance.font1.MeasureString(str);
+            // Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, str, new Vector2((float)LeaderboardsScreen.TAB3 - vector2.X / 2f, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
           }
           else
           {
-                        Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, signedInGamer.Gamertag, new Vector2((float)LeaderboardsScreen.TAB1, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
-            string str = Game.game_work.saveData.highScores[this.gameMode].ToString();
-            Vector2 vector2 = Mortar.Game1.instance.font1.MeasureString(str);
-                        Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, str, new Vector2((float)LeaderboardsScreen.TAB3 - vector2.X / 2f, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
+            //Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, signedInGamer.Gamertag, new Vector2((float)LeaderboardsScreen.TAB1, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
+            //string str = Game2.game_work.saveData.highScores[this.gameMode].ToString();
+            //Vector2 vector2 = Mortar.Game1.instance.font1.MeasureString(str);
+            // Mortar.Game1.instance.spriteBatch.DrawString(Mortar.Game1.instance.font2, str, new Vector2((float)LeaderboardsScreen.TAB3 - vector2.X / 2f, (float)LeaderboardsScreen.TABLE_Y + num4), new Color(200, 0, 0));
           }
           if (Mortar.Game1.picture != null)
-                        Mortar.Game1.instance.spriteBatch.Draw(Mortar.Game1.picture, new Rectangle(LeaderboardsScreen.TAB1 - 48, (int) ((double)LeaderboardsScreen.TABLE_Y + (double) num4), 32, 32), new Rectangle?(new Rectangle(0, 0, 64, 64)), Color.White);
+              Mortar.Game1.instance.spriteBatch.Draw(Mortar.Game1.picture, new Rectangle(LeaderboardsScreen.TAB1 - 48, (int) ((double)LeaderboardsScreen.TABLE_Y + (double) num4), 32, 32), new Rectangle?(new Rectangle(0, 0, 64, 64)), Color.White);
         }
-                Mortar.Game1.instance.spriteBatch.End();
+        Mortar.Game1.instance.spriteBatch.End();
       }
       else if (this.m_state == 3 || this.m_state == 4 || this.m_state == 5)
       {
@@ -732,8 +732,10 @@ namespace GameManager
       this.m_modeTotalFruit.m_pos.Y = num20;
       this.m_modeTotalFruit.m_pos.X = num19;
       float num22 = num20 + num21;
-    }
+    }//Draw
 
+
+    // QuitGameCallback
     private void QuitGameCallback()
     {
       SoundManager.GetInstance().SFXPlay(SoundDef.SND_MENU_BOMB);
@@ -742,8 +744,8 @@ namespace GameManager
       this.slide_off = true;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Mortar.Math.g_random.RandF(5f) + 5f, -Mortar.Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
-      Game.ClearMenuItems();
+      Game2.game_work.tutorialControl.ResetTutePos();
+      Game2.ClearMenuItems();
     }
 
     private void ReadFinished(int result)

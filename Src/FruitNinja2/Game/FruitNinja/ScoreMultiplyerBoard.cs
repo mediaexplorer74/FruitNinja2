@@ -149,7 +149,7 @@ namespace GameManager
       }
       else
       {
-        if (Game.game_work.pause)
+        if (Game2.game_work.pause)
           return;
         float time = this.m_time;
         this.m_time += dt;
@@ -185,8 +185,8 @@ namespace GameManager
           }
           if ((double) this.m_time > (double) ScoreMultiplyerBoard.SCALE_WAIT_TIME_START && this.m_score > 0)
           {
-            Game.SetScoreDelegate(new Game.ScoreDelegate(this.AddScoreNomals));
-            Game.AddToCurrentScore(this.m_finalScore);
+            Game2.SetScoreDelegate(new Game2.ScoreDelegate(this.AddScoreNomals));
+            Game2.AddToCurrentScore(this.m_finalScore);
             PowerUpManager.GetInstance().SetAppropriateScoreCallback();
             this.m_score = 0;
           }
@@ -202,7 +202,7 @@ namespace GameManager
       float[] tintChannels1 = new float[3]{ 1f, 1f, 1f };
       this.m_color = Color.White;
       base.Draw(tintChannels1);
-      Font font = Game.game_work.pNumberFont;
+      Font font = Game2.game_work.pNumberFont;
       string stringToDraw;
       if ((double) this.m_time < (double) ScoreMultiplyerBoard.SCALE_UP_TIME_START)
       {
@@ -211,7 +211,7 @@ namespace GameManager
       }
       else
       {
-        font = Game.game_work.pNumberFontBlue2;
+        font = Game2.game_work.pNumberFontBlue2;
         stringToDraw = string.Format("{0}", (object) this.m_finalScore);
       }
       font.DrawString(stringToDraw, Vector3.Add(this.m_pos, Vector3.Multiply(Vector3.UnitY, 10f)), this.m_color, 35f * this.m_textScaleAmt, Vector2.Zero, ALIGNMENT_TYPE.ALIGN_CENTER);
@@ -221,8 +221,8 @@ namespace GameManager
     {
       if (this.m_power != null || this.m_score <= 0)
         return;
-      Game.SetScoreDelegate(new Game.ScoreDelegate(this.AddScoreNomals));
-      Game.AddToCurrentScore(this.m_finalScore);
+      Game2.SetScoreDelegate(new Game2.ScoreDelegate(this.AddScoreNomals));
+      Game2.AddToCurrentScore(this.m_finalScore);
       PowerUpManager.GetInstance().SetAppropriateScoreCallback();
       this.m_score = 0;
     }

@@ -53,7 +53,7 @@ namespace GameManager
     {
       if (this.m_isWaiting)
       {
-        if ((double) Game.game_work.saveData.timer > (double) this.m_waitUntilTime)
+        if ((double) Game2.game_work.saveData.timer > (double) this.m_waitUntilTime)
           return false;
         this.ApplyModifier(false, new float?());
         this.m_isWaiting = false;
@@ -79,7 +79,7 @@ namespace GameManager
         this.m_currentTime = length.Value;
       uint hash1 = StringFunctions.StringHash("overtime");
       uint hash2 = StringFunctions.StringHash("freeze");
-      float num = (float) ((double) Game.game_work.saveData.timer + (PowerUpManager.GetInstance().GetActiveSingle(hash1) == null ? 0.0 : 5.0) + (this.m_parent != null && (int) this.m_parent.GetHash() == (int) hash2 || PowerUpManager.GetInstance().GetActiveSingle(hash2) != null ? 50.0 : 0.0));
+      float num = (float) ((double) Game2.game_work.saveData.timer + (PowerUpManager.GetInstance().GetActiveSingle(hash1) == null ? 0.0 : 5.0) + (this.m_parent != null && (int) this.m_parent.GetHash() == (int) hash2 || PowerUpManager.GetInstance().GetActiveSingle(hash2) != null ? 50.0 : 0.0));
       if ((double) this.m_currentTime / (double) PowerUpManager.GetInstance().PrevPowerupDtModMultiply() <= (double) num)
         return;
       this.m_currentTime = Math.MAX((float) ((double) num * (double) PowerUpManager.GetInstance().PrevPowerupDtModMultiply() - 0.33300000429153442), 0.1f);

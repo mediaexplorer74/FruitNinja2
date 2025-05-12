@@ -270,7 +270,7 @@ namespace GameManager
 
     public bool CanShowTute()
     {
-      return (double) Math.Abs(Game.game_work.gameOverTransition) > 0.99000000953674316;
+      return (double) Math.Abs(Game2.game_work.gameOverTransition) > 0.99000000953674316;
     }
   }
 }

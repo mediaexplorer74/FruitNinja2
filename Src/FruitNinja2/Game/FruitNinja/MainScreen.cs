@@ -6,7 +6,7 @@
 
 //using Microsoft.Phone.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.GamerServices;
+//using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -73,7 +73,7 @@ namespace GameManager
 
     public static float POP_SINE => (float) Mortar.Math.DEGREE_TO_IDX(110f);
 
-    public static float TOP_BUTTONS_Y => (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 24.5);
+    public static float TOP_BUTTONS_Y => (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 24.5);
 
     public static Vector3 TUTE_DIRECTION => new Vector3(-120f, -17f, 0.0f);
 
@@ -81,7 +81,7 @@ namespace GameManager
     {
       get
       {
-        return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + 65.0), (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 134.0), 0.0f);
+        return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + 65.0), (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 134.0), 0.0f);
       }
     }
 
@@ -91,22 +91,22 @@ namespace GameManager
 
     public static Vector3 NEW_GAME_POS
     {
-      get => new Vector3((float) (236.0 - (double) Game.SCREEN_WIDTH / 2.0), -66f, 0.0f);
+      get => new Vector3((float) (236.0 - (double) Game2.SCREEN_WIDTH / 2.0), -66f, 0.0f);
     }
 
     public static Vector3 DOJO_POS
     {
-      get => new Vector3((float) (69.0 - (double) Game.SCREEN_WIDTH / 2.0), -87f, 0.0f);
+      get => new Vector3((float) (69.0 - (double) Game2.SCREEN_WIDTH / 2.0), -87f, 0.0f);
     }
 
     public static Vector3 LEADERBOARD_BUTTON_POS
     {
-      get => new Vector3((float) (388.0 - (double) Game.SCREEN_WIDTH / 2.0), 7f, 0.0f);
+      get => new Vector3((float) (388.0 - (double) Game2.SCREEN_WIDTH / 2.0), 7f, 0.0f);
     }
 
     public static Vector3 MORE_GAMES_POS
     {
-      get => new Vector3((float) (422.0 - (double) Game.SCREEN_WIDTH / 2.0), -106f, 0.0f);
+      get => new Vector3((float) (422.0 - (double) Game2.SCREEN_WIDTH / 2.0), -106f, 0.0f);
     }
 
     public MainScreen()
@@ -127,9 +127,9 @@ namespace GameManager
       this.m_newGame = (MenuButton) null;
       this.m_multiplayerGame = (MenuButton) null;
       this.m_dojoButton = (MenuButton) null;
-      this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT - (double) this.m_scale.Y) * 0.5), 0.0f);
+      this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT - (double) this.m_scale.Y) * 0.5), 0.0f);
       this.m_tuteTime = 1f;
-      this.m_ninjaPos.Y = Game.SCREEN_HEIGHT / 2f + (float) (this.m_ninjaTex.GetHeight() / 2U);
+      this.m_ninjaPos.Y = Game2.SCREEN_HEIGHT / 2f + (float) (this.m_ninjaTex.GetHeight() / 2U);
       this.m_ninjaGrav = 0.0f;
       this.m_transitionWait = 0.0f;
       this.m_terminate = false;
@@ -167,8 +167,8 @@ namespace GameManager
         LeaderboardsScreen.SetStartLeaderboard(0);
         this.m_state = MainScreen.MS.MS_OPENFEINT;
         this.m_time = 1f;
-        Game.game_work.tutorialControl.ResetTutePos();
-        Game.ClearMenuItems();
+        Game2.game_work.tutorialControl.ResetTutePos();
+        Game2.ClearMenuItems();
       }
     }
 
@@ -178,7 +178,7 @@ namespace GameManager
     {
       this.m_state = MainScreen.MS.MS_DOJO;
       this.m_time = 1f;
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     private void NotConnected(IAsyncResult result)
@@ -187,7 +187,7 @@ namespace GameManager
 
     public void MarketplaceCallback()
     {
-      try
+      /*try
       {
         SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
         if (signedInGamer == null)
@@ -239,12 +239,12 @@ namespace GameManager
         //Guide.BeginShowMessageBox(TheGame.instance.stringTable.GetString(845), 
         //    TheGame.NotSignedInMessage(), (IEnumerable<string>) buttons, 0,
         //    MessageBoxIcon.Alert, new AsyncCallback(this.NotConnected), (object) null);
-      }
+      }*/
     }
 
     public void ShowCardCallback()
     {
-      SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+      /*SignedInGamer signedInGamer = Gamer.SignedInGamers[(PlayerIndex) 0];
       if (signedInGamer == null)
       {
         string[] buttons = new string[1]
@@ -261,7 +261,7 @@ namespace GameManager
         //if (Guide.IsVisible || !flag)
         //  return;
         //Guide.ShowGamerCard((PlayerIndex) 0, (Gamer) signedInGamer);
-      }
+      }*/
     }
 
     public void AchievementCallback()
@@ -280,8 +280,8 @@ namespace GameManager
       {
         this.m_state = MainScreen.MS.MS_ACHIEVEMENTS;
         this.m_time = 1f;
-        Game.game_work.tutorialControl.ResetTutePos();
-        Game.ClearMenuItems();
+        Game2.game_work.tutorialControl.ResetTutePos();
+        Game2.ClearMenuItems();
       }
     }
 
@@ -293,7 +293,7 @@ namespace GameManager
     {
       this.m_state = MainScreen.MS.MS_GAME_MODE;
       this.m_time = 1f;
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
       if (this.m_newGame == null)
         return;
       Mortar.Math.g_random.Seed((uint) ((double) int.MinValue * (double) this.m_newGame.m_rotation));
@@ -307,10 +307,10 @@ namespace GameManager
       //Guide.EndShowMessageBox(result);
       //if (!nullable.HasValue || nullable.Value != 0)
       //  return;
-      Game.game_work.musicEnabled = !Game.game_work.musicEnabled;
+      Game2.game_work.musicEnabled = !Game2.game_work.musicEnabled;
       try
       {
-        MediaPlayer.IsMuted = !Game.game_work.musicEnabled;
+        MediaPlayer.IsMuted = !Game2.game_work.musicEnabled;
       }
       catch
       {
@@ -319,7 +319,7 @@ namespace GameManager
 
     public void MusicCallback()
     {
-      if (Game.game_work.musicEnabled && SoundManager.GetInstance().CustomMusic)
+      if (Game2.game_work.musicEnabled && SoundManager.GetInstance().CustomMusic)
       {
         string[] buttons = new string[2]
         {
@@ -338,10 +338,10 @@ namespace GameManager
       }
       else
       {
-        Game.game_work.musicEnabled = !Game.game_work.musicEnabled;
+        Game2.game_work.musicEnabled = !Game2.game_work.musicEnabled;
         try
         {
-          MediaPlayer.IsMuted = !Game.game_work.musicEnabled;
+          MediaPlayer.IsMuted = !Game2.game_work.musicEnabled;
         }
         catch
         {
@@ -351,8 +351,8 @@ namespace GameManager
 
     public void SoundCallback()
     {
-      Game.game_work.soundEnabled = !Game.game_work.soundEnabled;
-      SoundManager.GetInstance().SetSFXVolume(Game.game_work.soundEnabled ? SoundDef.DEFAULT_SFX_VOL : 0.0f);
+      Game2.game_work.soundEnabled = !Game2.game_work.soundEnabled;
+      SoundManager.GetInstance().SetSFXVolume(Game2.game_work.soundEnabled ? SoundDef.DEFAULT_SFX_VOL : 0.0f);
     }
 
     public void MultiplayerGameModeCallback()
@@ -389,8 +389,8 @@ namespace GameManager
     {
       this.m_state = MainScreen.MS.MS_ABOUT;
       this.m_time = 1f;
-      Game.game_work.tutorialControl.ResetTutePos();
-      Game.ClearMenuItems();
+      Game2.game_work.tutorialControl.ResetTutePos();
+      Game2.ClearMenuItems();
     }
 
     private string YES => Mortar.Game1.instance.stringTable.GetString(707);
@@ -422,21 +422,22 @@ namespace GameManager
 
     public override void Update(float dt)
     {
-      float num1 = -Game.game_work.gameOverTransition;
+      float num1 = -Game2.game_work.gameOverTransition;
       Vector3 scale = new Vector3(128f, 40f, 1f);
       if (this.m_achivementsButton == null)
       {
         this.m_achivementsButton = new MenuButton("menu_achieve.tex", new Vector3(-1000f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.AchievementCallback), -1, scale, true);
         this.m_achivementsButton.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_achivementsButton);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_achivementsButton);
         this.m_achivementsButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_live == null)
         this.m_live = TextureManager.GetInstance().Load("textureswp7/xboxliveonwindowsphone_4cko_s.tex").intex;
+      
       if (this.m_gamerProfileButton == null)
       {
-        SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-        if (signedInGamer != null && signedInGamer.IsSignedInToLive && Mortar.Game1.picture != null && Mortar.Game1.logInSucceeded)
+        //SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
+        /*if (signedInGamer != null && signedInGamer.IsSignedInToLive && Mortar.Game1.picture != null && Mortar.Game1.logInSucceeded)
         {
                     Mortar.Texture texture = new Mortar.Texture();
           texture.intex = Mortar.Game1.picture;
@@ -445,31 +446,31 @@ namespace GameManager
           texture.hasAlpha = false;
           this.m_gamerProfileButton = new MenuButton(texture, new Vector3(-1000f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.ShowCardCallback), -1, new Vector3((float) texture.w, (float) texture.h, 1f));
           this.m_gamerProfileButton.Init();
-                    Game.game_work.hud.AddControl((HUDControl) this.m_gamerProfileButton);
+                    Game2.game_work.hud.AddControl((HUDControl) this.m_gamerProfileButton);
           this.m_gamerProfileButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
-        }
+        }*/
       }
       if (this.m_helpOptionsButton == null)
       {
         this.m_helpOptionsButton = new MenuButton("menu_help.tex", new Vector3(-1000f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.HelpAndOptionsCallback), -1, scale, true);
         this.m_helpOptionsButton.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_helpOptionsButton);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_helpOptionsButton);
         this.m_helpOptionsButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_leaderboardsButton == null)
       {
         this.m_leaderboardsButton = new MenuButton("menu_leader.tex", new Vector3(-1000f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.LeaderboardsCallback), -1, scale, true);
         this.m_leaderboardsButton.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_leaderboardsButton);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_leaderboardsButton);
         this.m_leaderboardsButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
-      if (Game.isWP7TrialMode())
+      if (Game2.isWP7TrialMode())
       {
         if (this.m_purchaseButton == null)
         {
           this.m_purchaseButton = new MenuButton("menu_purchase.tex", new Vector3(-1000f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.MarketplaceCallback), -1, scale, true);
           this.m_purchaseButton.Init();
-          Game.game_work.hud.AddControl((HUDControl) this.m_purchaseButton);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_purchaseButton);
           this.m_purchaseButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
         }
       }
@@ -477,69 +478,69 @@ namespace GameManager
       {
         this.m_marketplaceButton = new MenuButton("menu_market.tex", new Vector3(-1000f, 0.0f, 0.0f), new MenuButton.MenuCallback(this.MarketplaceCallback), -1, scale, true);
         this.m_marketplaceButton.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_marketplaceButton);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_marketplaceButton);
         this.m_marketplaceButton.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_sound == null)
       {
-        this.m_sound = new MenuButton("sound.tex", new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - 24.0), MainScreen.TOP_BUTTONS_Y, 0.0f), new MenuButton.MenuCallback(this.SoundCallback), -1, new Vector3(32f, 32f, 1f), false);
+        this.m_sound = new MenuButton("sound.tex", new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - 24.0), MainScreen.TOP_BUTTONS_Y, 0.0f), new MenuButton.MenuCallback(this.SoundCallback), -1, new Vector3(32f, 32f, 1f), false);
         this.m_sound.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_sound);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_sound);
         this.m_soundTextures[0] = this.m_sound.m_texture;
         this.m_soundTextures[1] = TextureManager.GetInstance().Load("textureswp7/sound_cross.tex");
         this.m_sound.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
       if (this.m_music == null)
       {
-        this.m_music = new MenuButton("music.tex", new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - 24.0 - 40.0), MainScreen.TOP_BUTTONS_Y, 0.0f), new MenuButton.MenuCallback(this.MusicCallback), -1, new Vector3(32f, 32f, 1f), false);
+        this.m_music = new MenuButton("music.tex", new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - 24.0 - 40.0), MainScreen.TOP_BUTTONS_Y, 0.0f), new MenuButton.MenuCallback(this.MusicCallback), -1, new Vector3(32f, 32f, 1f), false);
         this.m_music.Init();
-        Game.game_work.hud.AddControl((HUDControl) this.m_music);
+        Game2.game_work.hud.AddControl((HUDControl) this.m_music);
         this.m_musicTextures[0] = this.m_music.m_texture;
         this.m_musicTextures[1] = TextureManager.GetInstance().Load("textureswp7/music_cross.tex");
         this.m_music.m_drawOrder = HUD.HUD_ORDER.HUD_ORDER_POST;
       }
-      this.m_music.m_texture = this.m_musicTextures[Game.game_work.musicEnabled ? 0 : 1];
-      this.m_sound.m_texture = this.m_soundTextures[Game.game_work.soundEnabled ? 0 : 1];
+      this.m_music.m_texture = this.m_musicTextures[Game2.game_work.musicEnabled ? 0 : 1];
+      this.m_sound.m_texture = this.m_soundTextures[Game2.game_work.soundEnabled ? 0 : 1];
       switch (this.m_state)
       {
         case MainScreen.MS.MS_IN:
-          Game.game_work.gameMode = Game.GAME_MODE.GM_CLASSIC;
+          Game2.game_work.gameMode = Game2.GAME_MODE.GM_CLASSIC;
           this.m_moreGames = (MenuButton) null;
-          if ((double) this.m_transitionWait > 0.0 || (double) Game.game_work.hitBombTime > (double) MainScreen.BOMB_FLASH_FULL - 0.10000000149011612)
+          if ((double) this.m_transitionWait > 0.0 || (double) Game2.game_work.hitBombTime > (double) MainScreen.BOMB_FLASH_FULL - 0.10000000149011612)
           {
             this.m_transitionWait -= dt;
-            Game.game_work.gameOverTransition += (float) ((-1.0 - (double) Game.game_work.gameOverTransition) * 0.125);
-            if ((double) Game.game_work.gameOverTransition < 0.0)
-              Game.game_work.gameOverTransition = 0.0f;
+            Game2.game_work.gameOverTransition += (float) ((-1.0 - (double) Game2.game_work.gameOverTransition) * 0.125);
+            if ((double) Game2.game_work.gameOverTransition < 0.0)
+              Game2.game_work.gameOverTransition = 0.0f;
           }
           else
           {
             this.m_time += dt;
-            if ((double) Game.game_work.gameOverTransition < -0.99900001287460327)
-              Game.game_work.gameOverTransition = -1f;
+            if ((double) Game2.game_work.gameOverTransition < -0.99900001287460327)
+              Game2.game_work.gameOverTransition = -1f;
             else
-              Game.game_work.gameOverTransition += (float) (
-                                (-1.0 - (double) Game.game_work.gameOverTransition) * 0.125);
+              Game2.game_work.gameOverTransition += (float) (
+                                (-1.0 - (double) Game2.game_work.gameOverTransition) * 0.125);
           }
           if ((double) this.m_time > (double) MainScreen.BEGINNING_WAIT 
-                        && (double) Game.game_work.gameOverTransition < 0.0)
+                        && (double) Game2.game_work.gameOverTransition < 0.0)
           {
             this.m_state = MainScreen.MS.MS_WAIT;
             this.m_newGame = new MenuButton(this.s_newGameTex, MainScreen.NEW_GAME_POS, 
                 new MenuButton.MenuCallback(this.GameModeCallback), 3);
             this.m_newGame.Init();
-            Game.game_work.hud.AddControl((HUDControl) this.m_newGame);
+            Game2.game_work.hud.AddControl((HUDControl) this.m_newGame);
 
             this.m_newGame.m_originalScale = Vector3.Multiply(
                 Vector3.Multiply(
                     new Vector3((float) (this.m_newGame.m_texture.GetWidth() + 1U),
                     (float) (this.m_newGame.m_texture.GetHeight() + 1U), 1f), 
-                    Game.GAME_MODE_SCALE_FIX), MainScreen.OVERALL_BUTTON_SCALE);
+                    Game2.GAME_MODE_SCALE_FIX), MainScreen.OVERALL_BUTTON_SCALE);
             Entity entity1 = this.m_newGame.m_entity;
             entity1.m_cur_scale = Vector3.Multiply(entity1.m_cur_scale, 
                 MainScreen.OVERALL_BUTTON_SCALE);
             this.m_newGame.m_overallScratchScale = 0.5f;
-            Game.game_work.tutorialControl.ResetTutePos(this.m_newGame);
+            Game2.game_work.tutorialControl.ResetTutePos(this.m_newGame);
             this.m_dojoButton = new MenuButton(this.s_aboutTex, MainScreen.DOJO_POS, 
                 new MenuButton.MenuCallback(this.AboutCallback), Fruit.FruitType("mango"));
 
@@ -556,7 +557,7 @@ namespace GameManager
                 * MainScreen.OVERALL_BUTTON_SCALE);
 
             this.m_dojoButton.m_clearOthers = true;
-            Game.game_work.hud.AddControl((HUDControl) this.m_dojoButton);
+            Game2.game_work.hud.AddControl((HUDControl) this.m_dojoButton);
             break;
           }
           break;
@@ -575,29 +576,29 @@ namespace GameManager
           if (this.m_dojoButton != null)
             this.m_dojoButton.SetNewSymbol(ItemManager.GetInstance().AreNewItems());
           MenuButton moreGames = this.m_moreGames;
-          this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
-          if ((double) Game.game_work.gameOverTransition < -0.99900001287460327)
+          this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
+          if ((double) Game2.game_work.gameOverTransition < -0.99900001287460327)
           {
-            Game.game_work.gameOverTransition = -1f;
+            Game2.game_work.gameOverTransition = -1f;
             break;
           }
-          Game.game_work.gameOverTransition += (float) ((-1.0 - (double) Game.game_work.gameOverTransition) * 0.125);
+          Game2.game_work.gameOverTransition += (float) ((-1.0 - (double) Game2.game_work.gameOverTransition) * 0.125);
           break;
         case MainScreen.MS.MS_OUT:
           if ((double) num1 > 0.99900001287460327)
           {
-            Game.game_work.levelStartCoins = Game.game_work.coins;
+            Game2.game_work.levelStartCoins = Game2.game_work.coins;
             WaveManager.GetInstance().Reset();
-            Game.game_work.gameOver = true;
+            Game2.game_work.gameOver = true;
           }
-          Game.game_work.gameOverTransition *= 0.75f;
-          if ((double) Mortar.Math.Abs(Game.game_work.gameOverTransition) < 1.0 / 1000.0)
+          Game2.game_work.gameOverTransition *= 0.75f;
+          if ((double) Mortar.Math.Abs(Game2.game_work.gameOverTransition) < 1.0 / 1000.0)
           {
-            Game.game_work.gameOverTransition = 0.0f;
-            Game.game_work.gameOver = false;
+            Game2.game_work.gameOverTransition = 0.0f;
+            Game2.game_work.gameOver = false;
             this.m_state = MainScreen.MS.MS_GAME;
           }
-          this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
+          this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
           break;
         case MainScreen.MS.MS_ABOUT:
         case MainScreen.MS.MS_DOJO:
@@ -608,10 +609,10 @@ namespace GameManager
             this.m_time = 0.0f;
             HUDControl control = this.m_state != MainScreen.MS.MS_ABOUT ? (HUDControl) new DojoScreen() : (HUDControl) new AboutScreen(this);
             control.Init();
-            Game.game_work.hud.AddControl(control);
+            Game2.game_work.hud.AddControl(control);
           }
           num1 = this.m_time;
-          this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
+          this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
           break;
         case MainScreen.MS.MS_RETURN:
           if ((double) this.m_time > 0.99900001287460327)
@@ -630,7 +631,7 @@ namespace GameManager
             this.m_time += (float) ((1.0 - (double) this.m_time) * 0.125);
             num1 = this.m_time;
           }
-          this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
+          this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
           break;
         case MainScreen.MS.MS_OPENFEINT:
         case MainScreen.MS.MS_OPENFEINT_GAMES:
@@ -641,10 +642,10 @@ namespace GameManager
             this.m_time = 0.0f;
             LeaderboardsScreen control = new LeaderboardsScreen();
             control.Init();
-            Game.game_work.hud.AddControl((HUDControl) control);
+            Game2.game_work.hud.AddControl((HUDControl) control);
           }
           num1 = this.m_time;
-          this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
+          this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
           break;
         case MainScreen.MS.MS_GAME_MODE:
         case MainScreen.MS.MS_GAME_MODE_MP:
@@ -655,10 +656,10 @@ namespace GameManager
             this.m_time = 0.0f;
             GameModeScreen control = new GameModeScreen(false);
             control.Init();
-            Game.game_work.hud.AddControl((HUDControl) control);
+            Game2.game_work.hud.AddControl((HUDControl) control);
           }
           num1 = this.m_time;
-          this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
+          this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
           break;
         case MainScreen.MS.MS_ACHIEVEMENTS:
           int numEntities3 = (int) ActorManager.GetInstance().GetNumEntities(0);
@@ -668,10 +669,10 @@ namespace GameManager
             this.m_time = 0.0f;
             AchievementsScreen control = new AchievementsScreen();
             control.Init();
-            Game.game_work.hud.AddControl((HUDControl) control);
+            Game2.game_work.hud.AddControl((HUDControl) control);
           }
           num1 = this.m_time;
-          this.m_pos = new Vector3(0.0f, (float) (((double) Game.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
+          this.m_pos = new Vector3(0.0f, (float) (((double) Game2.SCREEN_HEIGHT + (double) this.m_scale.Y - (double) this.m_scale.Y * (double) num1 * 2.0) * 0.5), 0.0f);
           break;
       }
       if (this.m_state != MainScreen.MS.MS_WAIT && this.m_state != MainScreen.MS.MS_IN && this.m_newGame != null && (double) this.m_newGame.m_scale.X < 45.0 * (double) MainScreen.OVERALL_BUTTON_SCALE)
@@ -679,7 +680,7 @@ namespace GameManager
       if (this.m_state != MainScreen.MS.MS_WAIT || this.m_moreGames != null && this.m_moreGames.m_entity == null && (double) this.m_moreGames.m_scale.X < 45.0)
         this.m_moreGames = (MenuButton) null;
       dt = Mortar.Math.MIN(dt, 0.04f);
-      this.m_fruitPos.X = (float) (-(double) Game.SCREEN_WIDTH / 4.0);
+      this.m_fruitPos.X = (float) (-(double) Game2.SCREEN_WIDTH / 4.0);
       this.m_fruitPos.Y = this.m_pos.Y + 18f;
       this.m_fruitPos.Z = this.m_ninjaPos.Z = 0.0f;
       this.m_ninjaPos.X = this.m_fruitPos.X + 180f;
@@ -715,12 +716,12 @@ namespace GameManager
         return;
       if (this.m_gamerProfileButton != null)
       {
-        SignedInGamer signedInGamer = default;//Gamer.SignedInGamers[(PlayerIndex) 0];
-        if (signedInGamer != null && signedInGamer.IsSignedInToLive && Mortar.Game1.picture != null && Mortar.Game1.logInSucceeded)
-        {
-          this.m_gamerProfileButton.m_pos.Y = 116f;
-          this.m_gamerProfileButton.m_pos.X = num2;
-        }
+        //SignedInGamer signedInGamer = Gamer.SignedInGamers[(PlayerIndex) 0];
+        //if (signedInGamer != null && signedInGamer.IsSignedInToLive && Mortar.Game1.picture != null && Mortar.Game1.logInSucceeded)
+        //{
+        //  this.m_gamerProfileButton.m_pos.Y = 116f;
+        //  this.m_gamerProfileButton.m_pos.X = num2;
+        //}
       }
       if (this.m_live != null)
       {
@@ -729,7 +730,7 @@ namespace GameManager
       }
       if (this.m_achivementsButton != null)
       {
-        if (Game.isWP7TrialMode())
+        if (Game2.isWP7TrialMode())
         {
           this.m_achivementsButton.m_pos.Y = -12333f;
           this.m_achivementsButton.m_pos.X = -12333f;
@@ -743,7 +744,7 @@ namespace GameManager
       }
       if (this.m_leaderboardsButton != null)
       {
-        if (Game.isWP7TrialMode())
+        if (Game2.isWP7TrialMode())
         {
           this.m_leaderboardsButton.m_pos.Y = -12333f;
           this.m_leaderboardsButton.m_pos.X = -12333f;
@@ -761,7 +762,7 @@ namespace GameManager
         this.m_helpOptionsButton.m_pos.X = num2;
         num3 += num4;
       }
-      if (!Game.isWP7TrialMode() && this.m_marketplaceButton != null)
+      if (!Game2.isWP7TrialMode() && this.m_marketplaceButton != null)
       {
         this.m_marketplaceButton.m_pos.Y = num3;
         this.m_marketplaceButton.m_pos.X = num2;
@@ -769,7 +770,7 @@ namespace GameManager
       }
       if (this.m_purchaseButton == null)
         return;
-      if (!Game.isWP7TrialMode())
+      if (!Game2.isWP7TrialMode())
       {
         this.m_purchaseButton.m_pos.X = -12333f;
       }
@@ -819,7 +820,7 @@ namespace GameManager
         MatrixManager.GetInstance().Reset();
         MatrixManager.GetInstance().Scale(Vector3.Multiply(Vector3.Multiply(
             new Vector3((float) this.m_fruitTex.GetWidth(),
-            (float) this.m_fruitTex.GetHeight(), 0.0f), Game.GAME_MODE_SCALE_FIX), 0.85f));
+            (float) this.m_fruitTex.GetHeight(), 0.0f), Game2.GAME_MODE_SCALE_FIX), 0.85f));
 
         MatrixManager.GetInstance().Translate(this.m_fruitPos);
         MatrixManager.GetInstance().UploadCurrentMatrices();
@@ -832,7 +833,7 @@ namespace GameManager
         MatrixManager.GetInstance().Reset();
         MatrixManager.GetInstance().Scale(Vector3.Multiply(
             new Vector3((float) this.m_ninjaTex.GetWidth(), 
-            (float) this.m_ninjaTex.GetHeight(), 0.0f), Game.GAME_MODE_SCALE_FIX));
+            (float) this.m_ninjaTex.GetHeight(), 0.0f), Game2.GAME_MODE_SCALE_FIX));
         MatrixManager.GetInstance().Translate(this.m_ninjaPos);
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);
@@ -844,7 +845,7 @@ namespace GameManager
         MatrixManager.GetInstance().Reset();
         MatrixManager.GetInstance().Scale(Vector3.Multiply(
             new Vector3((float) this.m_tuteTex.GetWidth(),
-            (float) this.m_tuteTex.GetHeight(), 0.0f), Game.GAME_MODE_SCALE_FIX));
+            (float) this.m_tuteTex.GetHeight(), 0.0f), Game2.GAME_MODE_SCALE_FIX));
         MatrixManager.GetInstance().Translate(this.m_tutePos);
         MatrixManager.GetInstance().UploadCurrentMatrices();
         Mesh.DrawQuad(Color.White, 0.0f, 1f, 0.0f, 1f);

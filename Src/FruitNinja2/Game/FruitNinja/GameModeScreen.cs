@@ -60,7 +60,7 @@ namespace GameManager
     {
       get
       {
-        return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + 125.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 30.0), 0.0f);
+        return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + 125.0), (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 30.0), 0.0f);
       }
     }
 
@@ -68,7 +68,7 @@ namespace GameManager
     {
       get
       {
-        return new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - 58.0), (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 23.0), 0.0f);
+        return new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - 58.0), (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 23.0), 0.0f);
       }
     }
 
@@ -76,7 +76,7 @@ namespace GameManager
     {
       get
       {
-        return new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0 + 52.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 128.0), 0.0f);
+        return new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0 + 52.0), (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 128.0), 0.0f);
       }
     }
 
@@ -148,18 +148,18 @@ namespace GameManager
             break;
           this.m_state = GameModeScreen.GMS.GMS_WAIT;
           this.m_time = 1f;
-          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) ((double) Game.SCREEN_WIDTH / 2.0 - 45.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 50.0), 0.0f), new MenuButton.MenuCallback(this.QuitCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
+          this.m_quitButton = new MenuButton("back_icon.tex", new Vector3((float) ((double) Game2.SCREEN_WIDTH / 2.0 - 45.0), (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 50.0), 0.0f), new MenuButton.MenuCallback(this.QuitCallback), Fruit.MAX_FRUIT_TYPES, Vector3.Zero, true);
           this.m_quitButton.Init();
           this.m_quitButton.m_triggerOnBackPress = true;
-          Game.game_work.hud.AddControl((HUDControl) this.m_quitButton);
+          Game2.game_work.hud.AddControl((HUDControl) this.m_quitButton);
           MenuButton quitButton = this.m_quitButton;
           quitButton.m_originalScale = Vector3.Multiply(quitButton.m_originalScale, 0.75f);
           Entity entity1 = this.m_quitButton.m_entity;
           entity1.m_cur_scale = Vector3.Multiply(entity1.m_cur_scale, 0.75f);
           MenuButton menuButton1 = new MenuButton(GameModeScreen.s_classicTexture, GameModeScreen.CLASSIC_MODE_POS, new MenuButton.MenuCallback(this.ClassicModeCallback), Fruit.FruitType("watermelon"));
-          Game.game_work.tutorialControl.ResetTutePos(menuButton1);
+          Game2.game_work.tutorialControl.ResetTutePos(menuButton1);
           menuButton1.Init();
-          Game.game_work.hud.AddControl((HUDControl) menuButton1);
+          Game2.game_work.hud.AddControl((HUDControl) menuButton1);
           MenuButton menuButton2 = menuButton1;
           menuButton2.m_originalScale = Vector3.Multiply(menuButton2.m_originalScale, 0.9f);
           Entity entity2 = menuButton1.m_entity;
@@ -171,14 +171,14 @@ namespace GameManager
           control1.m_originalScale = GameModeScreen.Updatescale;
           Entity entity3 = control1.m_entity;
           entity3.m_cur_scale = Vector3.Multiply(entity3.m_cur_scale, 0.9f);
-          Game.game_work.hud.AddControl((HUDControl) control1);
+          Game2.game_work.hud.AddControl((HUDControl) control1);
           MenuButton control2 = new MenuButton(GameModeScreen.s_commingSoonTexture, GameModeScreen.COMING_SOON_1_POS, new MenuButton.MenuCallback(this.CommingsSoonCallback), Fruit.FruitType("banana"));
           control2.m_isTrialLockable = true;
           control2.Init();
           control2.m_originalScale = GameModeScreen.Updatescale;
           Entity entity4 = control2.m_entity;
           entity4.m_cur_scale = Vector3.Multiply(entity4.m_cur_scale, 0.75f);
-          Game.game_work.hud.AddControl((HUDControl) control2);
+          Game2.game_work.hud.AddControl((HUDControl) control2);
           this.m_comingSoonRespawnTime1 = -1f;
           this.m_comingSoonRespawnTime2 = -1f;
           break;
@@ -207,26 +207,26 @@ namespace GameManager
         case GameModeScreen.GMS.GMS_ZEN:
           this.m_time *= 0.85f;
           this.m_infoBoardTime = this.m_time;
-          if ((double) Game.game_work.gameOverTransition < -0.89999997615814209)
+          if ((double) Game2.game_work.gameOverTransition < -0.89999997615814209)
           {
-            Game.game_work.levelStartCoins = Game.game_work.coins;
+            Game2.game_work.levelStartCoins = Game2.game_work.coins;
             WaveManager.GetInstance().Reset(true);
-            Game.game_work.gameOver = true;
+            Game2.game_work.gameOver = true;
           }
-          Game.game_work.gameOverTransition *= 0.75f;
-          if ((double) Mortar.Math.Abs(Game.game_work.gameOverTransition) >= 1.0 / 1000.0)
+          Game2.game_work.gameOverTransition *= 0.75f;
+          if ((double) Mortar.Math.Abs(Game2.game_work.gameOverTransition) >= 1.0 / 1000.0)
             break;
           SoundManager.GetInstance().SFXPlay(SoundDef.SND_DANANANA_SCHWING);
-          Game.game_work.gameOverTransition = 0.0f;
-          Game.game_work.gameOver = false;
+          Game2.game_work.gameOverTransition = 0.0f;
+          Game2.game_work.gameOver = false;
           this.m_terminate = true;
-          Game.game_work.mainScreen.m_state = MainScreen.MS.MS_GAME;
+          Game2.game_work.mainScreen.m_state = MainScreen.MS.MS_GAME;
           break;
         case GameModeScreen.GMS.GMS_OUT:
           this.m_time *= 0.75f;
           this.m_infoBoardTime = this.m_time;
           if ((double) time > 0.25 && (double) this.m_time <= 0.25)
-            Game.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
+            Game2.game_work.mainScreen.m_state = MainScreen.MS.MS_RETURN;
           if ((double) this.m_time >= 1.0 / 1000.0)
             break;
           this.m_terminate = true;
@@ -276,7 +276,7 @@ namespace GameManager
       MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float) 
           (GameModeScreen.s_senseiTexture.GetWidth() + 1U),
           (float) (GameModeScreen.s_senseiTexture.GetHeight() + 1U), 0.0f), 
-          Game.GAME_MODE_SCALE_FIX));
+          Game2.GAME_MODE_SCALE_FIX));
 
       MatrixManager.GetInstance().Translate(
           Vector3.Subtract(GameModeScreen.SENSEI_SELECT_POS, 
@@ -286,15 +286,15 @@ namespace GameManager
       GameModeScreen.s_senseiTexture.Set();
       Mesh.DrawQuad(Color.White);
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Translate(new Vector3(Game.SCREEN_WIDTH / 2f, 
-          (float) ((double) Game.SCREEN_HEIGHT / 2.0 - 48.0 * (double) this.m_time), 0.0f));
+      MatrixManager.GetInstance().Translate(new Vector3(Game2.SCREEN_WIDTH / 2f, 
+          (float) ((double) Game2.SCREEN_HEIGHT / 2.0 - 48.0 * (double) this.m_time), 0.0f));
       MatrixManager.GetInstance().UploadCurrentMatrices();
       Mesh.DrawTriList(GameModeScreen.top_tri, 3, true);
       GameModeScreen.s_senseiTexture.UnSet();
       MatrixManager.GetInstance().Reset();
       MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float)
           (GameModeScreen.s_titleTexture.GetWidth() + 1U), 
-          (float) (GameModeScreen.s_titleTexture.GetHeight() + 1U), 0.0f), Game.GAME_MODE_SCALE_FIX));
+          (float) (GameModeScreen.s_titleTexture.GetHeight() + 1U), 0.0f), Game2.GAME_MODE_SCALE_FIX));
       MatrixManager.GetInstance().Translate(Vector3.Add(
           GameModeScreen.TITLE_POS, Vector3.Multiply(Vector3.Multiply(Vector3.UnitY, 48f), 1f - this.m_time)));
       MatrixManager.GetInstance().UploadCurrentMatrices();
@@ -302,20 +302,20 @@ namespace GameManager
       Mesh.DrawQuad(Color.White);
       GameModeScreen.s_titleTexture.UnSet();
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game.SCREEN_WIDTH / 2.0), (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + 55.0 * (double) this.m_time), 0.0f));
+      MatrixManager.GetInstance().Translate(new Vector3((float) (-(double) Game2.SCREEN_WIDTH / 2.0), (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + 55.0 * (double) this.m_time), 0.0f));
       MatrixManager.GetInstance().UploadCurrentMatrices();
       GameModeScreen.s_senseiTexture.Set();
       Mesh.DrawTriList(GameModeScreen.btm_tri, 3, true);
       GameModeScreen.s_senseiTexture.UnSet();
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float) (GameModeScreen.s_modeselectTexture.GetWidth() + 1U), (float) (GameModeScreen.s_modeselectTexture.GetHeight() + 1U), 0.0f), Game.GAME_MODE_SCALE_FIX));
+      MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float) (GameModeScreen.s_modeselectTexture.GetWidth() + 1U), (float) (GameModeScreen.s_modeselectTexture.GetHeight() + 1U), 0.0f), Game2.GAME_MODE_SCALE_FIX));
       MatrixManager.GetInstance().Translate(Vector3.Subtract(GameModeScreen.MODE_SELECT_POS, Vector3.Multiply(Vector3.Multiply(Vector3.UnitY, 55f), 1f - this.m_time)));
       MatrixManager.GetInstance().UploadCurrentMatrices();
       GameModeScreen.s_modeselectTexture.Set();
       Mesh.DrawQuad(Color.White);
       GameModeScreen.s_modeselectTexture.UnSet();
       MatrixManager.GetInstance().Reset();
-      MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float) (GameModeScreen.s_zenBoardTexture.GetWidth() + 1U), (float) (GameModeScreen.s_zenBoardTexture.GetHeight() + 1U), 0.0f), Game.GAME_MODE_SCALE_FIX));
+      MatrixManager.GetInstance().Scale(Vector3.Multiply(new Vector3((float) (GameModeScreen.s_zenBoardTexture.GetWidth() + 1U), (float) (GameModeScreen.s_zenBoardTexture.GetHeight() + 1U), 0.0f), Game2.GAME_MODE_SCALE_FIX));
       MatrixManager.GetInstance().Translate(Vector3.Add(GameModeScreen.ZEN_BOARD_POS_START, Vector3.Multiply(Vector3.Subtract(GameModeScreen.ZEN_BOARD_POS_FINISH, GameModeScreen.ZEN_BOARD_POS_START), this.m_infoBoardTime)));
       MatrixManager.GetInstance().UploadCurrentMatrices();
       GameModeScreen.s_zenBoardTexture.Set();
@@ -329,46 +329,46 @@ namespace GameManager
       this.m_state = GameModeScreen.GMS.GMS_OUT;
       ((Bomb) this.m_quitButton.m_entity).EnableGravity(true);
       this.m_quitButton.m_entity.m_vel = new Vector3(Mortar.Math.g_random.RandF(5f) + 5f, -Mortar.Math.g_random.RandF(5f), 0.0f);
-      Game.game_work.tutorialControl.ResetTutePos();
+      Game2.game_work.tutorialControl.ResetTutePos();
     }
 
     public void ClassicModeCallback()
     {
       this.m_state = GameModeScreen.GMS.GMS_CLASSIC;
-      Game.game_work.gameMode = Game.GAME_MODE.GM_CLASSIC;
+      Game2.game_work.gameMode = Game2.GAME_MODE.GM_CLASSIC;
     }
 
     public void CasinoModeCallback()
     {
       this.m_state = GameModeScreen.GMS.GMS_CASINO;
-      Game.game_work.gameMode = Game.GAME_MODE.GM_CASINO;
+      Game2.game_work.gameMode = Game2.GAME_MODE.GM_CASINO;
     }
 
     public void ZenModeCallback()
     {
-      if (Game.isWP7TrialMode())
+      if (Game2.isWP7TrialMode())
       {
-        Game.ClearMenuItems();
+        Game2.ClearMenuItems();
         this.RESPOAWWEN = true;
       }
       else
       {
         this.m_state = GameModeScreen.GMS.GMS_ZEN;
-        Game.game_work.gameMode = Game.GAME_MODE.GM_ZEN;
+        Game2.game_work.gameMode = Game2.GAME_MODE.GM_ZEN;
       }
     }
 
     public void CommingsSoonCallback()
     {
-      if (Game.isWP7TrialMode())
+      if (Game2.isWP7TrialMode())
       {
-        Game.ClearMenuItems();
+        Game2.ClearMenuItems();
         this.RESPOAWWEN = true;
       }
       else
       {
         this.m_state = GameModeScreen.GMS.GMS_ARCADE;
-        Game.game_work.gameMode = Game.GAME_MODE.GM_ARCADE;
+        Game2.game_work.gameMode = Game2.GAME_MODE.GM_ARCADE;
       }
     }
 

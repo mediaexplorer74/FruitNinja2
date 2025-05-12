@@ -74,7 +74,7 @@ namespace GameManager
           Vector3.Multiply(Vector3.Subtract(templateIdx.gravity_max, 
           templateIdx.gravity_min), Mortar.Math.g_random.RandF(1f)));
 
-      if (Game.IsMultiplayer() && !this.updateEvenIfPaused)
+      if (Game2.IsMultiplayer() && !this.updateEvenIfPaused)
       {
         float x = particle.gravity.X;
         particle.gravity.X = particle.gravity.Y;

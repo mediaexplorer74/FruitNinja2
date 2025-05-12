@@ -32,8 +32,8 @@ namespace GameManager
     public float m_chuckWait;
     public Vector3 m_orig_scale;
     public float m_explosionTime;
-    public static Model[] m_bombModel = new Model[Game.MAX_PLAYERS * 2];
-    public static uint[] particleHash = new uint[Game.MAX_PLAYERS * 2];
+    public static Model[] m_bombModel = new Model[Game2.MAX_PLAYERS * 2];
+    public static uint[] particleHash = new uint[Game2.MAX_PLAYERS * 2];
     public static Model s_arcadeBombModel = (Model) null;
     public static bool s_isContentLoaded = false;
     public static Texture s_minus_10 = (Texture) null;
@@ -82,9 +82,9 @@ namespace GameManager
       uint num2 = (uint) (idx + 1);
       for (Entity entity = instance.GetEntity(EntityTypes.ENTITY_BOMB, (uint) idx); entity != null; entity = ActorManager.GetInstance().GetEntity(EntityTypes.ENTITY_BOMB, num2++))
       {
-        float num3 = entity.m_pos.Y + Game.SCREEN_HEIGHT / 2f;
-        if (Game.IsMultiplayer())
-          num3 = Game.SCREEN_WIDTH / 2f - Mortar.Math.ABS(entity.m_pos.X);
+        float num3 = entity.m_pos.Y + Game2.SCREEN_HEIGHT / 2f;
+        if (Game2.IsMultiplayer())
+          num3 = Game2.SCREEN_WIDTH / 2f - Mortar.Math.ABS(entity.m_pos.X);
         if (!((Bomb) entity).m_isMenuItem && (double) num3 > (double) heighestBomb)
           heighestBomb = num3;
       }
@@ -97,7 +97,7 @@ namespace GameManager
         this.m_col_box = (Col) new ColSphere();
       float num = size.HasValue ? size.Value.X : 1f;
       this.m_col_box.centre = new Vector3(this.m_pos.X, this.m_pos.Y, 0.0f);
-      ((ColSphere) this.m_col_box).Radius = Game.game_work.bombCollision * 0.5f * num;
+      ((ColSphere) this.m_col_box).Radius = Game2.game_work.bombCollision * 0.5f * num;
       if (Bomb.m_blastTexture == null)
         Bomb.m_blastTexture = TextureManager.GetInstance().Load("Textureswp7/bomb_explode.tex");
       this.m_forPlayer = 0;
@@ -118,10 +118,10 @@ namespace GameManager
       this.m_emitter = (PSPParticleEmitter) null;
       this.m_hudControl = (MenuButton) null;
       this.m_cur_scale = Vector3.Multiply(
-          Vector3.Multiply(Vector3.Multiply(Vector3.One, Game.game_work.bombSize), 0.01f), num);
+          Vector3.Multiply(Vector3.Multiply(Vector3.One, Game2.game_work.bombSize), 0.01f), num);
       this.m_orig_scale = this.m_cur_scale;
       this.m_chuckWait = 0.0f;
-      this.m_gravity = new Vector3(0.0f, (float) -((double) Game.GRAVITY / (double) Bomb.SIXTY_FPS_DT), 0.0f);
+      this.m_gravity = new Vector3(0.0f, (float) -((double) Game2.GRAVITY / (double) Bomb.SIXTY_FPS_DT), 0.0f);
       this.m_z = GameTask.GetBombZPosition();
     }
 
@@ -147,7 +147,7 @@ namespace GameManager
       {
         if (!this.m_isMenuItem)
         {
-          this.m_newBlastWait -= Game.game_work.dt;
+          this.m_newBlastWait -= Game2.game_work.dt;
           if ((double) this.m_newBlastWait < 0.0)
           {
             Entity entity = ActorManager.GetInstance().Add(EntityTypes.ENTITY_BOMB_BLAST);
@@ -171,7 +171,7 @@ namespace GameManager
               m_gravity.Normalize();
               Bomb bomb2 = this;
               bomb2.m_gravity = Vector3.Multiply(bomb2.m_gravity, num2
-                  + (float) ((double) Game.GRAVITY * (double) num1 * 2.0));
+                  + (float) ((double) Game2.GRAVITY * (double) num1 * 2.0));
             }
           }
           Bomb bomb = this;
@@ -189,18 +189,18 @@ namespace GameManager
       {
         if ((double) this.m_chuckWait > 0.0)
         {
-          if ((double) Game.game_work.hitBombTime > 0.0 || Game.game_work.gameOver)
+          if ((double) Game2.game_work.hitBombTime > 0.0 || Game2.game_work.gameOver)
           {
             this.m_chuckWait = 0.0f;
-            this.m_pos.Y = -Game.SCREEN_HEIGHT;
+            this.m_pos.Y = -Game2.SCREEN_HEIGHT;
             this.m_vel = new Vector3(0.0f, -1f, 0.0f);
           }
           float chuckWait = this.m_chuckWait;
-          if (!Game.game_work.pause)
-            this.m_chuckWait -= Game.game_work.dt;
+          if (!Game2.game_work.pause)
+            this.m_chuckWait -= Game2.game_work.dt;
           if ((double) this.m_chuckWait <= 0.20000000298023224 
                         && (double) chuckWait > 0.20000000298023224 
-                        && !Bomb.s_sfxPlayedThisFrame && !Game.game_work.gameOver)
+                        && !Bomb.s_sfxPlayedThisFrame && !Game2.game_work.gameOver)
           {
             SoundManager.GetInstance().SFXPlay(SoundDef.SND_THROW_BOMB);
             Bomb.s_sfxPlayedThisFrame = true;
@@ -216,7 +216,7 @@ namespace GameManager
           if (num4 <= 0)
           {
             this.m_chuckWait = 0.0f;
-            this.m_pos.Y = -Game.SCREEN_HEIGHT;
+            this.m_pos.Y = -Game2.SCREEN_HEIGHT;
             this.m_vel = new Vector3(0.0f, -1f, 0.0f);
           }
           else if (num4 > 1)
@@ -236,7 +236,7 @@ namespace GameManager
             m_gravity.Normalize();
             Bomb bomb4 = this;
             bomb4.m_gravity = Vector3.Multiply(bomb4.m_gravity, num5 
-                + (float) ((double) Game.GRAVITY * (double) num1 * 2.0));
+                + (float) ((double) Game2.GRAVITY * (double) num1 * 2.0));
           }
         }
         Bomb bomb = this;
@@ -249,10 +249,10 @@ namespace GameManager
         this.m_col_box.centre = this.m_pos;
         this.m_col_box.centre.Z = 0.0f;
       }
-      if ((double) this.m_pos.Y <= -(double) Game.SCREEN_HEIGHT * 0.75 
-                || (double) this.m_pos.Y >= (double) Game.SCREEN_HEIGHT * 0.75 
-                || (double) this.m_pos.X <= -(double) Game.SCREEN_WIDTH * 0.75 
-                || (double) this.m_pos.X >= (double) Game.SCREEN_WIDTH * 0.75)
+      if ((double) this.m_pos.Y <= -(double) Game2.SCREEN_HEIGHT * 0.75 
+                || (double) this.m_pos.Y >= (double) Game2.SCREEN_HEIGHT * 0.75 
+                || (double) this.m_pos.X <= -(double) Game2.SCREEN_WIDTH * 0.75 
+                || (double) this.m_pos.X >= (double) Game2.SCREEN_WIDTH * 0.75)
       {
         this.KillBomb();
       }
@@ -330,20 +330,20 @@ namespace GameManager
       {
         if (this.m_hudControl == null || this.m_hudControl != null 
                     && this.m_hudControl.m_clearOthers)
-          Game.ClearMenuItems();
+          Game2.ClearMenuItems();
         this.m_callback();
       }
       else if (p_ent2 != null)
       {
-        if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+        if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
         {
           uint hash = StringFunctions.StringHash("bombs_hit");
-          Game.game_work.saveData.AddToTotal("bombs_hit", hash, 1, false, false);
+          Game2.game_work.saveData.AddToTotal("bombs_hit", hash, 1, false, false);
           WaveManager.GetInstance().ResetSpeed();
           this.m_isMenuItem = true;
-          Game.HitMenuBomb(this.m_pos);
-          Game.game_work.camera.CreateCameraShake(this.m_pos, 2f, 3f);
-          Game.AddToCurrentScore(-10);
+          Game2.HitMenuBomb(this.m_pos);
+          Game2.game_work.camera.CreateCameraShake(this.m_pos, 2f, 3f);
+          Game2.AddToCurrentScore(-10);
           PowerUpManager.GetInstance().ClearTimedPowers();
           MissControl free = MissControl.GetFree();
           free.MakeDisappear(this.m_pos, 0, Bomb.s_minus_10);
@@ -351,9 +351,9 @@ namespace GameManager
         }
         else
         {
-          if (Game.game_work.gameOver)
+          if (Game2.game_work.gameOver)
             return false;
-          Game.HitBomb(this.m_pos);
+          Game2.HitBomb(this.m_pos);
         }
       }
       this.m_hit = true;
@@ -413,7 +413,7 @@ namespace GameManager
       {
         for (; bomb != null; bomb = (Bomb) ActorManager.GetInstance().GetEntityNext(EntityTypes.ENTITY_BOMB, ref iterator))
         {
-          if (player == -1 && bomb.ForPlayer() < Game.MAX_PLAYERS || player == bomb.ForPlayer())
+          if (player == -1 && bomb.ForPlayer() < Game2.MAX_PLAYERS || player == bomb.ForPlayer())
             ++numActiveForPlayer;
         }
       }
@@ -449,17 +449,17 @@ namespace GameManager
       ((ColSphere) this.m_col_box).Radius *= 1.33f;
       if (fromLoad)
         return;
-      this.m_forPlayer += Game.MAX_PLAYERS - 1;
+      this.m_forPlayer += Game2.MAX_PLAYERS - 1;
       Vector3 gravity = this.m_gravity;
       gravity.Normalize();
-      bool flag = this.m_forPlayer == Game.MAX_PLAYERS + 1;
+      bool flag = this.m_forPlayer == Game2.MAX_PLAYERS + 1;
       PSPParticleEmitter pspParticleEmitter1 = PSPParticleManager.GetInstance().AddEmitter(StringFunctions.StringHash(flag ? "red_bomb_warning" : "blue_bomb_warning"), (Action<PSPParticleEmitter>) null);
       if (pspParticleEmitter1 != null)
       {
         pspParticleEmitter1.pos = this.m_pos;
         PSPParticleEmitter pspParticleEmitter2 = pspParticleEmitter1;
         pspParticleEmitter2.pos = Vector3.Add(pspParticleEmitter2.pos, Vector3.Multiply(this.m_vel, 7.5f));
-        pspParticleEmitter1.pos.X = (float) ((double) Game.SCREEN_WIDTH * (double) Mortar.Math.MATH_SIGN(this.m_pos.X) / 2.0);
+        pspParticleEmitter1.pos.X = (float) ((double) Game2.SCREEN_WIDTH * (double) Mortar.Math.MATH_SIGN(this.m_pos.X) / 2.0);
         Vector2 vector2 = new Vector2(this.m_vel.X, this.m_vel.Y);
         vector2.Normalize();
         pspParticleEmitter1.cosz = vector2.Y;

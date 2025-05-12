@@ -66,7 +66,7 @@ namespace GameManager
     public MenuButton m_hudControl;
     public bool m_isMenuItem;
     public bool m_isCritical;
-    private static int[] outOfFruitTime = new int[Game.MAX_PLAYERS];
+    private static int[] outOfFruitTime = new int[Game2.MAX_PLAYERS];
     private static bool inited = false;
     private static int banana;
     private static ushort angleOffset = Mortar.Math.DEGREE_TO_IDX(0.0f);
@@ -109,28 +109,28 @@ namespace GameManager
           this.m_slicedEmitter[index] = (PSPParticleEmitter) null;
         }
       }
-      if (!this.m_isSliced && !this.m_disabled && !Game.InViewer() && Fruit.fruitInfo[(int) this.m_fruitType].score < 5)
+      if (!this.m_isSliced && !this.m_disabled && !Game2.InViewer() && Fruit.fruitInfo[(int) this.m_fruitType].score < 5)
       {
-        if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+        if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
         {
           if (dropped)
           {
             uint hash = StringFunctions.StringHash(nameof (dropped));
-            Game.game_work.saveData.AddToTotal(nameof (dropped), hash, 1, false, false);
+            Game2.game_work.saveData.AddToTotal(nameof (dropped), hash, 1, false, false);
           }
         }
-        else if (Game.FailureEnabled() && dropped)
+        else if (Game2.FailureEnabled() && dropped)
         {
-          if (!Game.game_work.gameOver)
+          if (!Game2.game_work.gameOver)
           {
             MissControl.GetFree().MakeDisappear(this.m_pos, this.m_forPlayer);
             SoundManager.GetInstance().SFXPlay(SoundDef.SND_GANK);
-            Game.game_work.hasDroppedFruit = true;
+            Game2.game_work.hasDroppedFruit = true;
           }
-          ++Game.game_work.currentMissCount;
-          if ((int) Game.game_work.currentMissCount >= (int) Game.MAX_FRUIT_MISSES)
+          ++Game2.game_work.currentMissCount;
+          if ((int) Game2.game_work.currentMissCount >= (int) Game2.MAX_FRUIT_MISSES)
           {
-            Game.GameOver();
+            Game2.GameOver();
             Fruit.s_consecutiveCount = 0;
             Fruit.s_consecutiveType = -1;
           }
@@ -146,7 +146,7 @@ namespace GameManager
     public int CheckFruitDropped()
     {
       bool flag = false;
-      for (int player = 1; player < Game.MAX_PLAYERS; ++player)
+      for (int player = 1; player < Game2.MAX_PLAYERS; ++player)
       {
         if (Fruit.outOfFruitTime[player] > 0)
         {
@@ -154,7 +154,7 @@ namespace GameManager
           if (Fruit.outOfFruitTime[player] == 0)
           {
             flag = true;
-            Game.GameOver(-1, -1f, player);
+            Game2.GameOver(-1, -1f, player);
           }
         }
       }
@@ -163,22 +163,22 @@ namespace GameManager
         if (Fruit.outOfFruitTime[1] > 0 && Fruit.outOfFruitTime[2] > 0)
         {
           flag = true;
-          Game.GameOver(-1, -1f, 0);
+          Game2.GameOver(-1, -1f, 0);
         }
         else if (Fruit.outOfFruitTime[1] > 0)
         {
           flag = true;
-          Game.GameOver(-1, -1f, 1);
+          Game2.GameOver(-1, -1f, 1);
         }
         else if (Fruit.outOfFruitTime[2] > 0)
         {
           flag = true;
-          Game.GameOver(-1, -1f, 2);
+          Game2.GameOver(-1, -1f, 2);
         }
       }
       if (flag)
       {
-        for (int index = 1; index < Game.MAX_PLAYERS; ++index)
+        for (int index = 1; index < Game2.MAX_PLAYERS; ++index)
           Fruit.outOfFruitTime[index] = 0;
       }
       return !flag ? 0 : 1;
@@ -216,7 +216,7 @@ namespace GameManager
       this.m_isLockedMenuButton = false;
       this.m_dtMod = 1f;
       this.m_fruitType = tpl_size < 0 || tpl_size >= Fruit.MAX_FRUIT_TYPES ? (byte) Fruit.RandomFruit(true) : (byte) tpl_size;
-      if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && (double) Game.game_work.gameOverTransition < 1.0)
+      if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && (double) Game2.game_work.gameOverTransition < 1.0)
       {
         if (!Fruit.inited)
         {
@@ -228,7 +228,7 @@ namespace GameManager
         if (Fruit.fruitInfo[(int) this.m_fruitType].powers != null)
         {
           uint num = StringFunctions.StringHash("freeze");
-          if (Fruit.s_numActivePowerUpFruits > 0 || (double) Game.game_work.saveData.timer < 8.0 && (int) Fruit.fruitInfo[(int) this.m_fruitType].powers.powerUps[0].powerHash != (int) num || Fruit.fruitInfo[(int) this.m_fruitType].powers.AnyActivePowers())
+          if (Fruit.s_numActivePowerUpFruits > 0 || (double) Game2.game_work.saveData.timer < 8.0 && (int) Fruit.fruitInfo[(int) this.m_fruitType].powers.powerUps[0].powerHash != (int) num || Fruit.fruitInfo[(int) this.m_fruitType].powers.AnyActivePowers())
           {
             this.m_destroy = true;
             return;
@@ -264,8 +264,8 @@ namespace GameManager
       this.m_hudControl = (MenuButton) null;
       this.m_isMenuItem = false;
       this.m_isCritical = true;
-      this.m_z = Game.GetFruitZPosition();
-      this.m_gravity = new Vector3(0.0f, (float) -((double) Game.GRAVITY / (double) Fruit.SIXTY_FPS_DT), 0.0f);
+      this.m_z = Game2.GetFruitZPosition();
+      this.m_gravity = new Vector3(0.0f, (float) -((double) Game2.GRAVITY / (double) Fruit.SIXTY_FPS_DT), 0.0f);
     }
 
     public override void Release()
@@ -295,7 +295,7 @@ namespace GameManager
           this.m_gravity.Normalize();
           Fruit fruit = this;
           fruit.m_gravity = Vector3.Multiply(fruit.m_gravity, 
-              num2 + (float) ((double) Game.GRAVITY * (double) num1 * 4.5));
+              num2 + (float) ((double) Game2.GRAVITY * (double) num1 * 4.5));
         }
         if (this.m_isMenuItem)
         {
@@ -303,7 +303,7 @@ namespace GameManager
           this.m_gravity.Normalize();
           Fruit fruit = this;
           fruit.m_gravity = Vector3.Multiply(fruit.m_gravity, num3 
-              + (float) ((double) Game.GRAVITY * (double) num1 * 6.5));
+              + (float) ((double) Game2.GRAVITY * (double) num1 * 6.5));
         }
         Fruit fruit1 = this;
         fruit1.m_vel = Vector3.Add(fruit1.m_vel, Vector3.Multiply(this.m_gravity, dt));
@@ -320,9 +320,9 @@ namespace GameManager
         if ((double) this.m_chuckWait > 0.0)
         {
           float chuckWait = this.m_chuckWait;
-          if (!Game.game_work.pause && (double) Game.game_work.hitBombTime <= 0.0 && (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && (double) Game.game_work.gameOverTransition < 1.0 || !Game.game_work.gameOver))
-            this.m_chuckWait -= Game.game_work.dt;
-          if ((double) this.m_chuckWait <= 0.20000000298023224 && (double) chuckWait > 0.20000000298023224 && !Fruit.s_sfxPlayedThisFrame && !Game.game_work.gameOver)
+          if (!Game2.game_work.pause && (double) Game2.game_work.hitBombTime <= 0.0 && (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && (double) Game2.game_work.gameOverTransition < 1.0 || !Game2.game_work.gameOver))
+            this.m_chuckWait -= Game2.game_work.dt;
+          if ((double) this.m_chuckWait <= 0.20000000298023224 && (double) chuckWait > 0.20000000298023224 && !Fruit.s_sfxPlayedThisFrame && !Game2.game_work.gameOver)
           {
             SoundManager.GetInstance().SFXPlay(SoundDef.SND_THROW_FRUIT);
             Fruit.s_sfxPlayedThisFrame = true;
@@ -335,7 +335,7 @@ namespace GameManager
             if (this.m_slicedEmitter[0] != null)
               this.m_slicedEmitter[0].pos = Vector3.Add(this.m_pos, Vector3.Multiply(Vector3.UnitZ, this.m_z));
           }
-          else if (Game.IsFastHardware() && this.m_slicedEmitter[0] != null)
+          else if (Game2.IsFastHardware() && this.m_slicedEmitter[0] != null)
             this.m_slicedEmitter[0].pos = Vector3.Add(this.m_pos, Vector3.Multiply(Vector3.UnitZ, this.m_z - 20f));
           float num4 = WaveManager.GetInstance().FruitMultiplyer();
           int num5 = (int) num4;
@@ -344,7 +344,7 @@ namespace GameManager
           if (num5 <= 0)
           {
             this.m_chuckWait = 0.0f;
-            this.m_pos.Y = -Game.SCREEN_HEIGHT;
+            this.m_pos.Y = -Game2.SCREEN_HEIGHT;
             this.m_vel = new Vector3(0.0f, -1f, 0.0f);
           }
           else if (num5 > 1)
@@ -371,9 +371,9 @@ namespace GameManager
           fruit5.m_vel = Vector3.Add(fruit5.m_vel, Vector3.Multiply(gravity, dt));
           Fruit fruit6 = this;
           fruit6.m_pos = Vector3.Add(fruit6.m_pos, Vector3.Multiply(this.m_vel, num1));
-          if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && ((int) SlashEntity.ModPowerMask & 32) == 32 && !Game.game_work.gameOver && (double) this.m_pos.Y < -(double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel.Y < 0.0)
+          if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && ((int) SlashEntity.ModPowerMask & 32) == 32 && !Game2.game_work.gameOver && (double) this.m_pos.Y < -(double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel.Y < 0.0)
           {
-            this.m_pos.Y = (float) (-(double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0);
+            this.m_pos.Y = (float) (-(double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0);
             this.m_vel.Y *= -1f;
           }
           Fruit fruit7 = this;
@@ -450,7 +450,7 @@ namespace GameManager
         return;
       if (Fruit.LOCKED_BANANA_TYPE == -1)
         Fruit.LOCKED_BANANA_TYPE = Fruit.FruitType("banana_locked");
-      int index1 = !this.m_isLockedMenuButton || !Game.isWP7TrialMode() ? (int) this.m_fruitType : Fruit.LOCKED_BANANA_TYPE;
+      int index1 = !this.m_isLockedMenuButton || !Game2.isWP7TrialMode() ? (int) this.m_fruitType : Fruit.LOCKED_BANANA_TYPE;
       if (!this.m_isSliced)
       {
         if (Fruit.s_fruitModels[2][index1] == null)
@@ -488,26 +488,26 @@ namespace GameManager
         return;
       if ((double) this.m_gravity.X == 0.0)
       {
-        if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE && ((int) SlashEntity.ModPowerMask & 32) == 32)
+        if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE && ((int) SlashEntity.ModPowerMask & 32) == 32)
         {
-          if ((double) this.m_pos.X < -(double) Game.SCREEN_WIDTH * 0.40000000596046448)
+          if ((double) this.m_pos.X < -(double) Game2.SCREEN_WIDTH * 0.40000000596046448)
           {
-            this.m_pos.X = (float) (-(double) Game.SCREEN_WIDTH * 0.40000000596046448);
+            this.m_pos.X = (float) (-(double) Game2.SCREEN_WIDTH * 0.40000000596046448);
             this.m_vel.X *= -1f;
           }
-          if ((double) this.m_pos.X <= (double) Game.SCREEN_WIDTH * 0.40000000596046448)
+          if ((double) this.m_pos.X <= (double) Game2.SCREEN_WIDTH * 0.40000000596046448)
             return;
-          this.m_pos.X = Game.SCREEN_WIDTH * 0.4f;
+          this.m_pos.X = Game2.SCREEN_WIDTH * 0.4f;
           this.m_vel.X *= -1f;
         }
         else
         {
-          if ((double) this.m_pos.X < -(double) Game.SCREEN_WIDTH * 0.40000000596046448)
+          if ((double) this.m_pos.X < -(double) Game2.SCREEN_WIDTH * 0.40000000596046448)
           {
             this.m_vel.X += dt * 16f;
             this.m_separation.X += 20f;
           }
-          if ((double) this.m_pos.X <= (double) Game.SCREEN_WIDTH * 0.40000000596046448)
+          if ((double) this.m_pos.X <= (double) Game2.SCREEN_WIDTH * 0.40000000596046448)
             return;
           this.m_vel.X -= dt * 16f;
           this.m_separation.X -= 20f;
@@ -517,12 +517,12 @@ namespace GameManager
       {
         if ((double) this.m_gravity.Y != 0.0)
           return;
-        if ((double) this.m_pos.Y < -(double) Game.SCREEN_HEIGHT * 0.40000000596046448)
+        if ((double) this.m_pos.Y < -(double) Game2.SCREEN_HEIGHT * 0.40000000596046448)
         {
           this.m_vel.Y += dt * 16f;
           this.m_separation.Y += 20f;
         }
-        if ((double) this.m_pos.Y <= (double) Game.SCREEN_HEIGHT * 0.40000000596046448)
+        if ((double) this.m_pos.Y <= (double) Game2.SCREEN_HEIGHT * 0.40000000596046448)
           return;
         this.m_vel.Y -= dt * 16f;
         this.m_separation.Y -= 20f;
@@ -539,18 +539,18 @@ namespace GameManager
         return false;
       if (this.m_isSliced || (double) this.m_sliceWait > -1.0)
         return true;
-      if (Game.game_work.currentScore < 2 || !Fruit.fruitInfo[(int) this.m_fruitType].canBeCritical || Game.game_work.gameOver || (double) Game.game_work.hitBombTime > 0.0)
+      if (Game2.game_work.currentScore < 2 || !Fruit.fruitInfo[(int) this.m_fruitType].canBeCritical || Game2.game_work.gameOver || (double) Game2.game_work.hitBombTime > 0.0)
       {
         this.m_isCritical = false;
       }
       else
       {
-        Game.game_work.criticalChance = Mortar.Math.MAX(2, Game.game_work.criticalChance - 1);
-        this.m_isCritical = (double) WaveManager.GetInstance().GetCriticalChance() > 0.0 && Mortar.Math.g_random.Rand32((uint) Mortar.Math.MAX((float) Mortar.Math.MIN(Game.game_work.criticalChance, Fruit.CRITICAL_CHANCE) / WaveManager.GetInstance().GetCriticalChance(), 1f)) == 0U;
+        Game2.game_work.criticalChance = Mortar.Math.MAX(2, Game2.game_work.criticalChance - 1);
+        this.m_isCritical = (double) WaveManager.GetInstance().GetCriticalChance() > 0.0 && Mortar.Math.g_random.Rand32((uint) Mortar.Math.MAX((float) Mortar.Math.MIN(Game2.game_work.criticalChance, Fruit.CRITICAL_CHANCE) / WaveManager.GetInstance().GetCriticalChance(), 1f)) == 0U;
         if (this.m_isCritical)
-          Game.game_work.criticalChance = Fruit.CRITICAL_CHANCE + Fruit.CRITICAL_CHANCE_START_INC;
+          Game2.game_work.criticalChance = Fruit.CRITICAL_CHANCE + Fruit.CRITICAL_CHANCE_START_INC;
       }
-      if (!Game.game_work.inRetrySequence || !this.IsOffscreen())
+      if (!Game2.game_work.inRetrySequence || !this.IsOffscreen())
       {
         if (this.m_isCritical)
         {
@@ -574,7 +574,7 @@ namespace GameManager
         this.m_sliceWait *= 2.5f;
         GameTask.CriticalFlash(this.m_pos, Fruit.CRITICAL_COLOUR);
       }
-      else if (Fruit.fruitInfo[(int) this.m_fruitType].score == 50 && !Game.game_work.gameOver)
+      else if (Fruit.fruitInfo[(int) this.m_fruitType].score == 50 && !Game2.game_work.gameOver)
       {
         num = Mortar.Math.CLAMP(v, Fruit.MAX_SPEED * 0.75f, Fruit.MAX_SPEED);
         this.m_sliceWait *= 0.5f;
@@ -589,7 +589,7 @@ namespace GameManager
           PSPParticleManager.GetInstance().ClearEmitter(this.m_slicedEmitter[index]);
         this.m_slicedEmitter[index] = (PSPParticleEmitter) null;
       }
-      if (Game.game_work.inRetrySequence && this.IsOffscreen())
+      if (Game2.game_work.inRetrySequence && this.IsOffscreen())
         return false;
       GameTask.AddSlice(this.m_pos, (float) (-(double) this.m_slicedAngle / 182.0 + 90.0), num * 0.4f, this.m_isCritical);
       uint hash1 = Fruit.fruitInfo[(int) this.m_fruitType].hash[0];
@@ -617,10 +617,10 @@ namespace GameManager
         if (this.m_slicedEmitter[1] != null)
           this.m_slicedEmitter[1].pos = this.m_pos2;
       }
-      if (Game.game_work.inRetrySequence)
+      if (Game2.game_work.inRetrySequence)
         return false;
       AchievementManager.GetInstance().UnlockSpecificOrderAchievement(Fruit.fruitInfo[(int) this.m_fruitType].hash[0]);
-      if (p_ent2 != null && !this.m_disabled && (!Game.game_work.gameOver || (Game.game_work.gameMode == Game.GAME_MODE.GM_ZEN || Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE) && (double) Game.game_work.gameOverTransition < 0.949999988079071 && (double) Game.game_work.gameOverTransition > -0.10000000149011612) && !Game.InViewer() && p_ent2 != null)
+      if (p_ent2 != null && !this.m_disabled && (!Game2.game_work.gameOver || (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ZEN || Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE) && (double) Game2.game_work.gameOverTransition < 0.949999988079071 && (double) Game2.game_work.gameOverTransition > -0.10000000149011612) && !Game2.InViewer() && p_ent2 != null)
       {
         if (Fruit.fruitInfo[(int) this.m_fruitType].powers != null)
           PowerUpManager.GetInstance().ActivatePower(Fruit.fruitInfo[(int) this.m_fruitType].powers.RandomPower(), this.m_pos);
@@ -628,46 +628,46 @@ namespace GameManager
         if (Fruit.s_consecutiveType != (int) this.m_fruitType)
         {
           Fruit.s_consecutiveType = (int) this.m_fruitType;
-          while (Fruit.s_consecutiveCount > 1 && Game.game_work.gameMode == Game.GAME_MODE.GM_CASINO)
+          while (Fruit.s_consecutiveCount > 1 && Game2.game_work.gameMode == Game2.GAME_MODE.GM_CASINO)
           {
             --Fruit.s_consecutiveCount;
             score += 1 << Fruit.s_consecutiveCount;
           }
           Fruit.s_consecutiveCount = 0;
         }
-        else if (Fruit.s_consecutiveCount >= 1 && Game.game_work.gameMode == Game.GAME_MODE.GM_CASINO)
+        else if (Fruit.s_consecutiveCount >= 1 && Game2.game_work.gameMode == Game2.GAME_MODE.GM_CASINO)
         {
           string filename = string.Format("combo-{0}", (object) Fruit.s_consecutiveCount);
           SoundManager.GetInstance().SFXPlay(filename);
         }
         ++Fruit.s_consecutiveCount;
-        if (Game.game_work.gameMode == Game.GAME_MODE.GM_ARCADE)
+        if (Game2.game_work.gameMode == Game2.GAME_MODE.GM_ARCADE)
         {
           WaveManager.GetInstance().AddToSpeedLossTime(0.05f);
           uint hash3 = StringFunctions.StringHash("first_fruit");
           uint hash4 = StringFunctions.StringHash("last_fruit");
-          if (Game.game_work.saveData.GetTotal(hash3) <= 0)
-            Game.game_work.saveData.AddToTotal("first_fruit", hash3, 1 + (int) this.m_fruitType, false, false);
-          Game.game_work.saveData.AddToTotal("last_fruit", hash4, 1 + (int) this.m_fruitType - Game.game_work.saveData.GetTotal(hash4), false, false);
+          if (Game2.game_work.saveData.GetTotal(hash3) <= 0)
+            Game2.game_work.saveData.AddToTotal("first_fruit", hash3, 1 + (int) this.m_fruitType, false, false);
+          Game2.game_work.saveData.AddToTotal("last_fruit", hash4, 1 + (int) this.m_fruitType - Game2.game_work.saveData.GetTotal(hash4), false, false);
         }
-        Game.AddToCurrentScore(score, this.m_forPlayer);
+        Game2.AddToCurrentScore(score, this.m_forPlayer);
         uint hash5 = StringFunctions.StringHash("crit");
         AchievementManager instance = AchievementManager.GetInstance();
-        if (!Game.game_work.hasDroppedFruit)
-          instance.UnlockScoreUnsulliedAchievement(Game.game_work.currentScore);
+        if (!Game2.game_work.hasDroppedFruit)
+          instance.UnlockScoreUnsulliedAchievement(Game2.game_work.currentScore);
         instance.UnlockConsecutiveAchievement(Fruit.s_consecutiveCount, Fruit.fruitInfo[(int) this.m_fruitType].hash[0]);
-        Game.game_work.saveData.AddToTotal(Fruit.fruitInfo[(int) this.m_fruitType].fruitName, Fruit.fruitInfo[(int) this.m_fruitType].hash[0], 1, false, false);
-        Game.game_work.saveData.AddToTotal(Fruit.fruitInfo[(int) this.m_fruitType].fruitNameTotal, Fruit.fruitInfo[(int) this.m_fruitType].hash[4], 1, true, false);
+        Game2.game_work.saveData.AddToTotal(Fruit.fruitInfo[(int) this.m_fruitType].fruitName, Fruit.fruitInfo[(int) this.m_fruitType].hash[0], 1, false, false);
+        Game2.game_work.saveData.AddToTotal(Fruit.fruitInfo[(int) this.m_fruitType].fruitNameTotal, Fruit.fruitInfo[(int) this.m_fruitType].hash[4], 1, true, false);
         int numberOfCoins = 0;
         if (Fruit.fruitInfo[(int) this.m_fruitType].coinsMax > 0)
           numberOfCoins = Fruit.fruitInfo[(int) this.m_fruitType].coinsMin >= Fruit.fruitInfo[(int) this.m_fruitType].coinsMax ? Fruit.fruitInfo[(int) this.m_fruitType].coinsMin : (int) ((long) Mortar.Math.g_random.Rand32((uint) (Fruit.fruitInfo[(int) this.m_fruitType].coinsMax - Fruit.fruitInfo[(int) this.m_fruitType].coinsMin)) + (long) Fruit.fruitInfo[(int) this.m_fruitType].coinsMin);
         if (this.m_isCritical)
         {
           numberOfCoins *= Fruit.CRITICAL_SCORE / 2;
-          Game.game_work.saveData.AddToTotal("crit", hash5, 1, false, false);
+          Game2.game_work.saveData.AddToTotal("crit", hash5, 1, false, false);
           string str = Fruit.fruitInfo[(int) this.m_fruitType].fruitName + "%scrit";
           uint hash6 = StringFunctions.StringHash(str);
-          Game.game_work.saveData.AddToTotal(str, hash6, 1, false, false);
+          Game2.game_work.saveData.AddToTotal(str, hash6, 1, false, false);
         }
         if (numberOfCoins > 0)
           Coin.MakeCoins(numberOfCoins, 1, this.m_pos, this.m_slicedAngle, Mortar.Math.DEGREE_TO_IDX((float) Mortar.Math.MIN(360, 45 + numberOfCoins * 45)));
@@ -684,7 +684,7 @@ namespace GameManager
       Vector3 vector3_1 = new Vector3(0.0f, 0.0f, 1f);
       Vector3 vector3_2;
       Vector3.Transform(ref vector3_1, ref fromQuaternion, out vector3_2);
-      if (Game.game_work.gameOver)
+      if (Game2.game_work.gameOver)
         this.m_isCritical = false;
       bool flag1 = false;
       if ((double) Mortar.Math.ABS(vector3_2.Y) + (double) Mortar.Math.ABS(vector3_2.X) > 0.0 && (double) this.GetSmallestDelta((float) (360.0 - (double) (ushort) ((uint) Mortar.Math.Atan2Idx(vector3_2.Y, vector3_2.X) - (uint) Mortar.Math.DEGREE_TO_IDX(90f)) / 182.0), (float) (ushort) ((uint) this.m_slicedAngle - (uint) Mortar.Math.DEGREE_TO_IDX(180f)) / 182f) < 0.0)
@@ -704,7 +704,7 @@ namespace GameManager
         slicedMag *= 1.5f;
         num3 = Fruit.CRITICAL_SPLATS;
       }
-      if (Game.game_work.inRetrySequence && this.IsOffscreen())
+      if (Game2.game_work.inRetrySequence && this.IsOffscreen())
         num3 = 0;
       for (int index = 0; index < num3; ++index)
       {
@@ -772,7 +772,7 @@ namespace GameManager
         this.m_vel = Vector3.Multiply(new Vector3(Mortar.Math.SinIdx((ushort) ((uint) this.m_slicedAngle - (uint) Mortar.Math.DEGREE_TO_IDX(90f))) * slicedMag, Mortar.Math.CosIdx((ushort) ((uint) this.m_slicedAngle - (uint) Mortar.Math.DEGREE_TO_IDX(90f))) * slicedMag, 0.0f), 1.75f);
       }
       else
-        Game.MoveFruitZPositionToBack(ref this.m_z);
+        Game2.MoveFruitZPositionToBack(ref this.m_z);
       this.m_isSliced = true;
       for (int index = 0; index < 2; ++index)
       {
@@ -843,75 +843,75 @@ namespace GameManager
     public bool CheckHasGoneOffsceen()
     {
       bool isSliced = this.m_isSliced;
-      if (isSliced && (double) Mortar.Math.Abs(this.m_gravity.X) > 0.0 && ((double) this.m_pos.Y <= -((double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.Y >= (double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) && ((double) this.m_pos2.Y <= -((double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.Y >= (double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0))
+      if (isSliced && (double) Mortar.Math.Abs(this.m_gravity.X) > 0.0 && ((double) this.m_pos.Y <= -((double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.Y >= (double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) && ((double) this.m_pos2.Y <= -((double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.Y >= (double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0))
         return true;
       bool flag = false;
       if ((double) this.m_gravity.Y < 0.0)
       {
-        if ((double) this.m_pos.Y > (double) Game.SCREEN_HEIGHT * 0.75 && isSliced)
+        if ((double) this.m_pos.Y > (double) Game2.SCREEN_HEIGHT * 0.75 && isSliced)
         {
-          this.m_pos.Y = -Game.SCREEN_HEIGHT;
+          this.m_pos.Y = -Game2.SCREEN_HEIGHT;
           this.m_vel.Y = -1f;
         }
-        if ((double) this.m_pos2.Y > (double) Game.SCREEN_HEIGHT * 0.75 && isSliced)
+        if ((double) this.m_pos2.Y > (double) Game2.SCREEN_HEIGHT * 0.75 && isSliced)
         {
-          this.m_pos2.Y = -Game.SCREEN_HEIGHT;
+          this.m_pos2.Y = -Game2.SCREEN_HEIGHT;
           this.m_vel2.Y = -1f;
         }
-        if ((double) this.m_pos.Y <= -((double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel.Y < 0.0)
+        if ((double) this.m_pos.Y <= -((double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel.Y < 0.0)
           flag = true;
-        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.Y <= -((double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel2.Y < 0.0 || isSliced && ((double) this.m_pos.X <= -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.X >= (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && ((double) this.m_pos2.X <= -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.X >= (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0))
+        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.Y <= -((double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel2.Y < 0.0 || isSliced && ((double) this.m_pos.X <= -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.X >= (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && ((double) this.m_pos2.X <= -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.X >= (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0))
           return true;
       }
       if ((double) this.m_gravity.Y > 0.0)
       {
-        if ((double) this.m_pos.Y < -(double) Game.SCREEN_HEIGHT * 0.75 && isSliced)
+        if ((double) this.m_pos.Y < -(double) Game2.SCREEN_HEIGHT * 0.75 && isSliced)
         {
-          this.m_pos.Y = Game.SCREEN_HEIGHT;
+          this.m_pos.Y = Game2.SCREEN_HEIGHT;
           this.m_vel.Y = 1f;
         }
-        if ((double) this.m_pos2.Y < -(double) Game.SCREEN_HEIGHT * 0.75 && isSliced)
+        if ((double) this.m_pos2.Y < -(double) Game2.SCREEN_HEIGHT * 0.75 && isSliced)
         {
-          this.m_pos2.Y = Game.SCREEN_HEIGHT;
+          this.m_pos2.Y = Game2.SCREEN_HEIGHT;
           this.m_vel2.Y = 1f;
         }
-        if ((double) this.m_pos.Y >= (double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel.Y > 0.0)
+        if ((double) this.m_pos.Y >= (double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel.Y > 0.0)
           flag = true;
-        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.Y >= (double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel2.Y > 0.0 || isSliced && ((double) this.m_pos.X <= -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.X >= (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && ((double) this.m_pos2.X <= -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.X >= (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0))
+        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.Y >= (double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel2.Y > 0.0 || isSliced && ((double) this.m_pos.X <= -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.X >= (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && ((double) this.m_pos2.X <= -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.X >= (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0))
           return true;
       }
       if ((double) this.m_gravity.X < 0.0)
       {
-        if (isSliced && (double) this.m_pos.X > (double) Game.SCREEN_WIDTH * 0.75)
+        if (isSliced && (double) this.m_pos.X > (double) Game2.SCREEN_WIDTH * 0.75)
         {
-          this.m_pos.X = -Game.SCREEN_WIDTH;
+          this.m_pos.X = -Game2.SCREEN_WIDTH;
           this.m_vel.X = -1f;
         }
-        if (isSliced && (double) this.m_pos2.X > (double) Game.SCREEN_WIDTH * 0.75)
+        if (isSliced && (double) this.m_pos2.X > (double) Game2.SCREEN_WIDTH * 0.75)
         {
-          this.m_pos2.X = -Game.SCREEN_WIDTH;
+          this.m_pos2.X = -Game2.SCREEN_WIDTH;
           this.m_vel2.X = -1f;
         }
-        if ((double) this.m_pos.X <= -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel.X < 0.0)
+        if ((double) this.m_pos.X <= -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel.X < 0.0)
           flag = true;
-        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.X <= -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel2.X < 0.0)
+        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.X <= -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) && (double) this.m_vel2.X < 0.0)
           return true;
       }
       if ((double) this.m_gravity.X > 0.0)
       {
-        if (isSliced && (double) this.m_pos.X < -(double) Game.SCREEN_WIDTH * 0.75)
+        if (isSliced && (double) this.m_pos.X < -(double) Game2.SCREEN_WIDTH * 0.75)
         {
-          this.m_pos.X = Game.SCREEN_WIDTH;
+          this.m_pos.X = Game2.SCREEN_WIDTH;
           this.m_vel.X = 1f;
         }
-        if (isSliced && (double) this.m_pos2.X < -(double) Game.SCREEN_WIDTH * 0.75)
+        if (isSliced && (double) this.m_pos2.X < -(double) Game2.SCREEN_WIDTH * 0.75)
         {
-          this.m_pos2.X = Game.SCREEN_WIDTH;
+          this.m_pos2.X = Game2.SCREEN_WIDTH;
           this.m_vel2.X = 1f;
         }
-        if ((double) this.m_pos.X >= (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel.X > 0.0)
+        if ((double) this.m_pos.X >= (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel.X > 0.0)
           flag = true;
-        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.X >= (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel2.X > 0.0)
+        if (flag && (double) this.m_sliceWait <= 0.0 && (double) this.m_pos2.X >= (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0 && (double) this.m_vel2.X > 0.0)
           return true;
       }
       return false;
@@ -1073,10 +1073,10 @@ namespace GameManager
         {
           string astr1 = element2.AttributeStr("size");
           if (astr1 != null && astr1.Length > 0)
-            Game.game_work.bombSize = (float) MParser.ParseInt(astr1);
+            Game2.game_work.bombSize = (float) MParser.ParseInt(astr1);
           string astr2 = element2.AttributeStr("collision");
           if (astr2 != null && astr2.Length > 0)
-            Game.game_work.bombCollision = (float) MParser.ParseInt(astr2);
+            Game2.game_work.bombCollision = (float) MParser.ParseInt(astr2);
         }
         XElement element3 = xelement.Element((XName) "FruitInfo");
         Fruit.MAX_FRUIT_TYPES = 0;
@@ -1299,7 +1299,7 @@ namespace GameManager
       this.m_pos2 = this.m_pos;
       this.m_chuckWait = chuck;
       uint num = StringFunctions.StringHash("freeze");
-      if (Fruit.fruitInfo[(int) this.m_fruitType].powers == null || (double) Game.game_work.saveData.timer - (double) chuck >= 8.0 || (int) Fruit.fruitInfo[(int) this.m_fruitType].powers.powerUps[0].powerHash == (int) num)
+      if (Fruit.fruitInfo[(int) this.m_fruitType].powers == null || (double) Game2.game_work.saveData.timer - (double) chuck >= 8.0 || (int) Fruit.fruitInfo[(int) this.m_fruitType].powers.powerUps[0].powerHash == (int) num)
         return;
       --Fruit.s_numActivePowerUpFruits;
       this.m_destroy = true;
@@ -1310,10 +1310,10 @@ namespace GameManager
       bool flag = false;
       if ((double) Mortar.Math.Abs(this.m_gravity.Y) > 0.0)
       {
-        if ((double) this.m_pos.Y < -((double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.Y > (double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 || (double) this.m_pos2.Y < -((double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.Y > (double) Game.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0)
+        if ((double) this.m_pos.Y < -((double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.Y > (double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0 || (double) this.m_pos2.Y < -((double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.Y > (double) Game2.SCREEN_HEIGHT / 2.0 + (double) this.m_cur_scale.Y * 50.0)
           flag = true;
       }
-      else if ((double) Mortar.Math.Abs(this.m_gravity.X) > 0.0 && ((double) this.m_pos.X < -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.X > (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0 || (double) this.m_pos2.X < -((double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.X > (double) Game.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0))
+      else if ((double) Mortar.Math.Abs(this.m_gravity.X) > 0.0 && ((double) this.m_pos.X < -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos.X > (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0 || (double) this.m_pos2.X < -((double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0) || (double) this.m_pos2.X > (double) Game2.SCREEN_WIDTH / 2.0 + (double) this.m_cur_scale.Y * 50.0))
         flag = true;
       return flag;
     }
@@ -1346,7 +1346,7 @@ namespace GameManager
         if (Fruit.fruitInfo[type].factCount <= 0)
           return Fruit.GetFact(getType, getFact);
         string str = Fruit.fruitInfo[type].fruitName + "_facts";
-        fact = Game.game_work.saveData.AddToTotal(str, StringFunctions.StringHash(str), 1, true, true) - 1;
+        fact = Game2.game_work.saveData.AddToTotal(str, StringFunctions.StringHash(str), 1, true, true) - 1;
         fact %= Fruit.fruitInfo[type].factCount;
       }
       fact = Mortar.Math.CLAMP(fact, 0, Fruit.fruitInfo[type].factCount - 1);
